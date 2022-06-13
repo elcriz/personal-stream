@@ -10,7 +10,7 @@ const {
   verifyUser,
 } = require('../authenticate');
 
-router.post('/signup', (req, res, next) => {
+router.post('/signup', (req, res) => {
   if (!req.body.firstName) {
     res.status(500).send({
       name: 'FirstNameError',
@@ -59,7 +59,7 @@ router.post('/login', passport.authenticate('local'), (req, res, next) => {
     }, error => next(error));
 });
 
-router.get('/me', verifyUser, (req, res, next) => {
+router.get('/me', verifyUser, (req, res) => {
   res.status(200).send(req.user);
 });
 

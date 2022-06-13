@@ -20,6 +20,8 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cookieParser(process.env.COOKIE_SECRET));
 const userRouter = require('./routes/userRouter');
+const { getError } = require('./utils/generic');
+const { verifyUser } = require('./authenticate');
 
 const whitelist = process.env.WHITELISTED_DOMAINS
   ? process.env.WHITELISTED_DOMAINS.split(',')
@@ -58,6 +60,26 @@ app.get('/stream', (req, res) => {
       res.status(200).json(items);
     }, () => {
       getError('Could not fetch the documents.');
+    });
+});
+
+app.post('/stream', verifyUser, (req, res) => {
+  if (req.user.role !== 1) {
+    res.status(401).send();
+  }
+  Item
+    .create(new Item({
+      title: req.body.title,
+      tags: req.body.tags,
+      body: req.body.body,
+      images: req.body.images,
+      videos: req.body.videos,
+      links: req.body.links,
+    }))
+    .then((result) => {
+      res.status(201).json(result);
+    }, () => {
+      getError('Could not add document', 201);
     });
 });
 
