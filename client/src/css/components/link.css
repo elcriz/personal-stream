@@ -1,0 +1,10 @@
+.link {
+  color: rgb(var(--color-link));
+  transition: var(--transition-100);
+}
+
+.link:hover,
+.link:focus {
+  color: rgb(var(--color-text-light));
+  text-decoration: underline;
+}

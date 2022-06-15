@@ -3,9 +3,12 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
+const corsProxy = require('pass-cors');
 const Item = require('./models/item');
 
-if (process.env.NODE_ENV !== 'production') {
+const isDevelopment = process.env.NODE_ENV !== 'production';
+
+if (isDevelopment) {
   require('dotenv').config({ path: './.env' })
 }
 
@@ -42,24 +45,35 @@ app.use(passport.initialize());
 
 app.use('/users', userRouter);
 
+app.use('/proxy', corsProxy);
+
 app.get('/', (req, res) => {
   res.send({ status: 'success ' });
 });
 
 app.get('/stream', (req, res) => {
-  const page = req.query.page || 0;
-  const itemsPerPage = req.query.itemsAmount || 5;
-  const { tag } = req.query;
+  const { tag, page = 1, limit = 5 } = req.query;
+
+  async function getCount(tag) {
+    return await Item
+      .countDocuments(tag ? { tags: { $in: [tag] } } : {})
+      .then((amount) => {
+        return Promise.resolve(amount);
+      }, () => {
+        getError(res, 'Could not count the documents.');
+      });
+  }
 
   Item
     .find(tag ? { tags: { $in: [tag] } } : {})
     .sort('-time')
-    .skip(page * itemsPerPage)
-    .limit(itemsPerPage)
-    .then((items) => {
-      res.status(200).json(items);
+    .limit(limit * 1)
+    .skip((page - 1) * limit)
+    .then(async (items) => {
+      const amount = await getCount(tag);
+      res.status(200).json({ items, amount });
     }, () => {
-      getError('Could not fetch the documents.');
+      getError(res, 'Could not fetch the documents.');
     });
 });
 
@@ -79,7 +93,7 @@ app.post('/stream', verifyUser, (req, res) => {
     .then((result) => {
       res.status(201).json(result);
     }, () => {
-      getError('Could not add document', 201);
+      getError(res, 'Could not add document', 201);
     });
 });
 
@@ -90,7 +104,7 @@ app.get('/stream/:id', (req, res) => {
     .then((item) => {
       res.status(200).json(item);
     }, () => {
-      getError('Could not fetch the document.');
+      getError(res, 'Could not fetch the document.');
     });
 });
 
@@ -105,7 +119,7 @@ app.get('/tags', (_, res) => {
       ]), []).sort();
       res.status(200).json(tags);
     }, () => {
-      getError('Could not fetch the documents.');
+      getError(res, 'Could not fetch the documents.');
     });
 });
 

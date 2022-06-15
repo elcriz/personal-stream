@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
 const passport = require('passport');
+const jwt = require('jsonwebtoken');
 
 const {
   getToken,
@@ -52,14 +53,67 @@ router.post('/login', passport.authenticate('local'), (req, res, next) => {
       user.save((error) => {
         if (error) {
           res.status(500).send(error);
+          return;
         }
         res.cookie('refreshToken', refreshToken, COOKIE_OPTIONS);
-        res.send({ success: true, token });
+        res.send({
+          success: true,
+          role: req.user.role,
+          token
+        });
       })
     }, error => next(error));
 });
 
+router.post('/refreshToken', (req, res, next) => {
+  const { signedCookies = {} } = req;
+  const { refreshToken } = signedCookies;
+
+  if (!refreshToken) {
+    res.status(401).send('Unauthorized - 0');
+    return;
+  }
+
+  try {
+    const payload = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+    const userId = payload._id;
+    User
+      .findOne({ _id: userId })
+      .then((user) => {
+        if (!user) {
+          res.status(401).send('Unauthorized - 1');
+        }
+
+        const tokenIndex = user.refreshToken.findIndex(
+          item => item.refreshToken === refreshToken,
+        );
+
+        if (tokenIndex === -1) {
+          res.status(401).send('Unauthorized - 2');
+        }
+        const token = getToken({ _id: userId });
+        const newRefreshToken = getRefreshToken({ _id: userId });
+        user.refreshToken[tokenIndex] = { refreshToken: newRefreshToken };
+        User.save((error, user) => {
+          if (error) {
+            res.status(500).send(error);
+          }
+          res.cookie('refreshToken', newRefreshToken, COOKIE_OPTIONS);
+          res.send({
+            success: true,
+            role: req.user.role,
+            token
+          });
+        });
+      }, error => next(error));
+  } catch (error) {
+    res.status(401).send('Unauthorized - 3');
+  }
+});
+
 router.get('/me', verifyUser, (req, res) => {
+  const { signedCookies = {} } = req;
+  const { refreshToken } = signedCookies;
   res.status(200).send(req.user);
 });
 

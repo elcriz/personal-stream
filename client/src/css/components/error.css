@@ -1,0 +1,23 @@
+.error {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: var(--spacing);
+  margin-top: var(--spacing);
+  background-color: rgb(var(--color-red));
+  border-radius: calc(var(--spacing) / 2);
+}
+
+.error::before {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: calc(var(--spacing) * 2);
+  height: calc(var(--spacing) * 2);
+  margin-right: var(--spacing);
+  content: '!';
+  font-weight: bold;
+  background-color: rgb(var(--color-orange));
+  border-radius: calc(var(--spacing) / 2);
+  box-shadow: 4px 4px 0px rgba(var(--color-brown), .1);
+}

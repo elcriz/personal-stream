@@ -1,0 +1,28 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: var(--spacing);
+  padding-bottom: var(--spacing);
+  padding-left: var(--spacing);
+  padding-right: var(--spacing);
+  border-bottom: 1px solid rgba(var(--color-beige), .125);
+}
+
+.header h1 {
+  margin: var(--spacing);
+  font-size: 1.4em;
+}
+
+.header h1 a {
+  color: rgb(var(--color-text-light));
+}
+
+.header nav {
+  display: flex;
+}
+
+.header nav a {
+  display: inline-block;
+  margin: var(--spacing) var(--spacing) var(--spacing) 0;
+}

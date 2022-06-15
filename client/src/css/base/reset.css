@@ -1,0 +1,40 @@
+body,
+h1, h2, h3, h4, h5, h6,
+blockquote, p, pre,
+dl, dd, ol, ul,
+figure,
+hr,
+fieldset, legend {
+  padding: 0;
+  margin: 0;
+}
+
+li > ol,
+li > ul {
+  margin-bottom: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+button,
+[role=button] {
+  cursor: pointer;
+}
+
+abbr {
+  cursor: help;
+}
+
+abbr:not(:hover) {
+  text-decoration: none;
+}
+
+body {
+  background-color: rgb(var(--color-ui));
+  color: rgb(var(--color-text-light));
+  font-family: 'Barlow', Helvetica, Arial, sans-serif;
+  font-size: var(--font-size-100);
+  line-height: 1.5em;
+}

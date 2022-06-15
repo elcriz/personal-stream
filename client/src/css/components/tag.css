@@ -1,0 +1,23 @@
+:root {
+  --color-background-tag: var(--color-grey);
+}
+
+.tag {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 22px;
+  padding: 0 6px 1px;
+  text-transform: uppercase;
+  font-size: .75em;
+  color: rgb(var(--color-text-light));
+  background-color: rgb(var(--color-background-tag));
+  text-shadow: -1px -1px 0px rgba(var(--color-dark-green), .25);
+  border-radius: calc(var(--spacing) / 4);
+  transition: var(--transition-100);
+}
+
+.tag:hover,
+.tag:focus {
+  background-color: rgb(var(--color-green));
+}

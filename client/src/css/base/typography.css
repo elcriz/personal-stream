@@ -1,0 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@200;400;600&display=swap');
+
+h1,
+h2,
+h3,
+h4 {
+  margin-bottom: calc(var(--spacing));
+}

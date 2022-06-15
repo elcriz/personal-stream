@@ -5,6 +5,7 @@ const isDevelopment = process.env.NODE_ENV !== 'production';
 exports.COOKIE_OPTIONS = {
   httpOnly: true,
   secure: !isDevelopment,
+  secure: false,
   signed: true,
   maxAge: eval(process.env.REFRESH_TOKEN_EXPIRY) * 10000,
   sameSite: 'none',

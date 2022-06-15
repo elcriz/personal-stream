@@ -1,0 +1,8 @@
+.main {
+  display: flex;
+  justify-content: center;
+  margin-top: calc(var(--spacing) * 6);
+  margin-right: calc(var(--spacing) * 2);
+  margin-bottom: var(--spacing);
+  margin-left: calc(var(--spacing) * 2);
+}
