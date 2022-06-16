@@ -18,13 +18,3 @@
 .form > p {
   margin-top: calc(var(--spacing) / 2);
 }
-
-.form__field {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: var(--spacing);
-}
-
-.form__field label {
-  margin-bottom: calc(var(--spacing) / 2);
-}

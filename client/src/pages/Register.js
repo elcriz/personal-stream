@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import Canvas from '../components/Canvas';
+import Field from '../components/Field';
 import { UserContext } from '../context/UserContext';
 
 const defaultErrorMessage = 'Something went wrong, please try again later';
@@ -83,67 +84,43 @@ const Register = () => {
         onSubmit={handleSubmit}
       >
         <h2 className="form__heading">Register</h2>
-        <div className="form__field">
-          <label htmlFor="email">
-            Email address
-          </label>
-          <input
-            id="email"
-            className="input input--text"
-            type="email"
-            placeholder="Email address"
-            value={email}
-            disabled={isSubmitting}
-            onChange={(event => {
-              setEmail(event.target.value);
-            })}
-          />
-        </div>
-        <div className="form__field">
-          <label htmlFor="firstName">
-            First name
-          </label>
-          <input
-            id="firstName"
-            className="input input--text"
-            placeholder="First name"
-            value={firstName}
-            disabled={isSubmitting}
-            onChange={(event => {
-              setFirstName(event.target.value);
-            })}
-          />
-        </div>
-        <div className="form__field">
-          <label htmlFor="lastName">
-            Last name
-          </label>
-          <input
-            id="lastName"
-            className="input input--text"
-            placeholder="Last name"
-            value={lastName}
-            disabled={isSubmitting}
-            onChange={(event => {
-              setLastName(event.target.value);
-            })}
-          />
-        </div>
-        <div className="form__field">
-          <label htmlFor="password">
-            Password
-          </label>
-          <input
-            id="password"
-            className="input input--text"
-            type="password"
-            value={password}
-            disabled={isSubmitting}
-            onChange={(event => {
-              setPassword(event.target.value);
-            })}
-          />
-        </div>
+        <Field
+          id="email"
+          className="form__field"
+          type="email"
+          label="Email address"
+          value={email}
+          placeholder="Email address"
+          disabled={isSubmitting}
+          onChange={setEmail}
+        />
+        <Field
+          id="firstName"
+          className="form__field"
+          label="First name"
+          value={firstName}
+          placeholder="First name"
+          disabled={isSubmitting}
+          onChange={setFirstName}
+        />
+        <Field
+          id="lastName"
+          className="form__field"
+          label="Last name"
+          value={lastName}
+          placeholder="Last name"
+          disabled={isSubmitting}
+          onChange={setLastName}
+        />
+        <Field
+          id="password"
+          className="form__field"
+          type="password"
+          label="Password"
+          value={password}
+          disabled={isSubmitting}
+          onChange={setPassword}
+        />
         <button
           className="button"
           type="submit"

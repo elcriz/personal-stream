@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import Canvas from '../components/Canvas';
+import Field from '../components/Field';
 import { UserContext } from '../context/UserContext';
 
 const defaultErrorMessage = 'Something went wrong, please try again later';
@@ -76,37 +77,25 @@ const Login = () => {
         onSubmit={handleSubmit}
       >
         <h2 className="form__heading">Sign in</h2>
-        <div className="form__field">
-          <label htmlFor="email">
-            Email address
-          </label>
-          <input
-            id="email"
-            className="input input--text"
-            type="email"
-            placeholder="Email address"
-            value={email}
-            disabled={isSubmitting}
-            onChange={(event => {
-              setEmail(event.target.value);
-            })}
-          />
-        </div>
-        <div className="form__field">
-          <label htmlFor="password">
-            Password
-          </label>
-          <input
-            id="password"
-            className="input input--text"
-            type="password"
-            value={password}
-            disabled={isSubmitting}
-            onChange={(event => {
-              setPassword(event.target.value);
-            })}
-          />
-        </div>
+        <Field
+          id="email"
+          className="form__field"
+          type="email"
+          label="Email address"
+          value={email}
+          placeholder="Email address"
+          disabled={isSubmitting}
+          onChange={setEmail}
+        />
+        <Field
+          id="password"
+          className="form__field"
+          type="password"
+          label="Password"
+          value={password}
+          disabled={isSubmitting}
+          onChange={setPassword}
+        />
         <button
           className="button"
           type="submit"

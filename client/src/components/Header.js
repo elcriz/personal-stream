@@ -13,10 +13,11 @@ const Header = () => {
       <nav aria-label="Main">
         <Link className="link" to="/">Stream</Link>
         <Link className="link" to="/about">About</Link>
+        {auth.user.isAllowedToAdd && (
+          <Link className="link" to="/add">Add</Link>
+        )}
         {auth.user.isAuthenticated && (
-          <>
-            <Link className="link" to="/logout">Sign out</Link>
-          </>
+          <Link className="link" to="/logout">Sign out</Link>
         )}
         {!auth.user.isAuthenticated && (
           <Link className="link" to="/login">Sign in</Link>
