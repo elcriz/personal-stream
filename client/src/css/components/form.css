@@ -18,3 +18,29 @@
 .form > p {
   margin-top: calc(var(--spacing) / 2);
 }
+
+.form__preview {
+  height: 100%;
+  padding: var(--spacing);
+  border-radius: calc(var(--spacing) / 2);
+  box-sizing: border-box;
+  border: 1px solid rgba(var(--color-beige), .25);
+  background-color: rgba(var(--color-beige), .05);
+}
+
+.form__preview p,
+.form__preview ul,
+.form__preview ol {
+  margin-bottom: 1em;
+}
+
+.form__preview a {
+  color: rgb(var(--color-link));
+  transition: var(--transition-100);
+}
+
+.form__preview a:hover,
+.form__preview a:focus {
+  color: rgb(var(--color-text-light));
+  text-decoration: underline;
+}

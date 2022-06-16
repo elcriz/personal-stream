@@ -14,3 +14,8 @@
 .input:disabled {
   opacity: .5;
 }
+
+.input--body {
+  height: 200px;
+  padding: var(--spacing);
+}

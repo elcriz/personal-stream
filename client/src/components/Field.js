@@ -7,6 +7,7 @@ const Field = ({
   className,
   label,
   type,
+  value,
   onChange,
   children,
   ...rest
@@ -16,15 +17,30 @@ const Field = ({
   >
     <label htmlFor={id}>{label}</label>
     <div className="field__inner">
-      <input
-        {...rest}
-        id={id}
-        className={`input input--${type}`}
-        type={type}
-        onChange={(event) => {
-          onChange(event.target.value);
-        }}
-      />
+      {type !== 'body' && (
+        <input
+          {...rest}
+          id={id}
+          className={`input input--${type}`}
+          type={type}
+          value={value}
+          onChange={(event) => {
+            onChange(event.target.value, event.target.id);
+          }}
+        />
+      )}
+      {type === 'body' && (
+        <textarea
+          {...rest}
+          id={id}
+          className={`input input--${type}`}
+          onChange={(event) => {
+            onChange(event.target.value, event.target.id);
+          }}
+        >
+          {value}
+        </textarea>
+      )}
       {children && (
         <aside>
           {children}
