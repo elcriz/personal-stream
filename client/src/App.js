@@ -1,59 +1,25 @@
-import React, { useCallback, useContext, useEffect } from 'react';
-import {
-  Route,
-  Routes,
-} from 'react-router';
-import Header from './components/Header';
-import PrivateRoute from './components/PrivateRoute';
+import React, { useEffect } from 'react';
+import { Route, Routes } from 'react-router';
 import Stream from './pages/Stream';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import Add from './pages/Add';
+import AddOrModify from './pages/AddOrModify';
 import Item from './pages/Item';
 import About from './pages/About';
-import { UserContext, initialState } from './context/UserContext';
+import Header from './components/Header';
+import PrivateWrapper from './components/PrivateWrapper';
+import useAuth from './hooks/useAuth';
 
 const App = () => {
-  const [userContext, setUserContext] = useContext(UserContext);
-  const isLoggedIn = !!userContext.token;
-
-  const verifyUser = useCallback(() => {
-    fetch(`${process.env.REACT_APP_API_ENDPOINT}users/refreshToken`, {
-      method: 'POST',
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
-    })
-      .then(async (response) => {
-        setTimeout(verifyUser, 5 * 60 * 1000);
-        if (!response.ok) {
-          setUserContext(previous => ({
-            ...previous,
-            ...initialState,
-          }));
-          return;
-        }
-        const data = await response.json();
-        setUserContext(previous => ({
-          ...previous,
-          token: data.token,
-          role: data.role,
-        }));
-      })
-      .catch(() => {
-        console.error('Refresh token could not be fetched');
-      });
-  }, [setUserContext]);
+  const auth = useAuth();
 
   useEffect(() => {
-    verifyUser();
-  }, [verifyUser]);
+    auth.verifyUser();
+  }, [auth.verifyUser]);
 
   return (
     <>
-      <Header
-        userRole={userContext.role}
-        isLoggedIn={isLoggedIn}
-      />
+      <Header />
       <main
         className="main"
         aria-label="Content"
@@ -62,47 +28,39 @@ const App = () => {
           <Route
             path="/"
             exact
-            element={(
-              <Stream />
-            )}
+            element={(<Stream />)}
           />
           <Route
             path="/:id"
             exact
-            element={(
-              <Item userRole={userContext.role} />
-            )}
+            element={(<Item />)}
           />
           <Route
             path="/about"
             exact
-            element={(
-              <About />
-            )}
+            element={(<About />)}
           />
           <Route
             path="/login"
             exact
-            element={(
-              <Login />
-            )}
+            element={(<Login />)}
           />
           <Route
             path="/register"
             exact
-            element={(
-              <Register />
-            )}
+            element={(<Register />)}
           />
-          <Route
-            path="/add"
-            exact
-            element={(
-              <PrivateRoute>
-                <Register />
-              </PrivateRoute>
-            )}
-          />
+          <Route element={(
+            <PrivateWrapper
+              isAuthenticated={auth.user.isAllowedToAdd}
+            />
+          )}>
+            <Route
+              path="/add"
+              exact
+              element={(<AddOrModify />)}
+            />
+          </Route>
         </Routes>
       </main>
     </>

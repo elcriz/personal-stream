@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import { Navigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { formatDistance } from 'date-fns';
@@ -8,9 +7,7 @@ import SingleItem from '../components/Item';
 
 const defaultErrorMessage = 'An error occured whilst fetching the item, please try again later';
 
-const Item = ({
-  userRole,
-}) => {
+const Item = () => {
   const [item, setItem] = useState(undefined);
   const [error, setError] = useState('');
   const [isFetching, setIsFetching] = useState(false);
@@ -74,10 +71,6 @@ const Item = ({
       )}
     </Canvas>
   );
-};
-
-Item.propTypes = {
-  userRole: PropTypes.number,
 };
 
 export default Item;

@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Add = () => {
+const AddOrModify = () => {
   return (
     <div>Add item</div>
   );
 };
 
-export default Add;
+export default AddOrModify;
