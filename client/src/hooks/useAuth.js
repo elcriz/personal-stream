@@ -3,7 +3,7 @@ import { UserContext, initialState } from '../context/UserContext';
 
 const useAuth = () => {
   const [userContext, setUserContext] = useContext(UserContext);
-  const isAuthenticated = !!userContext.token
+  const isAuthenticated = !!userContext.token;
 
   const verifyUser = useCallback(() => {
     fetch(`${process.env.REACT_APP_API_ENDPOINT}users/refreshToken`, {

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router';
 import Stream from './pages/Stream';
 import Login from './pages/Login';
+import Logout from './pages/Logout';
 import Register from './pages/Register';
 import AddOrModify from './pages/AddOrModify';
 import Item from './pages/Item';
@@ -15,7 +16,7 @@ const App = () => {
 
   useEffect(() => {
     auth.verifyUser();
-  }, [auth.verifyUser]);
+  }, []);
 
   return (
     <>
@@ -45,11 +46,28 @@ const App = () => {
             exact
             element={(<Login />)}
           />
-          <Route
-            path="/register"
-            exact
-            element={(<Register />)}
-          />
+          <Route element={(
+            <PrivateWrapper
+              isAuthenticated={!auth.user.isAuthenticated}
+            />
+          )}>
+            <Route
+              path="/register"
+              exact
+              element={(<Register />)}
+            />
+          </Route>
+          <Route element={(
+            <PrivateWrapper
+              isAuthenticated={auth.user.isAuthenticated}
+            />
+          )}>
+            <Route
+              path="/logout"
+              exact
+              element={(<Logout />)}
+            />
+          </Route>
           <Route element={(
             <PrivateWrapper
               isAuthenticated={auth.user.isAllowedToAdd}

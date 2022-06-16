@@ -9,7 +9,7 @@ const {
   COOKIE_OPTIONS,
   getRefreshToken,
   verifyUser,
-} = require('../authenticate');
+} = require('../utils/authenticate');
 
 router.post('/signup', (req, res) => {
   if (!req.body.firstName) {

@@ -11,7 +11,7 @@ const Login = () => {
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [userContext, setUserContext] = useContext(UserContext);
-  const isLoggedIn = !!userContext.token;
+  const isAuthenticated = !!userContext.token
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -63,7 +63,7 @@ const Login = () => {
     setError('');
   }, [email, password]);
 
-  if (isLoggedIn) {
+  if (isAuthenticated) {
     return (
       <Navigate to="/" />
     );

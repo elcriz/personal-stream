@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const corsProxy = require('pass-cors');
 const Item = require('./models/item');
+const { getError } = require('./utils/generic');
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
@@ -16,19 +17,25 @@ require('./utils/db');
 require('./utils/generic');
 require('./strategies/JwtStrategy');
 require('./strategies/LocalStrategy');
-require('./authenticate');
+require('./utils/authenticate');
 
 const app = express();
 
-app.use(bodyParser.json());
-app.use(cookieParser(process.env.COOKIE_SECRET));
-const userRouter = require('./routes/userRouter');
-const { getError } = require('./utils/generic');
-const { verifyUser } = require('./authenticate');
+// Middleware
+app.use((req, res, next) => {
+  console.log(`${req.method}: ${req.path}`);
+  next();
+});
 
+const { verifyUser } = require('./utils/authenticate');
 const whitelist = process.env.WHITELISTED_DOMAINS
   ? process.env.WHITELISTED_DOMAINS.split(',')
   : [];
+
+app.use(bodyParser.json());
+
+app.use(cookieParser(process.env.COOKIE_SECRET));
+const userRouter = require('./routes/userRouter');
 
 app.use(cors({
   credentials: true,
@@ -47,6 +54,7 @@ app.use('/users', userRouter);
 
 app.use('/proxy', corsProxy);
 
+// Routes
 app.get('/', (req, res) => {
   res.send({ status: 'success ' });
 });
