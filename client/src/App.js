@@ -4,6 +4,7 @@ import {
   Routes,
 } from 'react-router';
 import Header from './components/Header';
+import PrivateRoute from './components/PrivateRoute';
 import Stream from './pages/Stream';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -49,7 +50,10 @@ const App = () => {
 
   return (
     <>
-      <Header isLoggedIn={isLoggedIn} />
+      <Header
+        userRole={userContext.role}
+        isLoggedIn={isLoggedIn}
+      />
       <main
         className="main"
         aria-label="Content"
@@ -66,10 +70,14 @@ const App = () => {
             path="/:id"
             exact
             element={(
-              <Item
-                isLoggedIn={isLoggedIn}
-                userRole={userContext.role}
-              />
+              <Item userRole={userContext.role} />
+            )}
+          />
+          <Route
+            path="/about"
+            exact
+            element={(
+              <About />
             )}
           />
           <Route
@@ -90,14 +98,9 @@ const App = () => {
             path="/add"
             exact
             element={(
-              <Add />
-            )}
-          />
-          <Route
-            path="/about"
-            exact
-            element={(
-              <About />
+              <PrivateRoute>
+                <Register />
+              </PrivateRoute>
             )}
           />
         </Routes>

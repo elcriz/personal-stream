@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 const Header = ({
+  userRole,
   isLoggedIn,
 }) => (
   <header className="header">
@@ -12,6 +13,7 @@ const Header = ({
     <nav aria-label="Main">
       <Link className="link" to="/">Stream</Link>
       <Link className="link" to="/about">About</Link>
+      <Link className="link" to="/add">Add</Link>
       {isLoggedIn && (
         <>
           <Link className="link" to="/login">Sign in(debug)</Link>
@@ -26,6 +28,7 @@ const Header = ({
 );
 
 Header.propTypes = {
+  userRole: PropTypes.number,
   isLoggedIn: PropTypes.bool.isRequired,
 };
 
