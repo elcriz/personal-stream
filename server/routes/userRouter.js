@@ -1,5 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const {
+  getMe,
+  logout,
+} = require('../controllers/userController');
 const User = require('../models/userModel');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
@@ -111,34 +115,33 @@ router.post('/refreshToken', (req, res, next) => {
   }
 });
 
-router.get('/me', verifyUser, (req, res) => {
-  const { signedCookies = {} } = req;
-  const { refreshToken } = signedCookies;
-  res.status(200).send(req.user);
-});
+// Get current user details
+router.get('/me', verifyUser, getMe);
 
-router.get('/logout', verifyUser, (req, res, next) => {
-  const { signedCookies = {} } = req;
-  const { refreshToken } = signedCookies;
-  User
-    .findById(req.user._id)
-    .then((user) => {
-      const tokenIndex = user.refreshToken.findIndex(
-        item => item.refreshToken === refreshToken,
-      );
+// Log out the user
+router.get('/logout', verifyUser, logout);
+// router.get('/logout', verifyUser, (req, res, next) => {
+//   const { signedCookies = {} } = req;
+//   const { refreshToken } = signedCookies;
+//   User
+//     .findById(req.user._id)
+//     .then((user) => {
+//       const tokenIndex = user.refreshToken.findIndex(
+//         item => item.refreshToken === refreshToken,
+//       );
 
-      if (tokenIndex !== -1) {
-        user.refreshToken.id(user.refreshToken[tokenIndex]._id).remove();
-      }
+//       if (tokenIndex !== -1) {
+//         user.refreshToken.id(user.refreshToken[tokenIndex]._id).remove();
+//       }
 
-      user.save((error, user) => {
-        if (error) {
-          res.status(500).send(error);
-        }
-        res.clearCookie('refreshToken', COOKIE_OPTIONS);
-        res.send({ success: true });
-      });
-    }, error => next(error));
-});
+//       user.save((error, user) => {
+//         if (error) {
+//           res.status(500).send(error);
+//         }
+//         res.clearCookie('refreshToken', COOKIE_OPTIONS);
+//         res.send({ success: true });
+//       });
+//     }, error => next(error));
+// });
 
 module.exports = router;

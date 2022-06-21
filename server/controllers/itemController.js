@@ -1,4 +1,5 @@
 const Item = require('../models/itemModel');
+const mongoose = require('mongoose');
 
 // Get the total amount of items
 const getAmount = async (tag) => {
@@ -21,10 +22,16 @@ const getItems = async (req, res) => {
 // Get a single item
 const getItem = async (req, res) => {
   const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: 'No such item found' });
+  }
+
   const item = await Item
     .findById(id);
+
   if (!item) {
-    return res.status(404).json({ error: 'No such item' });
+    return res.status(404).json({ error: 'No such item found' });
   }
   res.status(200).json(item);
 };

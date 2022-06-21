@@ -12,7 +12,6 @@ if (isDevelopment) {
 }
 
 require('./utils/db');
-require('./utils/generic');
 require('./strategies/JwtStrategy');
 require('./strategies/LocalStrategy');
 require('./utils/authenticate');
