@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 
 // Get current user details
 getMe = (req, res) => {
-  res.status(200).send(req.user);
+  const { user } = req;
+  res.status(200).json({ user });
 };
 
 // Log out the user
