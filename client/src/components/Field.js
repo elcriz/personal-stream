@@ -34,12 +34,11 @@ const Field = ({
           {...rest}
           id={id}
           className={`input input--${type}`}
+          value={value}
           onChange={(event) => {
             onChange(event.target.value, event.target.id);
           }}
-        >
-          {value}
-        </textarea>
+        />
       )}
       {children && (
         <aside>
