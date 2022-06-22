@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const mongoose = require('mongoose');
 const passport = require('passport');
 const corsProxy = require('pass-cors');
 
@@ -11,7 +12,6 @@ if (isDevelopment) {
   require('dotenv').config({ path: './.env' })
 }
 
-require('./utils/db');
 require('./strategies/JwtStrategy');
 require('./strategies/LocalStrategy');
 require('./utils/authenticate');
@@ -48,12 +48,22 @@ app.use(cors({
 
 app.use(passport.initialize());
 
-app.use('/users', userRouter);
+app.use('/api/users', userRouter);
 
-app.use('/stream', streamRouter);
+app.use('/api/stream', streamRouter);
 
 app.use('/proxy', corsProxy);
 
-const server = app.listen(process.env.PORT || 5000, () => {
-  console.log(`Server listening at port ${server.address().port}.`);
-});
+mongoose.connect(process.env.MONGO_DB_CONNECTION_STRING, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+  .then((db) => {
+    console.log('Connected to database.');
+    const server = app.listen(process.env.PORT || 5000, () => {
+      console.log(`Server listening at port ${server.address().port}.`);
+    });
+  })
+  .catch((error) => {
+    console.log(error);
+  });

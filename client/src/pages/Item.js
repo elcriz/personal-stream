@@ -17,7 +17,7 @@ const Item = () => {
     setError('');
     setIsFetching(true);
 
-    fetch(`${process.env.REACT_APP_API_ENDPOINT}stream/${id}`)
+    fetch(`${process.env.REACT_APP_API_ENDPOINT}stream/item/${id}`)
       .then(async (response) => {
         setIsFetching(false);
         if (!response.ok) {
@@ -60,7 +60,6 @@ const Item = () => {
         <SingleItem
           className="stream__item"
           item={item}
-          shouldDisplayTags={false}
           isLoading={isFetching}
         />
       )}
