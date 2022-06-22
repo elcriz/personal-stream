@@ -52,7 +52,7 @@ app.use('/api/users', userRouter);
 
 app.use('/api/stream', streamRouter);
 
-app.use('/proxy', corsProxy);
+app.use('/api/proxy', corsProxy);
 
 mongoose.connect(process.env.MONGO_DB_CONNECTION_STRING, {
   useNewUrlParser: true,

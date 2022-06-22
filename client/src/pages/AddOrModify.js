@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from 'react';
+import { Navigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import Canvas from '../components/Canvas';
 import Field from '../components/Field';
 import ItemsList from '../components/ItemsList';
 import Item from '../models/Item.js';
+import useAuth from '../hooks/useAuth';
 
 const AddOrModify = () => {
   const [tags, setTags] = useState([]);
   const [item, setItem] = useState(new Item());
   const [error, setError] = useState('');
+  const [isAdded, setIsAdded] = useState(false);
   const [isValid, setIsValid] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
+
+  const auth = useAuth();
+  const { isAllowedToAdd, isAllowedToModify, token } = auth.user;
 
   const fetchTags = () => {
     setIsFetching(true);
@@ -37,20 +43,44 @@ const AddOrModify = () => {
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if (isValid) {
-      debugger;
+      setIsSubmitting(true);
+      const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}stream/item`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(item),
+      });
+      setIsSubmitting(false);
+      if (!response.ok) {
+        setError('Adding new item failed');
+        return;
+      }
+      setIsAdded(true);
     }
   };
 
   useEffect(() => {
-    setIsValid(item.isValid());
+    setIsValid(item.isValid()
+      && isAllowedToAdd
+      && isAllowedToModify
+    );
   }, [item]);
 
   useEffect(() => {
     fetchTags();
   }, []);
+
+  if (isAdded) {
+    return (
+      <Navigate to="/" />
+    );
+  }
 
   return (
     <Canvas isWide>
