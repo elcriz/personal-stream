@@ -2,3 +2,8 @@
   max-width: 680px;
   min-width: 440px;
 }
+
+.canvas--wide {
+  max-width: 1280px;
+  min-width: 75%;
+}

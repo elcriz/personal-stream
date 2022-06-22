@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const Item = new mongoose.Schema({
+const itemSchema = new mongoose.Schema({
   title: {
     type: String,
     default: '',
@@ -29,6 +29,6 @@ const Item = new mongoose.Schema({
     type: Array,
     default: [],
   },
-});
+}, { timestamps: true });
 
-module.exports = mongoose.model('Item', Item);
+module.exports = mongoose.model('Item', itemSchema);

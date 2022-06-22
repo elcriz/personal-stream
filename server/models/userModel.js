@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
 const passportLocalMongoose = require('passport-local-mongoose');
 
-const Session = new mongoose.Schema({
+const sessionSchema = new mongoose.Schema({
   refreshToken: {
     type: String,
     default: '',
   },
 });
 
-const User = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
   firstName: {
     type: String,
     default: '',
@@ -30,17 +30,17 @@ const User = new mongoose.Schema({
     default: 0,
   },
   refreshToken: {
-    type: [Session],
+    type: [sessionSchema],
   },
-});
+}, { timestamps: true });
 
-User.set('toJSON', {
+userSchema.set('toJSON', {
   transform: (doc, ret, options) => {
     delete ret.refreshToken;
     return ret;
   },
 });
 
-User.plugin(passportLocalMongoose);
+userSchema.plugin(passportLocalMongoose);
 
-module.exports = mongoose.model('User', User);
+module.exports = mongoose.model('User', userSchema);

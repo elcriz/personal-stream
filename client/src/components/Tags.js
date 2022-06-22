@@ -12,7 +12,7 @@ const Tags = ({
 
   const fetchTags = () => {
     setIsFetching(true);
-    fetch(`${process.env.REACT_APP_API_ENDPOINT}tags`)
+    fetch(`${process.env.REACT_APP_API_ENDPOINT}stream/tags`)
       .then(async (response) => {
         setIsFetching(false);
         if (!response.ok) {
