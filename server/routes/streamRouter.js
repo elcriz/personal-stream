@@ -5,6 +5,7 @@ const {
   getTags,
   addItem,
   deleteItem,
+  updateItem,
 } = require('../controllers/itemController');
 const { verifyUser } = require('../utils/authenticate');
 const router = express.Router();
@@ -22,6 +23,9 @@ router.get('/tags', getTags);
 router.post('/item', verifyUser, addItem);
 
 // Delete an item
-router.delete('/item', verifyUser, deleteItem);
+router.delete('/item/:id', verifyUser, deleteItem);
+
+// Update an item
+router.patch('/item/:id', verifyUser, updateItem);
 
 module.exports = router;

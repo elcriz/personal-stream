@@ -83,6 +83,26 @@ const deleteItem = async (req, res) => {
   res.status(200).json(item);
 };
 
+const updateItem = async (req, res) => {
+  if (req.user.role !== 1) {
+    return res.status(401).send();
+  }
+
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: 'No such item found' });
+  }
+
+  const item = await Item
+    .findOneAndUpdate({ _id: id }, { ...req.body });
+
+  if (!item) {
+    return res.status(400).json({ error: 'No such item found' });
+  }
+  res.status(200).json(item);
+};
+
 module.exports = {
   getAmount,
   getItems,
@@ -90,4 +110,5 @@ module.exports = {
   getTags,
   addItem,
   deleteItem,
+  updateItem,
 };
