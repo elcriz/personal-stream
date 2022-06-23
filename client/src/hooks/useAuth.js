@@ -31,6 +31,7 @@ const useAuth = () => {
   return {
     verifyUser,
     clearUser,
+    setUser: setUserContext,
     user: {
       token: userContext.token,
       role: userContext.role,

@@ -1,9 +1,9 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import usersService from '../services/usersService';
 import Canvas from '../components/Canvas';
 import Field from '../components/Field';
-import { UserContext } from '../context/UserContext';
+import useAuth from '../hooks/useAuth';
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -12,8 +12,8 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [userContext, setUserContext] = useContext(UserContext);
-  const isLoggedIn = !!userContext.token;
+
+  const auth = useAuth();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -23,7 +23,7 @@ const Register = () => {
     usersService.retrieveSignup(email, firstName, lastName, password)
       .then((data) => {
         setIsSubmitting(false);
-        setUserContext(previous => ({
+        auth.setUser(previous => ({
           ...previous,
           token: data.token,
         }));
@@ -51,7 +51,7 @@ const Register = () => {
     setError('');
   }, [email, firstName, lastName, password]);
 
-  if (isLoggedIn) {
+  if (auth.user.isAuthenticated) {
     return (
       <Navigate to="/" />
     );

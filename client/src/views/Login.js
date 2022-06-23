@@ -1,9 +1,9 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import usersService from '../services/usersService';
 import Canvas from '../components/Canvas';
 import Field from '../components/Field';
-import { UserContext } from '../context/UserContext';
+import useAuth from '../hooks/useAuth';
 
 const defaultErrorMessage = 'Something went wrong, please try again later';
 
@@ -12,8 +12,8 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [userContext, setUserContext] = useContext(UserContext);
-  const isAuthenticated = !!userContext.token
+
+  const auth = useAuth();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -23,7 +23,7 @@ const Login = () => {
     usersService.retrieveLogin(email, password)
       .then((data) => {
         setIsSubmitting(false);
-        setUserContext(previous => ({
+        auth.setUser(previous => ({
           ...previous,
           token: data.token,
           role: data.role,
@@ -55,7 +55,7 @@ const Login = () => {
     setError('');
   }, [email, password]);
 
-  if (isAuthenticated) {
+  if (auth.user.isAuthenticated) {
     return (
       <Navigate to="/" />
     );
