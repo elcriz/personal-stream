@@ -1,3 +1,3 @@
 # My Personal Stream
 
-Rather than a blog, I wanted a stream.
+Rather than a full fledged blog, I wanted a stream.
