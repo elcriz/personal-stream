@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
-import { formatDistance } from 'date-fns';
+import { Navigate, useParams } from 'react-router-dom';
+import streamService from '../services/streamService';
 import Canvas from '../components/Canvas';
 import SingleItem from '../components/Item';
 
@@ -17,28 +16,12 @@ const Item = () => {
     setError('');
     setIsFetching(true);
 
-    fetch(`${process.env.REACT_APP_API_ENDPOINT}stream/item/${id}`)
-      .then(async (response) => {
+    streamService.retrieveItemById(id)
+      .then((retrievedItem) => {
         setIsFetching(false);
-        if (!response.ok) {
-          setError(defaultErrorMessage);
-          return Promise.resolve();
-        }
-
-        const item = await response.json();
-        setItem({
-          ...item,
-            images: item.images.map(url =>
-              `${process.env.REACT_APP_API_ENDPOINT}proxy?url=${url}`
-            ),
-            relativeDate: formatDistance(
-              new Date(parseInt(item.time)),
-              new Date(),
-              { addSuffix: true },
-            ),
-        });
+        setItem(retrievedItem);
       })
-      .catch(() => {
+      .catch((error) => {
         setError(defaultErrorMessage);
         setIsFetching(false);
       });

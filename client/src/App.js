@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router';
-import Stream from './pages/Stream';
-import Login from './pages/Login';
-import Logout from './pages/Logout';
-import Register from './pages/Register';
-import AddOrModify from './pages/AddOrModify';
-import Item from './pages/Item';
-import About from './pages/About';
+import Stream from './views/Stream';
+import Login from './views/Login';
+import Register from './views/Register';
+import AddOrModify from './views/AddOrModify';
+import Item from './views/Item';
+import About from './views/About';
 import Header from './components/Header';
 import PrivateWrapper from './components/PrivateWrapper';
 import useAuth from './hooks/useAuth';
@@ -59,13 +58,13 @@ const App = () => {
           </Route>
           <Route element={(
             <PrivateWrapper
-              isAuthenticated={auth.user.isAuthenticated}
+              isAuthenticated={auth.user.isAllowedToAdd}
             />
           )}>
             <Route
-              path="/logout"
+              path="/add"
               exact
-              element={(<Logout />)}
+              element={(<AddOrModify />)}
             />
           </Route>
           <Route element={(
@@ -74,7 +73,7 @@ const App = () => {
             />
           )}>
             <Route
-              path="/add"
+              path="/modify/:id"
               exact
               element={(<AddOrModify />)}
             />

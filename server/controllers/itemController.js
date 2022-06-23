@@ -13,7 +13,7 @@ const getItems = async (req, res) => {
   const amount = await getAmount(tag);
   const items = await Item
     .find(tag ? { tags: { $in: [tag] } } : {})
-    .sort('-time')
+    .sort('-createdAt')
     .limit(limit * 1)
     .skip((page - 1) * limit);
   res.status(200).json({ amount, items });
@@ -53,14 +53,54 @@ const addItem = async (req, res) => {
   if (req.user.role !== 1) {
     return res.status(401).send();
   }
-  const { title, tags, body, images, videos, links } = req.body;
+  const { title, tags, body, images, videos } = req.body;
   try {
     const newItem = await Item
-      .create(new Item({ title, tags, body, images, videos, links }));
+      .create(new Item({ title, tags, body, images, videos }));
     res.status(201).json(newItem);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
+};
+
+const deleteItem = async (req, res) => {
+  if (req.user.role !== 1) {
+    return res.status(401).send();
+  }
+
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: 'No such item found' });
+  }
+
+  const item = await Item
+    .findOneAndDelete({ _id: id });
+
+  if (!item) {
+    return res.status(400).json({ error: 'No such item found' });
+  }
+  res.status(200).json(item);
+};
+
+const updateItem = async (req, res) => {
+  if (req.user.role !== 1) {
+    return res.status(401).send();
+  }
+
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: 'No such item found' });
+  }
+
+  const item = await Item
+    .findOneAndUpdate({ _id: id }, { ...req.body });
+
+  if (!item) {
+    return res.status(400).json({ error: 'No such item found' });
+  }
+  res.status(200).json(item);
 };
 
 module.exports = {
@@ -69,4 +109,6 @@ module.exports = {
   getItem,
   getTags,
   addItem,
+  deleteItem,
+  updateItem,
 };

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
+import streamService from '../services/streamService';
 import Canvas from '../components/Canvas';
 import Field from '../components/Field';
 import ItemsList from '../components/ItemsList';
@@ -11,30 +12,13 @@ const AddOrModify = () => {
   const [tags, setTags] = useState([]);
   const [item, setItem] = useState(new Item());
   const [error, setError] = useState('');
-  const [isAdded, setIsAdded] = useState(false);
+  const [isProcessed, setisProcessed] = useState(false);
   const [isValid, setIsValid] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
 
+  const { id } = useParams();
   const auth = useAuth();
-  const { isAllowedToAdd, isAllowedToModify, token } = auth.user;
-
-  const fetchTags = () => {
-    setIsFetching(true);
-    fetch(`${process.env.REACT_APP_API_ENDPOINT}stream/tags`)
-      .then(async (response) => {
-        setIsFetching(false);
-        if (!response.ok) {
-          return Promise.resolve();
-        }
-        const data = await response.json();
-        setTags(data);
-      })
-      .catch((error) => {
-        setIsFetching(false);
-        console.error(error);
-      });
-  };
 
   const handleChange = (newValue, property) => {
     setItem(previous => new Item({
@@ -43,40 +27,76 @@ const AddOrModify = () => {
     }));
   };
 
-  const handleSubmit = async (event) => {
+  const fetchItem = async () => {
+    setError('');
+    setIsFetching(true);
+
+    return await streamService.retrieveItemById(id)
+      .then((retrievedItem) => {
+        setIsFetching(false);
+        setItem(new Item(retrievedItem));
+      })
+      .catch(() => {
+        setError('Item could not be found.');
+        setIsFetching(false);
+      });
+  };
+
+  const fetchTags = () => {
+    setIsFetching(true);
+
+    streamService.retrieveAllTags()
+      .then((data) => {
+        setIsFetching(false);
+        setTags(data);
+      })
+      .catch((error) => {
+        setIsFetching(false);
+        console.error(error);
+      });
+  };
+
+  const handleSubmit = (event) => {
     event.preventDefault();
     if (isValid) {
       setIsSubmitting(true);
-      const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}stream/item`, {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(item),
-      });
-      setIsSubmitting(false);
-      if (!response.ok) {
-        setError('Adding new item failed');
-        return;
-      }
-      setIsAdded(true);
+
+      const addOrModify = id
+        ? streamService.modifyItem(item, id, auth.user.token)
+        : streamService.createItem(item, auth.user.token)
+
+      addOrModify
+        .then(() => {
+          setIsSubmitting(false);
+          setisProcessed(true);
+        })
+        .catch((error) => {
+          console.log(error);
+          setIsSubmitting(false);
+          setError(`${id ? 'Editing' : 'Adding new'} item failed`);
+        });
     }
   };
 
   useEffect(() => {
     setIsValid(item.isValid()
-      && isAllowedToAdd
-      && isAllowedToModify
+      && auth.user.isAllowedToAdd
+      && auth.user.isAllowedToModify
     );
   }, [item]);
 
   useEffect(() => {
-    fetchTags();
+    if (!id) {
+      fetchTags();
+      return;
+    }
+    fetchItem()
+      .then(() => {
+        fetchTags();
+      });
   }, []);
 
-  if (isAdded) {
+  if (isProcessed) {
     return (
       <Navigate to="/" />
     );
@@ -88,7 +108,9 @@ const AddOrModify = () => {
         className="form"
         onSubmit={handleSubmit}
       >
-        <h2 className="form__heading">Add new item</h2>
+        <h2 className="form__heading">
+          {id ? 'Edit' : 'Add new'} item
+        </h2>
         <Field
           id="title"
           className="form__field"
@@ -121,6 +143,8 @@ const AddOrModify = () => {
             label="Tags"
             singleItemLabel="tag"
             options={tags}
+            defaultValues={id ? item.tags : ['']}
+            disabled={isSubmitting}
             onChange={handleChange}
           />
         )}
@@ -129,6 +153,7 @@ const AddOrModify = () => {
           label="Images"
           singleItemLabel="image"
           options={[]}
+          disabled={isSubmitting}
           onChange={handleChange}
         />
         <ItemsList
@@ -136,6 +161,7 @@ const AddOrModify = () => {
           label="Videos"
           singleItemLabel="video"
           options={[]}
+          disabled={isSubmitting}
           onChange={handleChange}
         />
         <button
@@ -143,7 +169,7 @@ const AddOrModify = () => {
           type="submit"
           disabled={isSubmitting || !isValid}
         >
-          Add item
+          {id ? 'Edit' : 'add'} item
         </button>
         {error && (
           <div className="form__error error">

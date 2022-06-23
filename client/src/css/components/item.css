@@ -81,3 +81,20 @@
   gap: 8px;
   margin-top: var(--spacing);
 }
+
+.item__actions {
+  display: flex;
+  margin-top: var(--spacing);
+  padding: calc(var(--spacing) * 2) 0;
+  list-style-type: none;
+  border-top: 1px solid rgba(var(--color-beige), .125);
+}
+
+.item__actions li:not(:first-child) {
+  margin-left: calc(var(--spacing) / 2);
+  border-left: 1px solid rgba(var(--color-beige), .25);
+}
+
+.item__actions li button {
+  padding-left: calc(var(--spacing) / 2);
+}

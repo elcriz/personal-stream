@@ -1,10 +1,9 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, Navigate } from 'react-router-dom';
+import usersService from '../services/usersService';
 import Canvas from '../components/Canvas';
 import Field from '../components/Field';
-import { UserContext } from '../context/UserContext';
-
-const defaultErrorMessage = 'Something went wrong, please try again later';
+import useAuth from '../hooks/useAuth';
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -13,57 +12,38 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [userContext, setUserContext] = useContext(UserContext);
-  const isLoggedIn = !!userContext.token;
+
+  const auth = useAuth();
 
   const handleSubmit = (event) => {
     event.preventDefault();
     setIsSubmitting(true);
     setError('');
 
-    fetch(`${process.env.REACT_APP_API_ENDPOINT}users/signup`, {
-      method: 'POST',
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        username: email,
-        firstName,
-        lastName,
-        password,
-      }),
-    })
-      .then(async (response) => {
+    usersService.retrieveSignup(email, firstName, lastName, password)
+      .then((data) => {
         setIsSubmitting(false);
-        if (!response.ok) {
-          const { status } = response;
-          switch (status) {
-            case 400: {
-              setError('Please fill all the fields correctly');
-              break;
-            }
-            case 500: {
-              console.log(response);
-              const data = await response.json();
-              if (data.message) {
-                setError(data.message || defaultErrorMessage);
-              }
-              break;
-            }
-            default: {
-              setError(defaultErrorMessage)
-            }
-          }
-          return;
-        }
-        const data = await response.json();
-        setUserContext(previous => ({
+        auth.setUser(previous => ({
           ...previous,
           token: data.token,
         }));
       })
-      .catch((error) => {
+      .catch((errorOrStatus) => {
         setIsSubmitting(false);
-        console.error(error);
+        if (errorOrStatus instanceof Error) {
+          console.log(error);
+          return;
+        }
+        switch (errorOrStatus) {
+          case 400:
+          case 401: {
+            setError('Please fill all the fields correctly');
+            break;
+          }
+          default: {
+            setError('Something went wrong, please try again later');
+          }
+        }
       });
   }
 
@@ -71,7 +51,7 @@ const Register = () => {
     setError('');
   }, [email, firstName, lastName, password]);
 
-  if (isLoggedIn) {
+  if (auth.user.isAuthenticated) {
     return (
       <Navigate to="/" />
     );
