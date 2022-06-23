@@ -58,7 +58,7 @@ const ItemsList = ({
       <div className="items-list">
         {availableOptions.length > 0 && (
           <div className="items-list__options">
-            <h3>Existing {id}</h3>
+            <h3>Existing</h3>
             {availableOptions.map((option, optionIndex) => (
               <button
                 key={optionIndex}
