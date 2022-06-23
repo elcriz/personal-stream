@@ -8,9 +8,11 @@ const ItemsList = ({
   options,
   defaultValues,
   onChange,
+  ...rest
 }) => {
-  const [values, setValues] = useState(['', ...defaultValues]);
-  const availableOptions = options.filter(option => values.indexOf(option) === -1);
+  const [values, setValues] = useState(defaultValues);
+  const availableOptions = options
+    .filter(option => values.indexOf(option) === -1);
 
   const handleUseOption = (event, optionToAdd) => {
     event.preventDefault();
@@ -79,6 +81,7 @@ const ItemsList = ({
             className="items-list__value-field"
           >
             <input
+              {...rest}
               className="items-list__input input input--text"
               type="text"
               value={value}
@@ -89,6 +92,7 @@ const ItemsList = ({
             {values.length > 1 && (
               <div className="items-list__item-actions">
                 <button
+                  {...rest}
                   className="items-list__button items-list__button--remove button"
                   type="button"
                   onClick={(event) => {
@@ -115,7 +119,7 @@ const ItemsList = ({
 ItemsList.defaultProps = {
   singleItemLabel: 'item',
   options: [],
-  defaultValues: [],
+  defaultValues: [''],
 };
 
 ItemsList.propTypes = {

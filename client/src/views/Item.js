@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import streamService from '../services/streamService';
 import Canvas from '../components/Canvas';
 import SingleItem from '../components/Item';

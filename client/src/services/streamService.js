@@ -120,6 +120,37 @@ export default {
   },
 
   /**
+   * Modify an existing item by its id.
+   * @param {Object<Item>} body
+   * @param {string} id
+   * @param {string} _token
+   * @returns Promise
+   */
+  modifyItem: async (body, id, _token) => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_ENDPOINT}stream/item/${id}`,
+        {
+          method: 'PATCH',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${_token}`,
+          },
+          body: JSON.stringify(body),
+        },
+      );
+      if (!response.ok) {
+        throw new Error(response.status);
+      }
+      const item = await response.json();
+      return serializeItem(item);
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  /**
    * Delete a single item by its id.
    * @param {string} id
    * @returns Promise

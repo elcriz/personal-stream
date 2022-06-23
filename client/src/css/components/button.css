@@ -20,7 +20,7 @@
 }
 
 button:disabled {
-  opacity: .5;
+  opacity: .5 !important;
 }
 
 button:hover,

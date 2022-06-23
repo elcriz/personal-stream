@@ -8,7 +8,7 @@ class Item {
   } = {}) {
     this.title = title || '';
     this.body = body || '';
-    this.tags = tags || [];
+    this.tags = tags || [''];
     this.images = images || [];
     this.videos = videos || [];
   }

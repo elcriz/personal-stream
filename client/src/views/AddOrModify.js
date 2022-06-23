@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import streamService from '../services/streamService';
 import Canvas from '../components/Canvas';
@@ -12,11 +12,12 @@ const AddOrModify = () => {
   const [tags, setTags] = useState([]);
   const [item, setItem] = useState(new Item());
   const [error, setError] = useState('');
-  const [isAdded, setIsAdded] = useState(false);
+  const [isProcessed, setisProcessed] = useState(false);
   const [isValid, setIsValid] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
 
+  const { id } = useParams();
   const auth = useAuth();
 
   const handleChange = (newValue, property) => {
@@ -24,6 +25,21 @@ const AddOrModify = () => {
       ...previous,
       [property]: newValue,
     }));
+  };
+
+  const fetchItem = async () => {
+    setError('');
+    setIsFetching(true);
+
+    return await streamService.retrieveItemById(id)
+      .then((retrievedItem) => {
+        setIsFetching(false);
+        setItem(new Item(retrievedItem));
+      })
+      .catch(() => {
+        setError('Item could not be found.');
+        setIsFetching(false);
+      });
   };
 
   const fetchTags = () => {
@@ -45,15 +61,19 @@ const AddOrModify = () => {
     if (isValid) {
       setIsSubmitting(true);
 
-      streamService.createItem(item, auth.user.token)
+      const addOrModify = id
+        ? streamService.modifyItem(item, id, auth.user.token)
+        : streamService.createItem(item, auth.user.token)
+
+      addOrModify
         .then(() => {
           setIsSubmitting(false);
-          setIsAdded(true);
+          setisProcessed(true);
         })
         .catch((error) => {
           console.log(error);
           setIsSubmitting(false);
-          setError('Adding new item failed');
+          setError(`${id ? 'Editing' : 'Adding new'} item failed`);
         });
     }
   };
@@ -66,10 +86,17 @@ const AddOrModify = () => {
   }, [item]);
 
   useEffect(() => {
-    fetchTags();
+    if (!id) {
+      fetchTags();
+      return;
+    }
+    fetchItem()
+      .then(() => {
+        fetchTags();
+      });
   }, []);
 
-  if (isAdded) {
+  if (isProcessed) {
     return (
       <Navigate to="/" />
     );
@@ -81,7 +108,9 @@ const AddOrModify = () => {
         className="form"
         onSubmit={handleSubmit}
       >
-        <h2 className="form__heading">Add new item</h2>
+        <h2 className="form__heading">
+          {id ? 'Edit' : 'Add new'} item
+        </h2>
         <Field
           id="title"
           className="form__field"
@@ -114,6 +143,8 @@ const AddOrModify = () => {
             label="Tags"
             singleItemLabel="tag"
             options={tags}
+            defaultValues={id ? item.tags : ['']}
+            disabled={isSubmitting}
             onChange={handleChange}
           />
         )}
@@ -122,6 +153,7 @@ const AddOrModify = () => {
           label="Images"
           singleItemLabel="image"
           options={[]}
+          disabled={isSubmitting}
           onChange={handleChange}
         />
         <ItemsList
@@ -129,6 +161,7 @@ const AddOrModify = () => {
           label="Videos"
           singleItemLabel="video"
           options={[]}
+          disabled={isSubmitting}
           onChange={handleChange}
         />
         <button
@@ -136,7 +169,7 @@ const AddOrModify = () => {
           type="submit"
           disabled={isSubmitting || !isValid}
         >
-          Add item
+          {id ? 'Edit' : 'add'} item
         </button>
         {error && (
           <div className="form__error error">

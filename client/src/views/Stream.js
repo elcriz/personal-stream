@@ -70,7 +70,7 @@ const Stream = () => {
                 key={itemIndex}
                 className="stream__item"
                 item={item}
-                shouldDisplayTags={false}
+                shouldRenderOptions={false}
                 isLoading={isFetching}
               />
             ))}

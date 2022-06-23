@@ -9,7 +9,7 @@ import useAuth from '../hooks/useAuth';
 const Item = ({
   className,
   item,
-  shouldDisplayTags,
+  shouldRenderOptions,
   isLoading,
 }) => {
   const [isFetching, setIsFetching] = useState(false);
@@ -24,7 +24,7 @@ const Item = ({
     if (window.confirm('Do you really want to delete this item?')) {
       setIsFetching(true);
 
-      streamService.deleteItemById(_id)
+      streamService.deleteItemById(_id, auth.user.token)
         .then(() => {
           setIsFetching(false);
           setIsDeleted(true);
@@ -74,7 +74,7 @@ const Item = ({
           </aside>
         )}
       </div>
-      {shouldDisplayTags && tags.length > 0 && (
+      {shouldRenderOptions && tags.length > 0 && (
         <ul className="item__tags tags">
           {tags.map((tag, tagIndex) => (
             <Link
@@ -87,7 +87,7 @@ const Item = ({
           ))}
         </ul>
       )}
-      {auth.user.isAllowedToModify && (
+      {shouldRenderOptions && auth.user.isAllowedToModify && (
         <ul className="item__actions">
           <li>
             <Link className="link" to={`/modify/${_id}`}>Edit</Link>
@@ -110,14 +110,14 @@ const Item = ({
 
 Item.defaultProps = {
   item: {},
-  shouldDisplayTags: true,
+  shouldRenderOptions: true,
   isLoading: false,
 };
 
 Item.propTypes = {
   className: PropTypes.string,
   item: PropTypes.object.isRequired,
-  shouldDisplayTags: PropTypes.bool.isRequired,
+  shouldRenderOptions: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool,
 }
 
