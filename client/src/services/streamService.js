@@ -5,17 +5,26 @@ import { formatDistance } from 'date-fns';
  * @param {object} - Item
  * @returns Object<Item>
  */
-function serializeItem({ time, images, ...item }) {
+function serializeItem({
+  createdAt,
+  updatedAt,
+  images,
+  ...item
+}) {
+  const getRelativeDate = timestamp => formatDistance(
+    new Date(timestamp),
+    new Date(),
+    { addSuffix: true },
+  );
   return {
     ...item,
     images: images.map(url =>
       `${process.env.REACT_APP_API_ENDPOINT}proxy?url=${url}`,
     ),
-    relativeDate: formatDistance(
-      new Date(parseInt(time)),
-      new Date(),
-      { addSuffix: true },
-    ),
+    relativeDates: {
+      created: getRelativeDate(createdAt),
+      updated: getRelativeDate(updatedAt),
+    },
   };
 }
 

@@ -53,10 +53,10 @@ const addItem = async (req, res) => {
   if (req.user.role !== 1) {
     return res.status(401).send();
   }
-  const { title, tags, body, images, videos, links } = req.body;
+  const { title, tags, body, images, videos } = req.body;
   try {
     const newItem = await Item
-      .create(new Item({ title, tags, body, images, videos, links }));
+      .create(new Item({ title, tags, body, images, videos }));
     res.status(201).json(newItem);
   } catch (error) {
     res.status(400).json({ error: error.message });

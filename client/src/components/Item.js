@@ -10,7 +10,7 @@ const Item = ({
   shouldDisplayTags,
   isLoading,
 }) => {
-  const { _id, title, body, tags, relativeDate, images, videos, links } = item;
+  const { _id, title, body, tags, relativeDates, images, videos } = item;
   const hasMedia = images.length > 0 || videos.length > 0;
 
   return (
@@ -25,7 +25,7 @@ const Item = ({
         </h2>
         <div className="item__meta">
           <div className="item__timestamp">
-            {relativeDate}
+            {relativeDates.created}
           </div>
         </div>
       </header>

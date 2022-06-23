@@ -5,10 +5,6 @@ const itemSchema = new mongoose.Schema({
     type: String,
     default: '',
   },
-  time: {
-    type: String,
-    default: new Date().getTime(),
-  },
   tags: {
     type: Array,
     default: [],
@@ -22,10 +18,6 @@ const itemSchema = new mongoose.Schema({
     default: [],
   },
   videos: {
-    type: Array,
-    default: [],
-  },
-  links: {
     type: Array,
     default: [],
   },
