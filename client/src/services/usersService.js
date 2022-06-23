@@ -50,6 +50,32 @@ export default {
   },
 
   /**
+   * Log out the current user.
+   * @param {string} _token
+   * @returns Promise
+   */
+  retrieveLogout: async (_token) => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_ENDPOINT}users/logout`,
+        {
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${_token}`,
+          },
+        },
+      );
+      if (!response.ok) {
+        throw new Error(response.status);
+      }
+      return await response.json();
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  /**
    * Retrieve newly signed up in user by credentials.
    * @param {string} username
    * @param {string} firstName

@@ -1,9 +1,22 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import usersService from '../services/usersService';
 import useAuth from '../hooks/useAuth';
 
 const Header = () => {
   const auth = useAuth();
+
+  const handleLogout = (event) => {
+    event.preventDefault();
+
+    usersService.retrieveLogout(auth.user.token)
+      .then(() => {
+        auth.clearUser();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   return (
     <header className="header">
@@ -17,7 +30,13 @@ const Header = () => {
           <Link className="link" to="/add">Add</Link>
         )}
         {auth.user.isAuthenticated && (
-          <Link className="link" to="/logout">Sign out</Link>
+          <button
+            className="link"
+            type="button"
+            onClick={handleLogout}
+          >
+            Sign out
+          </button>
         )}
         {!auth.user.isAuthenticated && (
           <Link className="link" to="/login">Sign in</Link>

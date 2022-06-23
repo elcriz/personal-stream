@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router';
 import Stream from './views/Stream';
 import Login from './views/Login';
-import Logout from './views/Logout';
 import Register from './views/Register';
 import AddOrModify from './views/AddOrModify';
 import Item from './views/Item';
@@ -55,17 +54,6 @@ const App = () => {
               path="/register"
               exact
               element={(<Register />)}
-            />
-          </Route>
-          <Route element={(
-            <PrivateWrapper
-              isAuthenticated={auth.user.isAuthenticated}
-            />
-          )}>
-            <Route
-              path="/logout"
-              exact
-              element={(<Logout />)}
             />
           </Route>
           <Route element={(

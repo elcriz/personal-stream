@@ -6,6 +6,13 @@ const useAuth = () => {
   const [userContext, setUserContext] = useContext(UserContext);
   const isAuthenticated = !!userContext.token;
 
+  const clearUser = () => {
+    setUserContext(previous => ({
+      ...previous,
+      ...initialState,
+    }));
+  };
+
   const verifyUser = useCallback(() => {
     usersService.retrieveRefreshToken()
       .then((data) => {
@@ -17,15 +24,13 @@ const useAuth = () => {
         }));
       })
       .catch((error) => {
-        setUserContext(previous => ({
-          ...previous,
-          ...initialState,
-        }));
+        clearUser();
       });
   }, [setUserContext]);
 
   return {
     verifyUser,
+    clearUser,
     user: {
       token: userContext.token,
       role: userContext.role,
