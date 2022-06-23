@@ -13,7 +13,7 @@ const getItems = async (req, res) => {
   const amount = await getAmount(tag);
   const items = await Item
     .find(tag ? { tags: { $in: [tag] } } : {})
-    .sort('-time')
+    .sort('-createdAt')
     .limit(limit * 1)
     .skip((page - 1) * limit);
   res.status(200).json({ amount, items });
