@@ -9,13 +9,13 @@ const {
 } = require('../utils/authenticate');
 
 // Get current user details
-getMe = (req, res) => {
+const getMe = (req, res) => {
   const { user } = req;
   res.status(200).json(user);
 };
 
 // Sign in the user
-login = async (req, res, next) => {
+const login = async (req, res, next) => {
   const { _id } = req.user;
 
   if (!mongoose.Types.ObjectId.isValid(_id)) {
@@ -45,7 +45,7 @@ login = async (req, res, next) => {
 }
 
 // Log out the user
-logout = async (req, res, next) => {
+const logout = async (req, res, next) => {
   const { signedCookies = {} } = req;
   const { refreshToken } = signedCookies;
   const { _id } = req.user;
@@ -77,7 +77,7 @@ logout = async (req, res, next) => {
 };
 
 // Sign up a new user
-signup = async (req, res) => {
+const signup = async (req, res) => {
   const { body: { username, firstName, lastName, password } } = req;
   const newUser = await User
     .register(
@@ -106,7 +106,7 @@ signup = async (req, res) => {
 };
 
 // Check refreshToken
-checkRefreshToken = async (req, res, next) => {
+const checkRefreshToken = async (req, res, next) => {
   const { signedCookies = {} } = req;
   const { refreshToken } = signedCookies;
 
