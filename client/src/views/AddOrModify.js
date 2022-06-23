@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
+import streamService from '../services/streamService';
 import Canvas from '../components/Canvas';
 import Field from '../components/Field';
 import ItemsList from '../components/ItemsList';
@@ -19,15 +20,19 @@ const AddOrModify = () => {
   const auth = useAuth();
   const { isAllowedToAdd, isAllowedToModify, token } = auth.user;
 
+  const handleChange = (newValue, property) => {
+    setItem(previous => new Item({
+      ...previous,
+      [property]: newValue,
+    }));
+  };
+
   const fetchTags = () => {
     setIsFetching(true);
-    fetch(`${process.env.REACT_APP_API_ENDPOINT}stream/tags`)
-      .then(async (response) => {
+
+    streamService.retrieveAllTags()
+      .then((data) => {
         setIsFetching(false);
-        if (!response.ok) {
-          return Promise.resolve();
-        }
-        const data = await response.json();
         setTags(data);
       })
       .catch((error) => {
@@ -36,32 +41,21 @@ const AddOrModify = () => {
       });
   };
 
-  const handleChange = (newValue, property) => {
-    setItem(previous => new Item({
-      ...previous,
-      [property]: newValue,
-    }));
-  };
-
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     if (isValid) {
       setIsSubmitting(true);
-      const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}stream/item`, {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(item),
-      });
-      setIsSubmitting(false);
-      if (!response.ok) {
-        setError('Adding new item failed');
-        return;
-      }
-      setIsAdded(true);
+
+      streamService.createItem(item, token)
+        .then(() => {
+          setIsSubmitting(false);
+          setIsAdded(true);
+        })
+        .catch((error) => {
+          console.log(error);
+          setIsSubmitting(false);
+          setError('Adding new item failed');
+        });
     }
   };
 

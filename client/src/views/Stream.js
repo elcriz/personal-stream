@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { formatDistance } from 'date-fns';
+import streamService from '../services/streamService';
 import Canvas from '../components/Canvas';
 import Item from '../components/Item';
 import Tags from '../components/Tags';
@@ -23,34 +23,18 @@ const Stream = () => {
     setError('');
     setIsFetching(true);
 
-    fetch(`${process.env.REACT_APP_API_ENDPOINT}stream?${tag ? `tag=${tag}&` : ''}page=${page}&limit=${amountToFetch}`)
-      .then(async (response) => {
+    streamService.retrieveItems(page, amountToFetch, tag)
+      .then(({ amount: newAmount, items: newItems }) => {
         setIsFetching(false);
-        if (!response.ok) {
-          setError(defaultErrorMessage);
-          return Promise.resolve();
-        }
-
-        const { amount: newAmount, items: newItems } = await response.json();
         setAmount(newAmount);
         setItems(previous => ([
           ...previous.filter(existing =>
             newItems.findIndex(item => item._id === existing._id) === -1
           ),
-          ...newItems.map(item => ({
-            ...item,
-            images: item.images.map(url =>
-              `${process.env.REACT_APP_API_ENDPOINT}proxy?url=${url}`
-            ),
-            relativeDate: formatDistance(
-              new Date(parseInt(item.time)),
-              new Date(),
-              { addSuffix: true },
-            ),
-          })),
+          ...newItems
         ]));
       })
-      .catch(() => {
+      .catch((error) => {
         setError(defaultErrorMessage);
         setIsFetching(false);
       });

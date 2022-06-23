@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import streamService from '../services/streamService';
 import classNames from 'classnames';
 
 const Tags = ({
@@ -12,13 +13,10 @@ const Tags = ({
 
   const fetchTags = () => {
     setIsFetching(true);
-    fetch(`${process.env.REACT_APP_API_ENDPOINT}stream/tags`)
-      .then(async (response) => {
+
+    streamService.retrieveAllTags()
+      .then((data) => {
         setIsFetching(false);
-        if (!response.ok) {
-          return Promise.resolve();
-        }
-        const data = await response.json();
         setTags(data);
       })
       .catch((error) => {

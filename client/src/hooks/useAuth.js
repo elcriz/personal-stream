@@ -1,4 +1,5 @@
 import { useContext, useCallback } from 'react';
+import usersService from '../services/usersService';
 import { UserContext, initialState } from '../context/UserContext';
 
 const useAuth = () => {
@@ -6,31 +7,20 @@ const useAuth = () => {
   const isAuthenticated = !!userContext.token;
 
   const verifyUser = useCallback(() => {
-    fetch(`${process.env.REACT_APP_API_ENDPOINT}users/refreshToken`, {
-      method: 'POST',
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
-    })
-      .then(async (response) => {
+    usersService.retrieveRefreshRoken()
+      .then((data) => {
         setTimeout(verifyUser, 5 * 60 * 1000);
-
-        if (!response.ok) {
-          setUserContext(previous => ({
-            ...previous,
-            ...initialState,
-          }));
-          return;
-        }
-
-        const data = await response.json();
         setUserContext(previous => ({
           ...previous,
           token: data.token,
           role: data.role,
         }));
       })
-      .catch(() => {
-        console.error('Refresh token could not be fetched');
+      .catch((error) => {
+        setUserContext(previous => ({
+          ...previous,
+          ...initialState,
+        }));
       });
   }, [setUserContext]);
 
