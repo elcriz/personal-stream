@@ -7,7 +7,7 @@ const useAuth = () => {
   const isAuthenticated = !!userContext.token;
 
   const verifyUser = useCallback(() => {
-    usersService.retrieveRefreshRoken()
+    usersService.retrieveRefreshToken()
       .then((data) => {
         setTimeout(verifyUser, 5 * 60 * 1000);
         setUserContext(previous => ({

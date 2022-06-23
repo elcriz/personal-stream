@@ -3,7 +3,7 @@ export default {
    * Retrieve a (new) token.
    * @returns Promise
    */
-  retrieveRefreshRoken: async () => {
+  retrieveRefreshToken: async () => {
     try {
       const response = await fetch(
         `${process.env.REACT_APP_API_ENDPOINT}users/refreshToken`,
