@@ -87,7 +87,7 @@ const Item = ({
           ))}
         </ul>
       )}
-      {auth.user.isAllowedToAdd && auth.user.isAllowedToModify && (
+      {auth.user.isAllowedToModify && (
         <ul className="item__actions">
           <li>
             <Link className="link" to={`/modify/${_id}`}>Edit</Link>
