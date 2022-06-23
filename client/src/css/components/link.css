@@ -8,3 +8,20 @@
   color: rgb(var(--color-text-light));
   text-decoration: underline;
 }
+
+button.link {
+  display: inline-block;
+  appearance: none;
+  padding: 0;
+  background: none;
+  font-family: 'Barlow', Arial, Helvetica, sans-serif;
+  font-size: 1em;
+  border: none;
+}
+
+button.link:hover,
+button.link:focus {
+  box-shadow: none;
+}
+
+

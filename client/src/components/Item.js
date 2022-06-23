@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import classnames from 'classnames';
 import ReactMarkdown from 'react-markdown';
+import streamService from '../services/streamService';
+import useAuth from '../hooks/useAuth';
 
 const Item = ({
   className,
@@ -10,13 +12,40 @@ const Item = ({
   shouldDisplayTags,
   isLoading,
 }) => {
+  const [isFetching, setIsFetching] = useState(false);
+  const [isDeleted, setIsDeleted] = useState(false);
+
   const { _id, title, body, tags, relativeDates, images, videos } = item;
   const hasMedia = images.length > 0 || videos.length > 0;
+  const auth = useAuth();
+
+  const handleDelete = (event) => {
+    event.preventDefault();
+    if (window.confirm('Do you really want to delete this item?')) {
+      setIsFetching(true);
+
+      streamService.deleteItemById(_id)
+        .then(() => {
+          setIsFetching(false);
+          setIsDeleted(true);
+        })
+        .catch((error) => {
+          setIsFetching(false);
+          console.error(error);
+        });
+    }
+  };
+
+  if (isDeleted) {
+    return (
+      <Navigate to="/" />
+    );
+  }
 
   return (
     <article
       className={classnames('item', className, {
-        'is-loading': isLoading,
+        'is-loading': isLoading || isFetching,
       })}
     >
       <header>
@@ -56,6 +85,23 @@ const Item = ({
               {tag}
             </Link>
           ))}
+        </ul>
+      )}
+      {auth.user.isAllowedToAdd && auth.user.isAllowedToModify && (
+        <ul className="item__actions">
+          <li>
+            <Link className="link" to={`/modify/${_id}`}>Edit</Link>
+            </li>
+          <li>
+            <button
+              className="link"
+              type="button"
+              disabled={isFetching}
+              onClick={handleDelete}
+            >
+              Delete
+            </button>
+          </li>
         </ul>
       )}
     </article>

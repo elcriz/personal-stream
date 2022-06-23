@@ -18,7 +18,6 @@ const AddOrModify = () => {
   const [isFetching, setIsFetching] = useState(false);
 
   const auth = useAuth();
-  const { isAllowedToAdd, isAllowedToModify, token } = auth.user;
 
   const handleChange = (newValue, property) => {
     setItem(previous => new Item({
@@ -46,7 +45,7 @@ const AddOrModify = () => {
     if (isValid) {
       setIsSubmitting(true);
 
-      streamService.createItem(item, token)
+      streamService.createItem(item, auth.user.token)
         .then(() => {
           setIsSubmitting(false);
           setIsAdded(true);
@@ -61,8 +60,8 @@ const AddOrModify = () => {
 
   useEffect(() => {
     setIsValid(item.isValid()
-      && isAllowedToAdd
-      && isAllowedToModify
+      && auth.user.isAllowedToAdd
+      && auth.user.isAllowedToModify
     );
   }, [item]);
 

@@ -67,6 +67,17 @@ const App = () => {
               element={(<AddOrModify />)}
             />
           </Route>
+          <Route element={(
+            <PrivateWrapper
+              isAuthenticated={auth.user.isAllowedToAdd}
+            />
+          )}>
+            <Route
+              path="/modify/:id"
+              exact
+              element={(<AddOrModify />)}
+            />
+          </Route>
         </Routes>
       </main>
     </>

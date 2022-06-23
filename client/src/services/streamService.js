@@ -72,6 +72,24 @@ export default {
   },
 
   /**
+   * Retrieve all tags crrently in items.
+   * @returns Promise
+   */
+  retrieveAllTags: async () => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_ENDPOINT}stream/tags`,
+      );
+      if (!response.ok) {
+        throw new Error(response.status);
+      }
+      return await response.json();
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  /**
    * Create a new item.
    * @param {Object<Item>} body
    * @param {string} _token
@@ -102,20 +120,30 @@ export default {
   },
 
   /**
-   * Retrieve all tags crrently in items.
+   * Delete a single item by its id.
+   * @param {string} id
    * @returns Promise
    */
-  retrieveAllTags: async () => {
+  deleteItemById: async (id, _token) => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_ENDPOINT}stream/tags`,
+        `${process.env.REACT_APP_API_ENDPOINT}stream/item/${id}`,
+        {
+          method: 'DELETE',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${_token}`,
+          },
+        },
       );
       if (!response.ok) {
         throw new Error(response.status);
       }
-      return await response.json();
+      const item = await response.json();
+      return serializeItem(item);
     } catch (error) {
       throw error;
     }
-  },
+  }
 };
