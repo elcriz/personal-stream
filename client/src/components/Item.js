@@ -21,6 +21,7 @@ const Item = ({
 
   const handleDelete = (event) => {
     event.preventDefault();
+
     if (window.confirm('Do you really want to delete this item?')) {
       setIsFetching(true);
 

@@ -86,7 +86,7 @@ const Stream = () => {
                 setPage(current => (current + 1));
               }}
             >
-              Load more items
+              Load older items
             </button>
           </div>
         )}
