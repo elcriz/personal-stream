@@ -91,6 +91,11 @@ const Stream = () => {
           </div>
         )}
       </div>
+      {items.length === 0 && (
+        <div className="error">
+          No items we're found{tag ? ` matching '${tag}'`: ''}
+        </div>
+      )}
       {error && (
         <div className="error">
           {error}

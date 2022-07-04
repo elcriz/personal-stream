@@ -6,6 +6,7 @@ import Register from './views/Register';
 import AddOrModify from './views/AddOrModify';
 import Item from './views/Item';
 import About from './views/About';
+import NotFound from './views/NotFound';
 import Header from './components/Header';
 import PrivateWrapper from './components/PrivateWrapper';
 import useAuth from './hooks/useAuth';
@@ -78,6 +79,10 @@ const App = () => {
               element={(<AddOrModify />)}
             />
           </Route>
+          <Route
+            path="*"
+            element={(<NotFound />)}
+          />
         </Routes>
       </main>
     </>
