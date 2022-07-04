@@ -8,7 +8,6 @@ import { formatDistance } from 'date-fns';
 function serializeItem({
   createdAt,
   updatedAt,
-  images,
   ...item
 }) {
   const getRelativeDate = timestamp => formatDistance(
@@ -18,9 +17,6 @@ function serializeItem({
   );
   return {
     ...item,
-    images: images.map(url =>
-      `/api/proxy?url=${url}`,
-    ),
     relativeDates: {
       created: getRelativeDate(createdAt),
       updated: getRelativeDate(updatedAt),
