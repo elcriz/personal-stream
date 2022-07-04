@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
@@ -19,6 +20,8 @@ require('./utils/authenticate');
 const app = express();
 
 // Middleware
+app.use(express.static(path.join(__dirname, 'client', 'build')));
+
 app.use((req, res, next) => {
   console.log(`${req.method}: ${req.path}`);
   next();
@@ -60,6 +63,12 @@ mongoose.connect(process.env.MONGO_DB_CONNECTION_STRING, {
 })
   .then((db) => {
     console.log('Connected to database.');
+
+    app.get('*', (req, res) => {
+      console.log('Serving up React build html');
+      res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+    });
+
     const server = app.listen(process.env.PORT || 5000, () => {
       console.log(`Server listening at port ${server.address().port}.`);
     });
