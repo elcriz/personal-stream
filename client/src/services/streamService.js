@@ -19,7 +19,7 @@ function serializeItem({
   return {
     ...item,
     images: images.map(url =>
-      `${process.env.REACT_APP_API_ENDPOINT}proxy?url=${url}`,
+      `/api/proxy?url=${url}`,
     ),
     relativeDates: {
       created: getRelativeDate(createdAt),
@@ -39,7 +39,7 @@ export default {
   retrieveItems: async (page, limit, tag) => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_ENDPOINT}stream?${tag ? `tag=${tag}&` : ''}page=${page}&limit=${limit}`,
+        `/api/stream?${tag ? `tag=${tag}&` : ''}page=${page}&limit=${limit}`,
       );
       if (!response.ok) {
         throw new Error(response.status);
@@ -59,7 +59,7 @@ export default {
   retrieveItemById: async (id) => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_ENDPOINT}stream/item/${id}`,
+        `/api/stream/item/${id}`,
       );
       if (!response.ok) {
         throw new Error(response.status);
@@ -78,7 +78,7 @@ export default {
   retrieveAllTags: async () => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_ENDPOINT}stream/tags`,
+        `/api/stream/tags`,
       );
       if (!response.ok) {
         throw new Error(response.status);
@@ -98,7 +98,7 @@ export default {
   createItem: async (body, _token) => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_ENDPOINT}stream/item`,
+        `/api/stream/item`,
         {
           method: 'POST',
           credentials: 'include',
@@ -129,7 +129,7 @@ export default {
   modifyItem: async (body, id, _token) => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_ENDPOINT}stream/item/${id}`,
+        `/api/stream/item/${id}`,
         {
           method: 'PATCH',
           credentials: 'include',
@@ -158,7 +158,7 @@ export default {
   deleteItemById: async (id, _token) => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_ENDPOINT}stream/item/${id}`,
+        `/api/stream/item/${id}`,
         {
           method: 'DELETE',
           credentials: 'include',

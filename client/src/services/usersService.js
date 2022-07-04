@@ -6,7 +6,7 @@ export default {
   retrieveRefreshToken: async () => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_ENDPOINT}users/refreshToken`,
+        `/api/users/refreshToken`,
         {
           method: 'POST',
           credentials: 'include',
@@ -31,7 +31,7 @@ export default {
   retrieveLogin: async (username, password) => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_ENDPOINT}users/login`,
+        `/api/users/login`,
         {
           method: 'POST',
           credentials: 'include',
@@ -57,7 +57,7 @@ export default {
   retrieveLogout: async (_token) => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_ENDPOINT}users/logout`,
+        `/api/users/logout`,
         {
           credentials: 'include',
           headers: {
@@ -86,7 +86,7 @@ export default {
   retrieveSignup: async (username, firstName, lastName, password) => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_ENDPOINT}users/signup`,
+        `/api/users/signup`,
         {
           method: 'POST',
           credentials: 'include',

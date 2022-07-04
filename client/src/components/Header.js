@@ -38,9 +38,6 @@ const Header = () => {
             Sign out
           </button>
         )}
-        {!auth.user.isAuthenticated && (
-          <Link className="link" to="/login">Sign in</Link>
-        )}
       </nav>
     </header>
   );
