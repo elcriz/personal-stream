@@ -6,3 +6,9 @@
   margin-bottom: var(--spacing);
   margin-left: calc(var(--spacing) * 2);
 }
+
+@media screen and (max-width: 441px) {
+  .main {
+    margin-top: calc(var(--spacing) * 2);
+  }
+}

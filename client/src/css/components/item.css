@@ -5,6 +5,11 @@
   border-top:  1px solid rgba(var(--color-beige), .125);
 }
 
+.item--single {
+  padding-top: 0;
+  border-top: none;
+}
+
 .item.is-loading {
   pointer-events: none;
   opacity: .5;
