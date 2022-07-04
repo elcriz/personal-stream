@@ -41,7 +41,7 @@ const Item = () => {
     <Canvas isWide>
       {item && (
         <SingleItem
-          className="stream__item"
+          className="item--single stream__item"
           item={item}
           isLoading={isFetching}
         />
