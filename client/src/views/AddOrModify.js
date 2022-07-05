@@ -158,7 +158,7 @@ const AddOrModify = () => {
         />
         <ItemsList
           id="videos"
-          label="Video URLs"
+          label="YouTube video IDs"
           singleItemLabel="video"
           options={[]}
           disabled={isSubmitting}

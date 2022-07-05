@@ -1,4 +1,5 @@
 import { formatDistance } from 'date-fns';
+import Item from '../models/Item';
 
 /**
  * Serialize a single item and add a relative date property.
@@ -16,7 +17,8 @@ function serializeItem({
     { addSuffix: true },
   );
   return {
-    ...item,
+    _id: item._id,
+    ...new Item(item),
     relativeDates: {
       created: getRelativeDate(createdAt),
       updated: getRelativeDate(updatedAt),
