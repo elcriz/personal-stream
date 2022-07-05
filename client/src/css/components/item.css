@@ -29,7 +29,6 @@
 
 .item header h2 a {
   color: rgb(var(--color-text-light));
-  font-size: 1.25em;
   text-decoration: underline;
   transition: var(--transition-100);
 }
@@ -37,6 +36,11 @@
 .item header h2 a:hover,
 .item header h2 a:focus {
   color: rgb(var(--color-yellow));
+}
+
+.item--single header h2 a {
+  pointer-events: none;
+  text-decoration: none;
 }
 
 .item__meta {
@@ -99,6 +103,10 @@
 }
 
 @media screen and (max-width: 440px) {
+  .item header h2 a {
+    font-size: 1.05em;
+  }
+
   .item__media {
     margin-top: var(--spacing);
     max-width: none;
@@ -113,5 +121,9 @@
   .item__body > div.with-media {
     width: 70%;
     padding-right: calc(var(--spacing) * 1.5);
+  }
+
+  .item header h2 a {
+    font-size: 1.25em;
   }
 }

@@ -11,7 +11,9 @@
 
 .header h1 {
   margin: var(--spacing);
-  font-size: 1.4em;
+  font-size: 1.2em;
+  text-transform: uppercase;
+  text-shadow: -1px -1px 1px rgb(var(--color-ui));
 }
 
 .header h1 a {
@@ -25,4 +27,10 @@
 .header nav a {
   display: inline-block;
   margin: var(--spacing) var(--spacing) var(--spacing) 0;
+  text-shadow: -1px -1px 1px rgb(var(--color-ui));
+}
+
+.header nav a:hover,
+.header nav a:focus {
+  text-decoration: none;
 }
