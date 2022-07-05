@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Navigate, useParams } from 'react-router-dom';
+import { Navigate, useParams, useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import streamService from '../services/streamService';
 import Canvas from '../components/Canvas';
@@ -17,6 +17,7 @@ const AddOrModify = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
 
+  const navigate = useNavigate();
   const { id } = useParams();
   const auth = useAuth();
 
@@ -121,17 +122,6 @@ const AddOrModify = () => {
           disabled={isSubmitting}
           onChange={handleChange}
         />
-        {!isFetching && (
-          <ItemsList
-            id="tags"
-            label="Tags"
-            singleItemLabel="tag"
-            options={tags}
-            defaultValues={id ? item.tags : ['']}
-            disabled={isSubmitting}
-            onChange={handleChange}
-          />
-        )}
         <Field
           id="body"
           className="form__field"
@@ -148,22 +138,35 @@ const AddOrModify = () => {
             </ReactMarkdown>
           </div>
         </Field>
-        <ItemsList
-          id="images"
-          label="Images"
-          singleItemLabel="image"
-          options={[]}
-          disabled={isSubmitting}
-          onChange={handleChange}
-        />
-        <ItemsList
-          id="videos"
-          label="YouTube video IDs"
-          singleItemLabel="video"
-          options={[]}
-          disabled={isSubmitting}
-          onChange={handleChange}
-        />
+        {!isFetching && (
+          <>
+            <ItemsList
+              id="tags"
+              label="Tags"
+              singleItemLabel="tag"
+              options={tags}
+              defaultValues={id ? item.tags : ['']}
+              disabled={isSubmitting}
+              onChange={handleChange}
+            />
+            <ItemsList
+              id="images"
+              label="Images"
+              singleItemLabel="image"
+              defaultValues={item.images.length > 0 ? item.images : ['']}
+              disabled={isSubmitting}
+              onChange={handleChange}
+            />
+            <ItemsList
+              id="videos"
+              label="YouTube video IDs"
+              singleItemLabel="video"
+              defaultValues={item.videos.length > 0 ? item.videos : ['']}
+              disabled={isSubmitting}
+              onChange={handleChange}
+            />
+          </>
+        )}
         <Field
           id="mediaPosition"
           label="Media position"
@@ -175,13 +178,26 @@ const AddOrModify = () => {
             handleChange(newValue.toLowerCase(), property);
           }}
         />
-        <button
-          className="button"
-          type="submit"
-          disabled={isSubmitting || !isValid}
-        >
-          {id ? 'Edit' : 'add'} item
-        </button>
+        <div className="form__buttons">
+          <button
+            className="button"
+            type="submit"
+            disabled={isSubmitting || !isValid}
+          >
+            {id ? 'Edit' : 'add'} item
+          </button>
+          {id && (
+            <button
+              className="button button--secondary"
+              type="button"
+              onClick={() => {
+                navigate(-1);
+              }}
+            >
+              Cancel
+            </button>
+          )}
+        </div>
         {error && (
           <div className="form__error error">
             {error}

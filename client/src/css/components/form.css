@@ -44,3 +44,13 @@
   color: rgb(var(--color-text-light));
   text-decoration: underline;
 }
+
+.form__buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--spacing);
+}
+
+.form__buttons > button {
+  display: block;
+}

@@ -119,7 +119,7 @@ const ItemsList = ({
 ItemsList.defaultProps = {
   singleItemLabel: 'item',
   options: [],
-  defaultValues: [''],
+  defaultValues: [],
 };
 
 ItemsList.propTypes = {
