@@ -63,4 +63,8 @@
   .stream__header p {
     font-size: 1.6em;
   }
+
+  .stream__tags .tag {
+    font-size: .9em;
+  }
 }

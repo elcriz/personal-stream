@@ -7,6 +7,7 @@
 
 .item--single {
   padding-top: 0;
+  padding-bottom: 0;
   border-top: none;
 }
 
@@ -84,6 +85,12 @@
   margin-top: calc(var(--spacing) * 2);
 }
 
+.item__tags::before {
+  content: 'Posted in';
+  color: rgba(var(--color-text-light), .75);
+  font-size: .9em;
+}
+
 .item__actions {
   display: flex;
   margin-top: var(--spacing);
@@ -104,6 +111,10 @@
 @media screen and (max-width: 440px) {
   .item header h2 a {
     font-size: 1.05em;
+  }
+
+  .item__tags::before {
+    font-size: .8em;
   }
 }
 
