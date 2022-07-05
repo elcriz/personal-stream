@@ -5,6 +5,7 @@ import classnames from 'classnames';
 import ReactMarkdown from 'react-markdown';
 import streamService from '../services/streamService';
 import useAuth from '../hooks/useAuth';
+import Media from './Media';
 
 const Item = ({
   className,
@@ -15,8 +16,7 @@ const Item = ({
   const [isFetching, setIsFetching] = useState(false);
   const [isDeleted, setIsDeleted] = useState(false);
 
-  const { _id, title, body, tags, relativeDates, images, videos } = item;
-  const hasMedia = images.length > 0 || videos.length > 0;
+  const { _id, title, body, tags, relativeDates, hasMedia, mediaPosition, ...media } = item;
   const auth = useAuth();
 
   const handleDelete = (event) => {
@@ -59,20 +59,21 @@ const Item = ({
           </div>
         </div>
       </header>
-      <div className="item__body">
+      <div
+        className={classnames('item__body', {
+          'item__body--media-at-bottom': hasMedia && mediaPosition === 'bottom',
+        })}
+      >
         {body && (
-          <div className={hasMedia ? 'with-media' : undefined}>
+          <div>
             <ReactMarkdown>{body}</ReactMarkdown>
           </div>
         )}
         {hasMedia && (
-          <aside className="item__media">
-            {images.length > 0 && (
-              <figure className="item__image">
-                <img src={images[0]} alt="" />
-              </figure>
-            )}
-          </aside>
+          <Media
+            className="item__media"
+            {...media}
+          />
         )}
       </div>
       {shouldRenderOptions && tags.length > 0 && (

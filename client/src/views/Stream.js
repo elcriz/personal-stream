@@ -16,12 +16,11 @@ const Stream = () => {
   const [amount, setAmount] = useState(defaultAmount);
   const [page, setPage] = useState(defaultPage);
   const [error, setError] = useState('');
-  const [isFetching, setIsFetching] = useState(false);
+  const [isFetching, setIsFetching] = useState(true);
   const tag = searchParams.get('tag');
 
   const fetchItems = () => {
     setError('');
-    setIsFetching(true);
 
     streamService.retrieveItems(page, amountToFetch, tag)
       .then(({ amount: newAmount, items: newItems }) => {
@@ -45,6 +44,7 @@ const Stream = () => {
   }, [page]);
 
   useEffect(() => {
+    setIsFetching(true);
     if (items.length > 0) {
       setItems([]);
       setAmount(defaultAmount);
