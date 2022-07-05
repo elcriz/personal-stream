@@ -8,10 +8,13 @@
   text-align: center;
 }
 
+.stream__header h2,
 .stream__header p {
-  font-size: 2em;
-  font-weight: 300;
-  line-height: 1.5em;
+  color: rgb(var(--color-text-light));
+  font-family: 'Indie Flower', Georgia, serif;
+  font-size: 2.6em;
+  font-weight: 400;
+  line-height: 1.2em;
 }
 
 .stream__tags {
@@ -36,10 +39,6 @@
   border-right: none;
 }
 
-.stream__tags .tag:hover {
-  text-decoration: underline;
-}
-
 .stream__tags .tag:hover,
 .stream__tags .tag:focus {
   color: rgb(var(--color-text-light));
@@ -56,10 +55,11 @@
 
 @media screen and (max-width: 440px) {
   .stream__header {
-    max-width: 320px;
+    max-width: 280px;
     margin-bottom: calc(var(--spacing) * 2);
   }
 
+  .stream__header h2,
   .stream__header p {
     font-size: 1.6em;
   }

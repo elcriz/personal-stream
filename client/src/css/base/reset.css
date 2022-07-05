@@ -36,5 +36,5 @@ body {
   color: rgb(var(--color-text-light));
   font-family: 'Barlow', Helvetica, Arial, sans-serif;
   font-size: var(--font-size-100);
-  line-height: 1.5em;
+  line-height: 1.4em;
 }
