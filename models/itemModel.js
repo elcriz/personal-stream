@@ -21,6 +21,11 @@ const itemSchema = new mongoose.Schema({
     type: Array,
     default: [],
   },
+  mediaPosition: {
+    type: String,
+    enum: ['top', 'bottom'],
+    default: 'top',
+  }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Item', itemSchema);

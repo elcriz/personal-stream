@@ -121,6 +121,17 @@ const AddOrModify = () => {
           disabled={isSubmitting}
           onChange={handleChange}
         />
+        {!isFetching && (
+          <ItemsList
+            id="tags"
+            label="Tags"
+            singleItemLabel="tag"
+            options={tags}
+            defaultValues={id ? item.tags : ['']}
+            disabled={isSubmitting}
+            onChange={handleChange}
+          />
+        )}
         <Field
           id="body"
           className="form__field"
@@ -137,17 +148,6 @@ const AddOrModify = () => {
             </ReactMarkdown>
           </div>
         </Field>
-        {!isFetching && (
-          <ItemsList
-            id="tags"
-            label="Tags"
-            singleItemLabel="tag"
-            options={tags}
-            defaultValues={id ? item.tags : ['']}
-            disabled={isSubmitting}
-            onChange={handleChange}
-          />
-        )}
         <ItemsList
           id="images"
           label="Images"
@@ -158,11 +158,22 @@ const AddOrModify = () => {
         />
         <ItemsList
           id="videos"
-          label="Videos"
+          label="Video URLs"
           singleItemLabel="video"
           options={[]}
           disabled={isSubmitting}
           onChange={handleChange}
+        />
+        <Field
+          id="mediaPosition"
+          label="Media position"
+          type="radio"
+          options={['Top', 'Bottom']}
+          value={item.mediaPosition}
+          disabled={isSubmitting}
+          onChange={(newValue, property) => {
+            handleChange(newValue.toLowerCase(), property);
+          }}
         />
         <button
           className="button"
