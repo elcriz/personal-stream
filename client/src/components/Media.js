@@ -62,23 +62,21 @@ const Media = ({
       )}
       {currentImage && (
         <div className="media__viewer">
-          <div className="media__viewer-inner">
-            <img
-              className="media__viewer-image"
-              src={currentImage}
-              loading="lazy"
-              alt=""
-            />
-            <button
-              className="button"
-              type="button"
-              onClick={() => {
-                setCurrentImage(undefined);
-              }}
-            >
-              Close
-            </button>
-          </div>
+          <img
+            className="media__viewer-image"
+            src={currentImage}
+            loading="lazy"
+            alt=""
+          />
+          <button
+            className="button"
+            type="button"
+            onClick={() => {
+              setCurrentImage(undefined);
+            }}
+          >
+            Close
+          </button>
         </div>
       )}
     </aside>
