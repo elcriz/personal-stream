@@ -1,8 +1,14 @@
 .canvas {
-  max-width: 680px;
-  min-width: 320px;
+  max-width: 720px;
+  min-width: 440px;
 }
 
 .canvas--wide {
   max-width: 1040px;
+}
+
+@media screen and (max-width: 440px) {
+  .canvas {
+    min-width: 320px;
+  }
 }

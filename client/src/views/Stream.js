@@ -57,7 +57,7 @@ const Stream = () => {
     <Canvas>
       <div className="stream">
         <header className="stream__header" role="banner">
-          <p>A personal collection of things I see, like, do, listen to and more.</p>
+          <p>Short updates on things keeping me afloat, for anyone who cares.</p>
         </header>
         <Tags
           className="stream__tags"

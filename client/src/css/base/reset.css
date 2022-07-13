@@ -32,9 +32,17 @@ abbr:not(:hover) {
 }
 
 body {
-  background-color: rgb(var(--color-ui));
-  color: rgb(var(--color-text-light));
-  font-family: 'Barlow', Helvetica, Arial, sans-serif;
+  background-color: rgb(var(--color-ui-light));
+  color: rgb(72, 72, 72);
+  font-family: 'Space Grotesk', Helvetica, Arial, sans-serif;
   font-size: var(--font-size-100);
+  letter-spacing: -1px;
   line-height: 1.4em;
+}
+
+
+@media screen and (max-width: 440px) {
+  body {
+    font-size: var(--font-size-90);
+  }
 }

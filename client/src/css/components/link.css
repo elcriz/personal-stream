@@ -1,11 +1,10 @@
 .link {
   color: rgb(var(--color-link));
-  transition: var(--transition-100);
 }
 
 .link:hover,
 .link:focus {
-  color: rgb(var(--color-text-light));
+  color: rgb(var(--color-link-active));
   text-decoration: underline;
 }
 
@@ -22,6 +21,10 @@ button.link {
 button.link:hover,
 button.link:focus {
   box-shadow: none;
+}
+
+p .link {
+  text-decoration: underline;
 }
 
 
