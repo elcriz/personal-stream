@@ -20,6 +20,8 @@ const About = () => {
       <p>If you want to know more about me, or what I do for a living, check out my <a className="link" href="https://christiaanhemerik.com/" target="_blank" rel="noopener noreferrer">personal website</a>.</p>
 
       <p>If you're interested in the code that powers this thing you're looking at? Check out its <a className="link" href="https://github.com/elcriz/personal-stream" target="_blank" rel="noopener noreferrer">repository on GitHub</a>.</p>
+
+      <p>If you want to stay updated without having to visit every single time? Hook up your RSS reader to <a className="link" href="/feed.xml" target="_blank" rel="noopener noreferrer">my feed</a>. (<a className="link" href="https://aboutfeeds.com" target="_blank" rel="noopener noreferrer">what is RSS?</a>)</p>
     </Canvas>
   );
 };
