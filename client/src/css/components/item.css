@@ -68,6 +68,16 @@
   margin-bottom: 1em;
 }
 
+.item__body a {
+  color: rgb(var(--color-link));
+  text-decoration: underline;
+}
+
+.item__body a:hover,
+.item__body a:focus {
+  color: rgb(var(--color-link-active));
+}
+
 .item__body > div > *:last-child {
   margin-bottom: 0;
 }
