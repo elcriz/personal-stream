@@ -34,6 +34,7 @@
 .item header h2 a:hover,
 .item header h2 a:focus {
   color: rgb(var(--color-link-active));
+  text-decoration: underline;
 }
 
 .item--single header h2 a {
