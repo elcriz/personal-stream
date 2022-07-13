@@ -37,6 +37,7 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 
 const userRouter = require('./routes/userRouter');
 const streamRouter = require('./routes/streamRouter');
+const feedRouter = require('./routes/feedRouter');
 
 app.use(cors({
   credentials: true,
@@ -56,6 +57,8 @@ app.use('/api/users', userRouter);
 app.use('/api/stream', streamRouter);
 
 app.use('/api/proxy', corsProxy);
+
+app.use('/feed.xml', feedRouter);
 
 mongoose.connect(process.env.MONGO_DB_CONNECTION_STRING, {
   useNewUrlParser: true,
