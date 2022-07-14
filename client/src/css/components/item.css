@@ -64,6 +64,10 @@
   flex-direction: column;
 }
 
+.item__body--media-at-bottom .media__container {
+  margin-top: calc(var(--spacing));
+}
+
 .item__body--media-at-bottom .item__media {
   margin-top: calc(var(--spacing));
   margin-bottom: 0;
