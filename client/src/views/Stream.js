@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import streamService from '../services/streamService';
 import Canvas from '../components/Canvas';
 import Item from '../components/Item';
+import SkeletonItem from '../components/SkeletonItem';
 import Tags from '../components/Tags';
 
 const defaultErrorMessage = 'An error occured whilst fetching new items, please try again later';
@@ -63,7 +64,12 @@ const Stream = () => {
           className="stream__tags"
           currentTag={tag}
         />
-        {items.length > 0 && (
+        {isFetching && (
+          <div className="stream__items">
+            <SkeletonItem />
+          </div>
+        )}
+        {!isFetching && items.length > 0 && (
           <div className="stream__items">
             {items.map((item, itemIndex) => (
               <Item
