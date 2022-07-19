@@ -70,6 +70,26 @@ export default {
   },
 
   /**
+   * Retrieve a single item by its slug.
+   * @param {string} slug
+   * @returns Promise
+   */
+  retrieveItemBySlug: async (slug) => {
+    try {
+      const response = await fetch(
+        `/api/stream/item/${slug}`,
+      );
+      if (!response.ok) {
+        throw new Error(response.status);
+      }
+      const item = await response.json();
+      return serializeItem(item);
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  /**
    * Retrieve all tags crrently in items.
    * @returns Promise
    */

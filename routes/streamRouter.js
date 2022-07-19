@@ -14,7 +14,7 @@ const router = express.Router();
 router.get('/', getItems);
 
 // Get a single item
-router.get('/item/:id', getItem);
+router.get('/item/:slug/:id?', getItem);
 
 // Get all tags
 router.get('/tags', getTags);

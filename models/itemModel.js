@@ -1,9 +1,16 @@
 const mongoose = require('mongoose');
+const slug = require('mongoose-slug-generator');
+
+mongoose.plugin(slug);
 
 const itemSchema = new mongoose.Schema({
   title: {
     type: String,
     default: '',
+  },
+  slug: {
+    type: String,
+    slug: 'title',
   },
   tags: {
     type: Array,

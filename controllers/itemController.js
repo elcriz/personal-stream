@@ -21,14 +21,15 @@ const getItems = async (req, res) => {
 
 // Get a single item
 const getItem = async (req, res) => {
-  const { id } = req.params;
+  const { slug, id } = req.params;
 
-  if (!mongoose.Types.ObjectId.isValid(id)) {
+  if (id && !mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: 'No such item found' });
   }
 
-  const item = await Item
-    .findById(id);
+  const item = id
+    ? await Item.findById(id)
+    : await Item.findOne({ slug });
 
   if (!item) {
     return res.status(404).json({ error: 'No such item found' });

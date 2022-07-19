@@ -16,7 +16,7 @@ const Item = ({
   const [isFetching, setIsFetching] = useState(false);
   const [isDeleted, setIsDeleted] = useState(false);
 
-  const { _id, title, body, tags, relativeDates, hasMedia, mediaPosition, ...media } = item;
+  const { _id, title, slug, body, tags, relativeDates, hasMedia, mediaPosition, ...media } = item;
   const auth = useAuth();
 
   const handleDelete = (event) => {
@@ -51,7 +51,7 @@ const Item = ({
     >
       <header>
         <h2>
-          <Link to={`/${_id}`}>{title}</Link>
+          <Link to={`/${slug}`}>{title}</Link>
         </h2>
         <div className="item__meta">
           <div className="item__timestamp">

@@ -32,7 +32,7 @@ const App = () => {
             element={(<Stream />)}
           />
           <Route
-            path="/:id"
+            path="/:slug"
             exact
             element={(<Item />)}
           />

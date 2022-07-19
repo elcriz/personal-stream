@@ -16,6 +16,10 @@
   border-top: none;
 }
 
+.item--skeleton {
+  display: block;
+}
+
 .item.is-loading {
   pointer-events: none;
   opacity: .5;

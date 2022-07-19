@@ -1,6 +1,7 @@
 class Item {
   constructor({
     title,
+    slug,
     body,
     tags,
     images,
@@ -8,6 +9,7 @@ class Item {
     mediaPosition,
   } = {}) {
     this.title = title || '';
+    this.slug = slug || '';
     this.body = body || '';
     this.tags = tags || [''];
     this.images = images || [];
