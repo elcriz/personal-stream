@@ -23,12 +23,10 @@ const getItems = async (req, res) => {
 const getItem = async (req, res) => {
   const { slug, id } = req.params;
 
-  if (id && !mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: 'No such item found' });
-  }
+  const usableId = id || slug;
 
-  const item = id
-    ? await Item.findById(id)
+  const item = mongoose.Types.ObjectId.isValid(usableId)
+    ? await Item.findById(usableId)
     : await Item.findOne({ slug });
 
   if (!item) {
@@ -64,6 +62,7 @@ const addItem = async (req, res) => {
   }
 };
 
+// Delete existing item
 const deleteItem = async (req, res) => {
   if (req.user.role !== 1) {
     return res.status(401).send();
@@ -84,6 +83,7 @@ const deleteItem = async (req, res) => {
   res.status(200).json(item);
 };
 
+// Update existing item
 const updateItem = async (req, res) => {
   if (req.user.role !== 1) {
     return res.status(401).send();

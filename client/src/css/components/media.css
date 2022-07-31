@@ -1,8 +1,8 @@
 
 @keyframes mediaLoader {
-  0% { background-color: rgba(var(--color-beige), .175); }
-  50% { background-color: rgba(var(--color-beige), .125); }
-  100% { background-color: rgba(var(--color-beige), .175); }
+  0% { background-color: rgba(var(--color-grey), .175); }
+  50% { background-color: rgba(var(--color-grey), .125); }
+  100% { background-color: rgba(var(--color-grey), .175); }
 }
 
 .media__container {
