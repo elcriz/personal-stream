@@ -184,7 +184,7 @@ const AddOrModify = () => {
             type="submit"
             disabled={isSubmitting || !isValid}
           >
-            {id ? 'Edit' : 'add'} item
+            {id ? 'Edit' : 'Add'} item
           </button>
           {id && (
             <button
