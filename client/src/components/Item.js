@@ -16,7 +16,9 @@ const Item = ({
   const [isFetching, setIsFetching] = useState(false);
   const [isDeleted, setIsDeleted] = useState(false);
 
-  const { _id, title, slug, body, tags, relativeDates, hasMedia, mediaPosition, ...media } = item;
+  console.log({ item });
+
+  const { _id, title, slug, body, tags, dates, relativeDates, hasMedia, mediaPosition, ...media } = item;
   const auth = useAuth();
 
   const handleDelete = (event) => {
@@ -54,7 +56,7 @@ const Item = ({
           <Link to={`/${slug}`}>{title}</Link>
         </h2>
         <div className="item__meta">
-          <div className="item__timestamp">
+          <div className="item__timestamp" title={dates.created}>
             {relativeDates.created}
           </div>
         </div>

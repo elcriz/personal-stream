@@ -43,7 +43,7 @@ const Media = ({
       )}
       {videos.length > 0 && (
         <div className="media__container media-container--videos">
-          {[videos[0], videos[0]].map(youTubeId => (
+          {videos.map(youTubeId => (
             <div
               key={youTubeId}
               className="media__video-container"

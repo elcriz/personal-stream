@@ -1,4 +1,4 @@
-import { formatDistance } from 'date-fns';
+import { format, formatDistance } from 'date-fns';
 import Item from '../models/Item';
 
 /**
@@ -19,6 +19,10 @@ function serializeItem({
   return {
     _id: item._id,
     ...new Item(item),
+    dates: {
+      created: format(new Date(createdAt), 'dd-MM-yyyy HH:mm'),
+      updated: format(new Date(updatedAt), 'dd-MM-yyyy HH:mm'),
+    },
     relativeDates: {
       created: getRelativeDate(createdAt),
       updated: getRelativeDate(updatedAt),
