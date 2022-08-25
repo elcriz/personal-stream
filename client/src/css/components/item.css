@@ -83,6 +83,11 @@
   margin-bottom: 1em;
 }
 
+.item__body > div ul,
+.item__body > div ol {
+  margin-left: var(--spacing);
+}
+
 .item__body a {
   color: rgb(var(--color-link));
   text-decoration: underline;
