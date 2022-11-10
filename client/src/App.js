@@ -6,6 +6,7 @@ import Register from './views/Register';
 import AddOrModify from './views/AddOrModify';
 import Item from './views/Item';
 import About from './views/About';
+import Hikes from './views/hikes/Hikes';
 import NotFound from './views/NotFound';
 import Header from './components/Header';
 import PrivateWrapper from './components/PrivateWrapper';
@@ -77,6 +78,17 @@ const App = () => {
               path="/modify/:id"
               exact
               element={(<AddOrModify />)}
+            />
+          </Route>
+          <Route element={(
+            <PrivateWrapper
+              isAuthenticated={auth.user.isAllowedToAdd}
+            />
+          )}>
+            <Route
+              path="/hikes"
+              exact
+              element={(<Hikes />)}
             />
           </Route>
           <Route

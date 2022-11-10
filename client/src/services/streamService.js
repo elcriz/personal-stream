@@ -1,4 +1,4 @@
-import { format, formatDistance } from 'date-fns';
+import { getRelativeDate, getReadableDate } from '../helpers/dateTimeHelper';
 import Item from '../models/Item';
 
 /**
@@ -11,17 +11,12 @@ function serializeItem({
   updatedAt,
   ...item
 }) {
-  const getRelativeDate = timestamp => formatDistance(
-    new Date(timestamp),
-    new Date(),
-    { addSuffix: true },
-  );
   return {
     _id: item._id,
     ...new Item(item),
     dates: {
-      created: format(new Date(createdAt), 'dd-MM-yyyy HH:mm'),
-      updated: format(new Date(updatedAt), 'dd-MM-yyyy HH:mm'),
+      created: getReadableDate(createdAt),
+      updated: getReadableDate(updatedAt),
     },
     relativeDates: {
       created: getRelativeDate(createdAt),

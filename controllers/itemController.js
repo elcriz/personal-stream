@@ -54,9 +54,9 @@ const addItem = async (req, res) => {
   }
   const { title, tags, body, images, videos } = req.body;
   try {
-    const newItem = await Item
+    const itemToAdd = await Item
       .create(new Item({ title, tags, body, images, videos }));
-    res.status(201).json(newItem);
+    res.status(201).json(itemToAdd);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

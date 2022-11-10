@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 const slug = require('mongoose-slug-generator');
+const { Schema, plugin, model } = mongoose;
 
-mongoose.plugin(slug);
+plugin(slug);
 
-const itemSchema = new mongoose.Schema({
+const itemSchema = new Schema({
   title: {
     type: String,
     default: '',
@@ -35,4 +36,4 @@ const itemSchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
-module.exports = mongoose.model('Item', itemSchema);
+module.exports = model('Item', itemSchema);
