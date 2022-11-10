@@ -22,10 +22,13 @@ const AddHikeModal = ({
   const auth = useAuth();
 
   const handleChange = (newValue, property) => {
+    if (property === 'dateTime') console.log(property, newValue);
     if (['date', 'time'].indexOf(property) !== -1) {
       handleChange(
-        `${property === 'date' ? newValue : date}T${property === 'time' ? newValue : time}+00:00`, 'dateTime'
+        `${property === 'date' ? newValue : date}T${property === 'time' ? newValue : time}:00+00:00`, 'dateTime'
       );
+      setDate(property === 'date' ? newValue : date);
+      setTime(property === 'time' ? newValue : time);
       return;
     }
     setHikeToAdd(previous => new Hike({
@@ -64,8 +67,6 @@ const AddHikeModal = ({
       && auth.user.isAllowedToModify
     );
   }, [hikeToAdd, date, time]);
-
-  console.log({ hikeToAdd, isValid });
 
   return (
     <div className={classnames('modal', {
