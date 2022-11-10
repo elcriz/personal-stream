@@ -22,10 +22,9 @@ const AddHikeModal = ({
   const auth = useAuth();
 
   const handleChange = (newValue, property) => {
-    if (property === 'dateTime') console.log(property, newValue);
     if (['date', 'time'].indexOf(property) !== -1) {
       handleChange(
-        `${property === 'date' ? newValue : date}T${property === 'time' ? newValue : time}:00+00:00`, 'dateTime'
+        `${property === 'date' ? newValue : date}T${property === 'time' ? newValue : time}:00+01:00`, 'dateTime'
       );
       setDate(property === 'date' ? newValue : date);
       setTime(property === 'time' ? newValue : time);
@@ -33,28 +32,21 @@ const AddHikeModal = ({
     }
     setHikeToAdd(previous => new Hike({
       ...previous,
-      [property]: [
-        'distance',
-        'elevationGain',
-        'durationMoving',
-        'durationStopped',
-        'speedMoving',
-        'speedOverall',
-      ].indexOf(property) !== -1
-        ? Number(newValue)
-        : newValue,
+      [property]: newValue,
     }));
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     if (isValid) {
-      onSubmit(hikeToAdd);
+      onSubmit(hikeToAdd, handleCancel, event);
     }
   };
 
   const handleCancel = (event) => {
-    event.preventDefault();
+    if (event) {
+      event.preventDefault();
+    }
     setHikeToAdd(new Hike());
     setDate(defaultDate);
     setTime(defaultTime);
@@ -127,7 +119,7 @@ const AddHikeModal = ({
               id="distance"
               className="form__field"
               type="text"
-              label="Distance"
+              label="Distance (km)"
               value={hikeToAdd.distance}
               disabled={isSubmitting}
               onChange={handleChange}

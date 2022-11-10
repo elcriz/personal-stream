@@ -29,7 +29,7 @@ const Hikes = () => {
 
   const auth = useAuth();
 
-  const handleAddSubmit = (hikeToAdd = new Hike(), event) => {
+  const handleAddSubmit = (hikeToAdd = new Hike(), callback, event) => {
     event.preventDefault();
     setError('');
     setIsSubmitting(true);
@@ -49,6 +49,7 @@ const Hikes = () => {
         setIsSubmitting(false);
         setIsFetching(true);
         fetchHikes();
+        callback();
       });
   };
 
@@ -102,7 +103,7 @@ const Hikes = () => {
       <div className="log">
         <header className="log__header">
           <h1 className="log__heading">
-            <em>{amount === 1 ? '1 Hike' : `${amount} Hikes`} so far</em> ({totals.distance} km)
+            <em>{amount === 1 ? '1 Hike' : `${amount} Hikes`} so far</em> ({totals.distance.toFixed(2)} km)
           </h1>
         </header>
 
@@ -150,13 +151,13 @@ const Hikes = () => {
                     colSpan="3"
                     data-alignment="end"
                   >
-                    {totals.distance} <span>km</span>
+                    {totals.distance.toFixed(2)} <span>km</span>
                   </td>
                   <td data-alignment="end">{totals.elevationGain} <span>m</span></td>
                   <td data-alignment="end">{totals.durationMoving}</td>
                   <td data-alignment="end">{totals.durationStopped}</td>
-                  <td data-alignment="end">{totals.speedMoving} <span>km/h</span></td>
-                  <td data-alignment="end">{totals.speedOverall} <span>km/h</span></td>
+                  <td data-alignment="end">{totals.speedMoving.toFixed(2)} <span>km/h</span></td>
+                  <td data-alignment="end">{totals.speedOverall.toFixed(2)} <span>km/h</span></td>
                 </tr>
               </tfoot>
               <tbody>
@@ -170,12 +171,12 @@ const Hikes = () => {
                       <span>{dates.hiked}</span>
                     </td>
                     <td>{hike.location}</td>
-                    <td data-alignment="end">{hike.distance} <span>km</span></td>
+                    <td data-alignment="end">{hike.distance.toFixed(2)} <span>km</span></td>
                     <td data-alignment="end">{hike.elevationGain} <span>m</span></td>
                     <td data-alignment="end">{hike.hours.moved}</td>
                     <td data-alignment="end">{hike.hours.stopped}</td>
-                    <td data-alignment="end">{hike.speedMoving} <span>km/h</span></td>
-                    <td data-alignment="end">{hike.speedOverall} <span>km/h</span></td>
+                    <td data-alignment="end">{hike.speedMoving.toFixed(2)} <span>km/h</span></td>
+                    <td data-alignment="end">{hike.speedOverall.toFixed(2)} <span>km/h</span></td>
                   </tr>
                 ))}
               </tbody>

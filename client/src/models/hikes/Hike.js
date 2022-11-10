@@ -9,7 +9,7 @@ class Hike {
     speedMoving,
     speedOverall,
   } = {}) {
-    this.dateTime = dateTime || `${new Date().toJSON().slice(0, 10)}T00:00+00:00`;
+    this.dateTime = dateTime || `${new Date().toJSON().slice(0, 10)}T00:00+01:00`;
     this.location = location || '';
     this.distance = distance || 0;
     this.elevationGain = elevationGain || 0;
