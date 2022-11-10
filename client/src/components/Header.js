@@ -27,11 +27,14 @@ const Header = () => {
         <Link className="link" to="/">Stream</Link>
         <Link className="link" to="/about">About</Link>
         {auth.user.isAllowedToAdd && (
-          <Link className="link" to="/add">Add</Link>
+          <>
+            <Link className="link" to="/add">Add</Link>
+            <Link className="link" to="/hikes">Hikes</Link>
+          </>
         )}
         {auth.user.isAuthenticated && (
           <button
-            className="link"
+            className="button button--secondary"
             type="button"
             onClick={handleLogout}
           >

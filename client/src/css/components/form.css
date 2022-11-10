@@ -54,3 +54,13 @@
 .form__buttons > button {
   display: block;
 }
+
+.form__group {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing);
+}
+
+.form__group .form__field {
+  width: 100%;
+}

@@ -93,7 +93,7 @@ const ItemsList = ({
               <div className="items-list__item-actions">
                 <button
                   {...rest}
-                  className="items-list__button items-list__button--remove button"
+                  className="items-list__button items-list__button--remove button button--secondary"
                   type="button"
                   onClick={(event) => {
                     handleDelete(event, valueIndex);
@@ -105,7 +105,7 @@ const ItemsList = ({
           </div>
         ))}
         <button
-          className="items-list__button items-list__button--add button"
+          className="items-list__button items-list__button--add button button--secondary"
           type="button"
           onClick={handleAdd}
         >

@@ -16,8 +16,6 @@ const Item = ({
   const [isFetching, setIsFetching] = useState(false);
   const [isDeleted, setIsDeleted] = useState(false);
 
-  console.log({ item });
-
   const { _id, title, slug, body, tags, dates, relativeDates, hasMedia, mediaPosition, ...media } = item;
   const auth = useAuth();
 

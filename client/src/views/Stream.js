@@ -29,9 +29,9 @@ const Stream = () => {
         setAmount(newAmount);
         setItems(previous => ([
           ...previous.filter(existing =>
-            newItems.findIndex(item => item._id === existing._id) === -1
+            newItems.findIndex(item => item._id === existing._id) === -1,
           ),
-          ...newItems
+          ...newItems,
         ]));
       })
       .catch((error) => {
