@@ -34,7 +34,7 @@ const Header = () => {
         )}
         {auth.user.isAuthenticated && (
           <button
-            className="button button--secondary"
+            className="header__button button button--secondary button--90"
             type="button"
             onClick={handleLogout}
           >
