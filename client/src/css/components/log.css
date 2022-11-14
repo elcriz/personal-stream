@@ -141,3 +141,43 @@
 .log__table tfoot tr:last-child td:last-child {
   border-bottom-right-radius: calc(var(--spacing) / 2);
 }
+
+@media screen and (max-width: 440px) {
+  .log__header {
+    padding-right: 80px;
+  }
+
+  .log__heading {
+    font-size: var(--font-size-100);
+  }
+
+  .log__heading em {
+    display: block;
+    margin-bottom: calc(var(--spacing) / 7.5);
+    font-size: var(--font-size-150);
+  }
+
+  .log__overview {
+    overflow: auto;
+  }
+
+  .log__overview-wrapper {
+    position: relative;
+  }
+
+  .log__overview-wrapper::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    width: calc(var(--spacing) * 2);
+    display: block;
+    content: '';
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, .075) 100%);
+  }
+
+  .log__table {
+    width: 300%;
+  }
+}

@@ -118,70 +118,72 @@ const Hikes = () => {
           Add hike
         </button>
 
-        <div className="log__overview">
-          {isFetching && (
-            <SkeletonItem />
-          )}
-          {!isFetching && hikes.length > 0 && (
-            <table className="log__table">
-              <thead>
-                <tr>
-                  <th rowSpan="2">Date &amp; time</th>
-                  <th rowSpan="2">Location</th>
-                  <th rowSpan="2">Distance</th>
-                  <th rowSpan="2">Elevation gain</th>
-                  <th colSpan="2">Duration <span>(hh:mm)</span></th>
-                  <th colSpan="2">Speed</th>
-                </tr>
-                <tr>
-                  <th>Moving</th>
-                  <th>Stopped</th>
-                  <th>Moving</th>
-                  <th>Overall</th>
-                </tr>
-              </thead>
-              <tfoot>
-                <tr>
-                  <td colSpan="2" />
-                  <td colSpan="4">Totals</td>
-                  <td colSpan="2">Averages</td>
-                </tr>
-                <tr>
-                  <td
-                    colSpan="3"
-                    data-alignment="end"
-                  >
-                    {totals.distance.toFixed(2)} <span>km</span>
-                  </td>
-                  <td data-alignment="end">{totals.elevationGain} <span>m</span></td>
-                  <td data-alignment="end">{totals.durationMoving}</td>
-                  <td data-alignment="end">{totals.durationStopped}</td>
-                  <td data-alignment="end">{totals.speedMoving.toFixed(2)} <span>km/h</span></td>
-                  <td data-alignment="end">{totals.speedOverall.toFixed(2)} <span>km/h</span></td>
-                </tr>
-              </tfoot>
-              <tbody>
-                {hikes.map(({ _id, dates, relativeDates, ...hike }, hikeIndex) => (
-                  <tr
-                    key={_id}
-                    data-index={hikeIndex % 2 === 0 ? 'even' : 'odd'}
-                  >
-                    <td>
-                      <em>{relativeDates.hiked}</em>
-                      <span>{dates.hiked}</span>
-                    </td>
-                    <td>{hike.location}</td>
-                    <td data-alignment="end">{hike.distance.toFixed(2)} <span>km</span></td>
-                    <td data-alignment="end">{hike.elevationGain} <span>m</span></td>
-                    <td data-alignment="end">{hike.hours.moved}</td>
-                    <td data-alignment="end">{hike.hours.stopped}</td>
-                    <td data-alignment="end">{hike.speedMoving.toFixed(2)} <span>km/h</span></td>
-                    <td data-alignment="end">{hike.speedOverall.toFixed(2)} <span>km/h</span></td>
+        <div className="log__overview-wrapper">
+          <div className="log__overview">
+            {isFetching && (
+              <SkeletonItem />
+            )}
+            {!isFetching && hikes.length > 0 && (
+              <table className="log__table">
+                <thead>
+                  <tr>
+                    <th rowSpan="2">Date &amp; time</th>
+                    <th rowSpan="2">Location</th>
+                    <th rowSpan="2">Distance</th>
+                    <th rowSpan="2">Elevation gain</th>
+                    <th colSpan="2">Duration <span>(hh:mm)</span></th>
+                    <th colSpan="2">Speed</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
+                  <tr>
+                    <th>Moving</th>
+                    <th>Stopped</th>
+                    <th>Moving</th>
+                    <th>Overall</th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <td colSpan="2" />
+                    <td colSpan="4">Totals</td>
+                    <td colSpan="2">Averages</td>
+                  </tr>
+                  <tr>
+                    <td
+                      colSpan="3"
+                      data-alignment="end"
+                    >
+                      {totals.distance.toFixed(2)} <span>km</span>
+                    </td>
+                    <td data-alignment="end">{totals.elevationGain} <span>m</span></td>
+                    <td data-alignment="end">{totals.durationMoving}</td>
+                    <td data-alignment="end">{totals.durationStopped}</td>
+                    <td data-alignment="end">{totals.speedMoving.toFixed(2)} <span>km/h</span></td>
+                    <td data-alignment="end">{totals.speedOverall.toFixed(2)} <span>km/h</span></td>
+                  </tr>
+                </tfoot>
+                <tbody>
+                  {hikes.map(({ _id, dates, relativeDates, ...hike }, hikeIndex) => (
+                    <tr
+                      key={_id}
+                      data-index={hikeIndex % 2 === 0 ? 'even' : 'odd'}
+                    >
+                      <td>
+                        <em>{relativeDates.hiked}</em>
+                        <span>{dates.hiked}</span>
+                      </td>
+                      <td>{hike.location}</td>
+                      <td data-alignment="end">{hike.distance.toFixed(2)} <span>km</span></td>
+                      <td data-alignment="end">{hike.elevationGain} <span>m</span></td>
+                      <td data-alignment="end">{hike.hours.moved}</td>
+                      <td data-alignment="end">{hike.hours.stopped}</td>
+                      <td data-alignment="end">{hike.speedMoving.toFixed(2)} <span>km/h</span></td>
+                      <td data-alignment="end">{hike.speedOverall.toFixed(2)} <span>km/h</span></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
         </div>
       </div>
 

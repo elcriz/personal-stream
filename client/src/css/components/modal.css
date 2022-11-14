@@ -60,3 +60,31 @@
   margin-bottom: var(--spacing);
   min-width: 400px;
 }
+
+@media screen and (max-width: 440px) {
+  .modal:not(.is-hidden) .modal__inner {
+    position: fixed;
+    top: var(--spacing);
+    right: var(--spacing);
+    bottom: var(--spacing);
+    left: var(--spacing);
+  }
+
+  .modal__form {
+    min-width: 0px;
+    margin: 0;
+    border-radius: 0px !important;
+    background-color: transparent !important;
+  }
+
+  .modal__form input {
+    background-color: rgba(var(--color-grey), .125);
+  }
+
+  .modal__form .form__buttons {
+    position: absolute;
+    bottom: var(--spacing);
+    left: var(--spacing);
+    right: var(--spacing);
+  }
+}
