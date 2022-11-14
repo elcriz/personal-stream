@@ -129,16 +129,16 @@ const Hikes = () => {
                   <tr>
                     <th rowSpan="2">Date &amp; time</th>
                     <th rowSpan="2">Location</th>
-                    <th rowSpan="2">Distance</th>
-                    <th rowSpan="2">Elevation gain</th>
+                    <th rowSpan="2" data-alignment="end">Distance</th>
+                    <th rowSpan="2" data-alignment="end">Elevation gain</th>
                     <th colSpan="2">Duration <span>(hh:mm)</span></th>
                     <th colSpan="2">Speed</th>
                   </tr>
                   <tr>
-                    <th>Moving</th>
-                    <th>Stopped</th>
-                    <th>Moving</th>
-                    <th>Overall</th>
+                    <th data-alignment="end">Moving</th>
+                    <th data-alignment="end">Stopped</th>
+                    <th data-alignment="end">Moving</th>
+                    <th data-alignment="end">Overall</th>
                   </tr>
                 </thead>
                 <tfoot>

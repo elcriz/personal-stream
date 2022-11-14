@@ -86,5 +86,7 @@
     bottom: var(--spacing);
     left: var(--spacing);
     right: var(--spacing);
+    padding-top: var(--spacing);
+    background-color: rgb(var(--color-ui-light));
   }
 }
