@@ -173,7 +173,12 @@ const Hikes = () => {
                       </td>
                       <td>{hike.location}</td>
                       <td data-alignment="end">{hike.distance.toFixed(2)} <span>km</span></td>
-                      <td data-alignment="end">{hike.elevationGain} <span>m</span></td>
+                      {hike.elevationGain === 0 && (
+                        <td data-alignment="end">-</td>
+                      )}
+                      {hike.elevationGain > 0 && (
+                        <td data-alignment="end">{hike.elevationGain} <span>m</span></td>
+                      )}
                       <td data-alignment="end">{hike.hours.moved}</td>
                       <td data-alignment="end">{hike.hours.stopped}</td>
                       <td data-alignment="end">{hike.speedMoving.toFixed(2)} <span>km/h</span></td>
