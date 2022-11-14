@@ -39,14 +39,14 @@ const Item = () => {
 
   if (isFetching) {
     return (
-      <Canvas isWide>
+      <Canvas size="wide">
         <SkeletonItem />
       </Canvas>
     );
   }
 
   return (
-    <Canvas isWide>
+    <Canvas size="wide">
       {item && (
         <SingleItem
           className="item--single stream__item"

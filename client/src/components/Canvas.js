@@ -4,10 +4,11 @@ import classnames from 'classnames';
 
 const Canvas = ({
   children,
-  isWide,
+  size,
 }) => (
   <div className={classnames('canvas', {
-    'canvas--wide': isWide,
+    'canvas--wide': size === 'wide',
+    'canvas--full': size === 'full',
   })}>
     {children}
   </div>
@@ -15,7 +16,7 @@ const Canvas = ({
 
 Canvas.propTypes = {
   children: PropTypes.node.isRequired,
-  isWide: PropTypes.bool,
+  size: PropTypes.oneOf(['wide', 'full']),
 };
 
 export default Canvas;

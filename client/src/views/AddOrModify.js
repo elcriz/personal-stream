@@ -104,7 +104,7 @@ const AddOrModify = () => {
   }
 
   return (
-    <Canvas isWide>
+    <Canvas size="wide">
       <form
         className="form"
         onSubmit={handleSubmit}

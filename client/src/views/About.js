@@ -3,7 +3,7 @@ import Canvas from '../components/Canvas';
 
 const About = () => {
   return (
-    <Canvas isWide>
+    <Canvas size="wide">
       <header className="stream__header" role="banner">
         <h2>About</h2>
       </header>

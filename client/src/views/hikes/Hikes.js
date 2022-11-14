@@ -99,7 +99,7 @@ const Hikes = () => {
   }, [hikes]);
 
   return (
-    <Canvas isWide>
+    <Canvas size="full">
       <div className="log">
         <header className="log__header">
           <h1 className="log__heading">
