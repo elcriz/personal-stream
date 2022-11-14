@@ -1,14 +1,34 @@
 const Hike = require('../../models/hikes/hikesModel');
 
+const mapSortByToSchema = {
+  dateTime: 'dateTime',
+  location: 'location',
+  distance: 'distance',
+  elevationGain: 'elevationGain',
+  durationMoving: 'duration.moving',
+  durationStopped: 'duration.stopped',
+  speedMoving: 'speed.moving',
+  speedOverall: 'speed.overall',
+};
+
 module.exports = {
   getHikes: async (req, res) => {
+    const { sortBy = 'dateTime', order = 'desc' } = req.query;
     if (req.user.role !== 1) {
       return res.status(401).send();
+    }
+    if (!mapSortByToSchema[sortBy]) {
+      return res.status(400).send();
+    }
+    if (['desc', 'asc'].indexOf(order) === -1) {
+      return res.status(400).send();
     }
     const amount = await Hike.countDocuments();
     const hikes = await Hike
       .find()
-      .sort('-dateTime');
+      .sort({
+        [mapSortByToSchema[sortBy]]: order === 'asc' ? 1 : -1,
+      });
     res.status(200).json({ amount, hikes });
   },
 
