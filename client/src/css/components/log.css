@@ -94,9 +94,23 @@
   border-top: none;
 }
 
+.log__table th,
+.log__table td {
+  transition: var(--transition-100);
+}
+
 .log__table th[data-alignment="end"],
 .log__table td[data-alignment="end"] {
   text-align: right;
+}
+
+.log__table[data-variant="loading"] th,
+.log__table[data-variant="loading"] td {
+  pointer-events: none;
+}
+
+.log__table[data-variant="loading"] td {
+  opacity: .5;
 }
 
 .log__table tbody tr[data-index="odd"] td {

@@ -38,12 +38,14 @@ export default {
   /**
    * Retrieve hikes.
    * @param {string} _token
+   * @param {string} sortBy - Value to sort results by
+   * @param {boolean} isAscending - Should results be ordered ascending?
    * @returns Promise
    */
-  retrieveHikes: async (_token) => {
+  retrieveHikes: async (_token, sortBy, isAscending = false) => {
     try {
       const response = await fetch(
-        '/api/hikes',
+        `/api/hikes?sortBy=${sortBy}&order=${isAscending ? 'asc' : 'desc'}`,
         {
           credentials: 'include',
           headers: {

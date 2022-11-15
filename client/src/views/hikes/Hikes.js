@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import hikesService from '../../services/hikes/hikesService';
 import useAuth from '../../hooks/useAuth';
+import useTableHeads from '../../hooks/useTableHeads';
 import { getHoursFromMinutes } from '../../helpers/dateTimeHelper';
 import { getTotal, getAverage } from '../../helpers/calculationHelper';
 import Hike from '../../models/hikes/Hike';
 import Canvas from '../../components/Canvas';
 import SkeletonItem from '../../components/SkeletonItem';
+import TableHeadButton from '../../components/TableHeadButton';
 import AddHikeModal from '../../components/hikes/AddHikeModal';
 
 const defaultAmount = 0;
@@ -23,9 +25,11 @@ const Hikes = () => {
   const [totals, setTotals] = useState(defaultTotals);
   const [error, setError] = useState('');
   const [amount, setAmount] = useState(defaultAmount);
-  const [isFetching, setIsFetching] = useState(true);
+  const [isFetching, setIsFetching] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isHikeToAddVisible, setIsHikeToAddVisible] = useState(false);
+
+  const { handleTableHeadClick, sortBy, isAscending } = useTableHeads('dateTime');
 
   const auth = useAuth();
 
@@ -54,9 +58,10 @@ const Hikes = () => {
   };
 
   const fetchHikes = () => {
+    setIsFetching(true);
     setError('');
     hikesService
-      .retrieveHikes(auth.user.token)
+      .retrieveHikes(auth.user.token, sortBy, isAscending)
       .then(({ amount: newAmount, hikes: newHikes }) => {
         setAmount(newAmount);
         setHikes(previous => ([
@@ -92,7 +97,7 @@ const Hikes = () => {
 
   useEffect(() => {
     fetchHikes();
-  }, []);
+  }, [sortBy, isAscending]);
 
   useEffect(() => {
     calculateTotals();
@@ -120,25 +125,100 @@ const Hikes = () => {
 
         <div className="log__overview-wrapper">
           <div className="log__overview">
-            {isFetching && (
+            {isFetching && hikes.length === 0 && (
               <SkeletonItem />
             )}
-            {!isFetching && hikes.length > 0 && (
-              <table className="log__table">
+            {hikes.length > 0 && (
+              <table
+                className="log__table"
+                data-variant={isFetching ? 'loading' : 'loaded'}
+              >
                 <thead>
                   <tr>
-                    <th rowSpan="2">Date &amp; time</th>
-                    <th rowSpan="2">Location</th>
-                    <th rowSpan="2" data-alignment="end">Distance</th>
-                    <th rowSpan="2" data-alignment="end">Elevation gain</th>
+                    <th rowSpan="2">
+                      <TableHeadButton
+                        label="dateTime"
+                        activeLabel={sortBy}
+                        onClick={handleTableHeadClick}
+                        isAscending={isAscending}
+                      >
+                        Date &amp; time
+                      </TableHeadButton>
+                    </th>
+                    <th rowSpan="2">
+                      <TableHeadButton
+                        label="location"
+                        activeLabel={sortBy}
+                        onClick={handleTableHeadClick}
+                        isAscending={isAscending}
+                      >
+                        Location
+                      </TableHeadButton>
+                    </th>
+                    <th rowSpan="2">
+                      <TableHeadButton
+                        label="distance"
+                        activeLabel={sortBy}
+                        onClick={handleTableHeadClick}
+                        isAscending={isAscending}
+                      >
+                        Distance
+                      </TableHeadButton>
+                    </th>
+                    <th rowSpan="2">
+                      <TableHeadButton
+                        label="elevationGain"
+                        activeLabel={sortBy}
+                        onClick={handleTableHeadClick}
+                        isAscending={isAscending}
+                      >
+                        Elevation gain
+                      </TableHeadButton>
+                    </th>
                     <th colSpan="2">Duration <span>(hh:mm)</span></th>
                     <th colSpan="2">Speed</th>
                   </tr>
                   <tr>
-                    <th data-alignment="end">Moving</th>
-                    <th data-alignment="end">Stopped</th>
-                    <th data-alignment="end">Moving</th>
-                    <th data-alignment="end">Overall</th>
+                    <th>
+                      <TableHeadButton
+                        label="durationMoving"
+                        activeLabel={sortBy}
+                        onClick={handleTableHeadClick}
+                        isAscending={isAscending}
+                      >
+                        Moving
+                      </TableHeadButton>
+                    </th>
+                    <th>
+                      <TableHeadButton
+                        label="durationStopped"
+                        activeLabel={sortBy}
+                        onClick={handleTableHeadClick}
+                        isAscending={isAscending}
+                      >
+                        Stopped
+                      </TableHeadButton>
+                    </th>
+                    <th>
+                      <TableHeadButton
+                        label="speedMoving"
+                        activeLabel={sortBy}
+                        onClick={handleTableHeadClick}
+                        isAscending={isAscending}
+                      >
+                        Moving
+                      </TableHeadButton>
+                    </th>
+                    <th>
+                      <TableHeadButton
+                        label="speedOverall"
+                        activeLabel={sortBy}
+                        onClick={handleTableHeadClick}
+                        isAscending={isAscending}
+                      >
+                        Overall
+                      </TableHeadButton>
+                    </th>
                   </tr>
                 </thead>
                 <tfoot>
