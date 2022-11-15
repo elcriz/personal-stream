@@ -120,7 +120,8 @@ const AddHikeModal = ({
               className="form__field"
               type="text"
               label="Distance (km)"
-              value={hikeToAdd.distance}
+              defaultValue={hikeToAdd.distance}
+              placeholder="0"
               disabled={isSubmitting}
               onChange={handleChange}
             />
@@ -129,7 +130,8 @@ const AddHikeModal = ({
               className="form__field"
               type="text"
               label="Elevation gain (m)"
-              value={hikeToAdd.elevationGain}
+              defaultValue={hikeToAdd.elevationGain}
+              placeholder="0"
               disabled={isSubmitting}
               onChange={handleChange}
             />
@@ -140,7 +142,8 @@ const AddHikeModal = ({
               className="form__field"
               type="text"
               label="Moving time (minutes)"
-              value={hikeToAdd.durationMoving}
+              defaultValue={hikeToAdd.durationMoving}
+              placeholder="0"
               disabled={isSubmitting}
               onChange={handleChange}
             />
@@ -149,7 +152,8 @@ const AddHikeModal = ({
               className="form__field"
               type="text"
               label="Time stopped (minutes)"
-              value={hikeToAdd.durationStopped}
+              defaultValue={hikeToAdd.durationStopped}
+              placeholder="0"
               disabled={isSubmitting}
               onChange={handleChange}
             />
@@ -160,7 +164,8 @@ const AddHikeModal = ({
               className="form__field"
               type="text"
               label="Speed moving (km/h)"
-              value={hikeToAdd.speedMoving}
+              defaultValue={hikeToAdd.speedMoving}
+              placeholder="0"
               disabled={isSubmitting}
               onChange={handleChange}
             />
@@ -169,7 +174,8 @@ const AddHikeModal = ({
               className="form__field"
               type="text"
               label="Speed average (km/h)"
-              value={hikeToAdd.speedOverall}
+              defaultValue={hikeToAdd.speedOverall}
+              placeholder="0"
               disabled={isSubmitting}
               onChange={handleChange}
             />

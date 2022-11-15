@@ -11,21 +11,22 @@ class Hike {
   } = {}) {
     this.dateTime = dateTime || `${new Date().toJSON().slice(0, 10)}T00:00+01:00`;
     this.location = location || '';
-    this.distance = distance || 0;
-    this.elevationGain = elevationGain || 0;
-    this.durationMoving = durationMoving || 0;
-    this.durationStopped = durationStopped || 0;
-    this.speedMoving = speedMoving || 0;
-    this.speedOverall = speedOverall || 0;
+    this.distance = distance;
+    this.elevationGain = elevationGain;
+    this.durationMoving = durationMoving;
+    this.durationStopped = durationStopped;
+    this.speedMoving = speedMoving;
+    this.speedOverall = speedOverall;
   }
 
   isValid() {
     return !!this.dateTime
       && !!this.location
-      && this.distance !== undefined
-      && this.durationMoving !== undefined
-      && this.speedMoving !== undefined
-      && this.speedOverall !== undefined
+      && this.distance !== undefined && !isNaN(Number(this.distance))
+      && this.durationMoving !== undefined && !isNaN(Number(this.durationMoving))
+      && this.durationStopped !== undefined && !isNaN(Number(this.durationStopped))
+      && this.speedMoving !== undefined && !isNaN(Number(this.speedMoving))
+      && this.speedOverall !== undefined && !isNaN(Number(this.speedOverall))
   }
 }
 

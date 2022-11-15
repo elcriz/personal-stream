@@ -1,7 +1,7 @@
 import { getRelativeDate, getReadableDate, getHoursFromMinutes } from '../../helpers/dateTimeHelper';
 import Hike from '../../models/hikes/Hike';
 
-function serializeHike({
+function serializeHikeToPlatform({
   createdAt,
   updatedAt,
   duration,
@@ -30,8 +30,28 @@ function serializeHike({
     hours: {
       moved: getHoursFromMinutes(duration.moving),
       stopped: getHoursFromMinutes(duration.stopped),
-    }
+    },
   };
+}
+
+function serializeHikeToApi({
+  distance = 0,
+  elevationGain = 0,
+  durationMoving = 0,
+  durationStopped = 0,
+  speedMoving = 0,
+  speedOverall = 0,
+  ...hike
+}) {
+  return new Hike({
+    ...hike,
+    distance,
+    elevationGain,
+    durationMoving,
+    durationStopped,
+    speedMoving,
+    speedOverall,
+  });
 }
 
 export default {
@@ -58,7 +78,7 @@ export default {
         throw new Error(response.status);
       }
       const { amount, hikes } = await response.json();
-      return { amount, hikes: hikes.map(serializeHike) };
+      return { amount, hikes: hikes.map(serializeHikeToPlatform) };
     } catch (error) {
       throw error;
     }
@@ -81,14 +101,16 @@ export default {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${_token}`,
           },
-          body: JSON.stringify(body),
+          body: JSON.stringify(
+            serializeHikeToApi(body)
+          ),
         },
       );
       if (!response.ok) {
         throw new Error(response.status);
       }
       const hike = await response.json();
-      return serializeHike(hike);
+      return serializeHikeToPlatform(hike);
     } catch (error) {
       throw error;
     }
