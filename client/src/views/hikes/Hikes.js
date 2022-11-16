@@ -2,29 +2,17 @@ import React, { useState, useEffect } from 'react';
 import hikesService from '../../services/hikes/hikesService';
 import useAuth from '../../hooks/useAuth';
 import useTableHeads from '../../hooks/useTableHeads';
-import { getHoursFromMinutes } from '../../helpers/dateTimeHelper';
-import { getTotal, getAverage } from '../../helpers/calculationHelper';
 import Hike from '../../models/hikes/Hike';
 import Canvas from '../../components/Canvas';
 import SkeletonItem from '../../components/SkeletonItem';
 import TableHeadButton from '../../components/TableHeadButton';
 import AddHikeModal from '../../components/hikes/AddHikeModal';
 
-const defaultAmount = 0;
-const defaultTotals = {
-  distance: 0,
-  elevationGain: 0,
-  durationMoving: 0,
-  durationStopped: 0,
-  speedMoving: 0,
-  speedOverall: 0,
-};
-
 const Hikes = () => {
   const [hikes, setHikes] = useState([]);
-  const [totals, setTotals] = useState(defaultTotals);
+  const [totals, setTotals] = useState({});
+  const [amount, setAmount] = useState(0);
   const [error, setError] = useState('');
-  const [amount, setAmount] = useState(defaultAmount);
   const [isFetching, setIsFetching] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isHikeToAddVisible, setIsHikeToAddVisible] = useState(false);
@@ -62,8 +50,13 @@ const Hikes = () => {
     setError('');
     hikesService
       .retrieveHikes(auth.user.token, sortBy, isAscending)
-      .then(({ amount: newAmount, hikes: newHikes }) => {
+      .then(({
+        amount: newAmount,
+        totals: newTotals,
+        hikes: newHikes,
+      }) => {
         setAmount(newAmount);
+        setTotals(newTotals);
         setHikes(previous => ([
           ...previous.filter(existing =>
             newHikes.findIndex(hike => hike._id === existing._id) === -1,
@@ -79,36 +72,16 @@ const Hikes = () => {
       });
   };
 
-  const calculateTotals = () => {
-    if (hikes.length === 0) {
-      setTotals(defaultTotals);
-      return;
-    }
-
-    setTotals({
-      distance: getTotal(hikes, 'distance'),
-      elevationGain: getTotal(hikes, 'elevationGain'),
-      durationMoving: getHoursFromMinutes(getTotal(hikes, 'durationMoving')),
-      durationStopped: getHoursFromMinutes(getTotal(hikes, 'durationStopped')),
-      speedMoving: getAverage(hikes, 'speedMoving'),
-      speedOverall: getAverage(hikes, 'speedOverall'),
-    });
-  };
-
   useEffect(() => {
     fetchHikes();
   }, [sortBy, isAscending]);
-
-  useEffect(() => {
-    calculateTotals();
-  }, [hikes]);
 
   return (
     <Canvas size="full">
       <div className="log">
         <header className="log__header">
           <h1 className="log__heading">
-            <em>{amount === 1 ? '1 Hike' : `${amount} Hikes`} so far</em> ({totals.distance.toFixed(2)} km)
+            <em>{amount === 1 ? '1 Hike' : `${amount} Hikes`} so far</em> ({totals.distance ? totals.distance.toFixed(2) : 0} km)
           </h1>
         </header>
 

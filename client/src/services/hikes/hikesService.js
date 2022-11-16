@@ -77,8 +77,8 @@ export default {
       if (!response.ok) {
         throw new Error(response.status);
       }
-      const { amount, hikes } = await response.json();
-      return { amount, hikes: hikes.map(serializeHikeToPlatform) };
+      const { amount, totals, hikes } = await response.json();
+      return { amount, totals, hikes: hikes.map(serializeHikeToPlatform) };
     } catch (error) {
       throw error;
     }

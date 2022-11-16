@@ -1,3 +1,5 @@
+const { getTotal, getAverage } = require('../../helpers/calculationHelper');
+const { getHoursFromMinutes } = require('../../helpers/dateTimeHelper');
 const Hike = require('../../models/hikes/hikesModel');
 
 const mapSortByToSchema = {
@@ -29,7 +31,23 @@ module.exports = {
       .sort({
         [mapSortByToSchema[sortBy]]: order === 'asc' ? 1 : -1,
       });
-    res.status(200).json({ amount, hikes });
+    try {
+      const totals = {
+        distance: Number(getTotal(hikes, 'distance').toFixed(2)),
+        elevationGain: Number(getTotal(hikes, 'elevationGain').toFixed(2)),
+        durationMoving: getHoursFromMinutes(getTotal(hikes, 'duration', 'moving')),
+        durationStopped: getHoursFromMinutes(getTotal(hikes, 'duration', 'stopped')),
+        speedMoving: Number(getAverage(hikes, 'speed', 'moving').toFixed(2)),
+        speedOverall: Number(getAverage(hikes, 'speed', 'overall').toFixed(2)),
+      };
+      res.status(200).json({
+        amount,
+        totals,
+        hikes,
+      });
+    } catch (error) {
+      res.status(500).send();
+    }
   },
 
   addHike: async (req, res) => {
