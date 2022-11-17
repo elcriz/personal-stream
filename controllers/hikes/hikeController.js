@@ -1,5 +1,5 @@
 const { getTotal, getAverage } = require('../../helpers/calculationHelper');
-const { getHoursFromMinutes } = require('../../helpers/dateTimeHelper');
+const { getHoursFromMinutes, getDateTimeFilter } = require('../../helpers/dateTimeHelper');
 const Hike = require('../../models/hikes/hikesModel');
 
 const mapSortByToSchema = {
@@ -15,7 +15,13 @@ const mapSortByToSchema = {
 
 module.exports = {
   getHikes: async (req, res) => {
-    const { sortBy = 'dateTime', order = 'desc' } = req.query;
+    const {
+      sortBy = 'dateTime',
+      order = 'desc',
+      year = new Date().getFullYear(),
+      month,
+    } = req.query;
+
     if (req.user.role !== 1) {
       return res.status(401).send();
     }
@@ -25,9 +31,13 @@ module.exports = {
     if (['desc', 'asc'].indexOf(order) === -1) {
       return res.status(400).send();
     }
+
     const amount = await Hike.countDocuments();
     const hikes = await Hike
       .find()
+      .where({
+        dateTime: getDateTimeFilter(year, month),
+      })
       .sort({
         [mapSortByToSchema[sortBy]]: order === 'asc' ? 1 : -1,
       });
@@ -37,11 +47,12 @@ module.exports = {
         elevationGain: Number(getTotal(hikes, 'elevationGain').toFixed(2)),
         durationMoving: getHoursFromMinutes(getTotal(hikes, 'duration', 'moving')),
         durationStopped: getHoursFromMinutes(getTotal(hikes, 'duration', 'stopped')),
-        speedMoving: Number(getAverage(hikes, 'speed', 'moving').toFixed(2)),
-        speedOverall: Number(getAverage(hikes, 'speed', 'overall').toFixed(2)),
+        speedMoving: Number(getAverage(hikes, 'speed', 'moving').toFixed(2)) || 0,
+        speedOverall: Number(getAverage(hikes, 'speed', 'overall').toFixed(2)) || 0,
       };
       res.status(200).json({
         amount,
+        filteredAmount: hikes.length,
         totals,
         hikes,
       });

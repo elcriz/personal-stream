@@ -10,5 +10,5 @@ module.exports = {
         ? item[parentKey][childKey]
         : item[parentKey]
     ))
-    .reduce((a, b) => (a + b)) / array.length,
+    .reduce((a, b) => (a + b), 0) / array.length,
 };
