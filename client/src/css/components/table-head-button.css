@@ -8,6 +8,7 @@
   font-family: 'Space Grotesk', Arial, Helvetica, sans-serif;
   font-size: var(--font-size-90);
   font-weight: bold;
+  text-align: right;
   border: none;
 }
 

@@ -108,7 +108,10 @@ const Hikes = () => {
               >
                 <thead>
                   <tr>
-                    <th rowSpan="2">
+                    <th
+                      rowSpan="2"
+                      data-variant="medium"
+                    >
                       <TableHeadButton
                         label="dateTime"
                         activeLabel={sortBy}
@@ -118,7 +121,10 @@ const Hikes = () => {
                         Date &amp; time
                       </TableHeadButton>
                     </th>
-                    <th rowSpan="2">
+                    <th
+                      rowSpan="2"
+                      data-variant="large"
+                    >
                       <TableHeadButton
                         label="location"
                         activeLabel={sortBy}
@@ -128,7 +134,10 @@ const Hikes = () => {
                         Location
                       </TableHeadButton>
                     </th>
-                    <th rowSpan="2">
+                    <th
+                      rowSpan="2"
+                      data-variant="narrow"
+                    >
                       <TableHeadButton
                         label="distance"
                         activeLabel={sortBy}
@@ -138,7 +147,10 @@ const Hikes = () => {
                         Distance
                       </TableHeadButton>
                     </th>
-                    <th rowSpan="2">
+                    <th
+                      rowSpan="2"
+                      data-variant="narrow"
+                    >
                       <TableHeadButton
                         label="elevationGain"
                         activeLabel={sortBy}
@@ -152,7 +164,7 @@ const Hikes = () => {
                     <th colSpan="2">Speed</th>
                   </tr>
                   <tr>
-                    <th>
+                    <th data-variant="narrow">
                       <TableHeadButton
                         label="durationMoving"
                         activeLabel={sortBy}
@@ -162,7 +174,7 @@ const Hikes = () => {
                         Moving
                       </TableHeadButton>
                     </th>
-                    <th>
+                    <th data-variant="narrow">
                       <TableHeadButton
                         label="durationStopped"
                         activeLabel={sortBy}
@@ -172,7 +184,7 @@ const Hikes = () => {
                         Stopped
                       </TableHeadButton>
                     </th>
-                    <th>
+                    <th data-variant="narrow">
                       <TableHeadButton
                         label="speedMoving"
                         activeLabel={sortBy}
@@ -182,7 +194,7 @@ const Hikes = () => {
                         Moving
                       </TableHeadButton>
                     </th>
-                    <th>
+                    <th data-variant="narrow">
                       <TableHeadButton
                         label="speedOverall"
                         activeLabel={sortBy}
@@ -207,11 +219,36 @@ const Hikes = () => {
                     >
                       {totals.distance.toFixed(2)} <span>km</span>
                     </td>
-                    <td data-alignment="end">{totals.elevationGain} <span>m</span></td>
-                    <td data-alignment="end">{totals.durationMoving}</td>
-                    <td data-alignment="end">{totals.durationStopped}</td>
-                    <td data-alignment="end">{totals.speedMoving.toFixed(2)} <span>km/h</span></td>
-                    <td data-alignment="end">{totals.speedOverall.toFixed(2)} <span>km/h</span></td>
+                    <td
+                      data-variant="narrow"
+                      data-alignment="end"
+                    >
+                      {totals.elevationGain} <span>m</span>
+                    </td>
+                    <td
+                      data-variant="narrow"
+                      data-alignment="end"
+                    >
+                      {totals.durationMoving}
+                    </td>
+                    <td
+                      data-variant="narrow"
+                      data-alignment="end"
+                    >
+                      {totals.durationStopped}
+                    </td>
+                    <td
+                      data-variant="narrow"
+                      data-alignment="end"
+                    >
+                      {totals.speedMoving.toFixed(2)} <span>km/h</span>
+                    </td>
+                    <td
+                      data-variant="narrow"
+                      data-alignment="end"
+                    >
+                      {totals.speedOverall.toFixed(2)} <span>km/h</span>
+                    </td>
                   </tr>
                 </tfoot>
                 <tbody>
@@ -220,22 +257,57 @@ const Hikes = () => {
                       key={_id}
                       data-index={hikeIndex % 2 === 0 ? 'even' : 'odd'}
                     >
-                      <td>
+                      <td data-variant="medium">
                         <em>{relativeDates.hiked}</em>
                         <span>{dates.hiked}</span>
                       </td>
-                      <td>{hike.location}</td>
-                      <td data-alignment="end">{hike.distance.toFixed(2)} <span>km</span></td>
+                      <td data-variant="large">{hike.location}</td>
+                      <td
+                        data-variant="narrow"
+                        data-alignment="end"
+                      >
+                        {hike.distance.toFixed(2)} <span>km</span>
+                      </td>
                       {hike.elevationGain === 0 && (
-                        <td data-alignment="end">-</td>
+                        <td
+                          data-variant="narrow"
+                          data-alignment="end"
+                        >
+                          -
+                        </td>
                       )}
                       {hike.elevationGain > 0 && (
-                        <td data-alignment="end">{hike.elevationGain} <span>m</span></td>
+                        <td
+                          data-variant="narrow"
+                          data-alignment="end"
+                        >
+                          {hike.elevationGain} <span>m</span>
+                        </td>
                       )}
-                      <td data-alignment="end">{hike.hours.moved}</td>
-                      <td data-alignment="end">{hike.hours.stopped}</td>
-                      <td data-alignment="end">{hike.speedMoving.toFixed(2)} <span>km/h</span></td>
-                      <td data-alignment="end">{hike.speedOverall.toFixed(2)} <span>km/h</span></td>
+                      <td
+                        data-variant="narrow"
+                        data-alignment="end"
+                      >
+                        {hike.hours.moved}
+                      </td>
+                      <td
+                        data-variant="narrow"
+                        data-alignment="end"
+                      >
+                          {hike.hours.stopped}
+                      </td>
+                      <td
+                        data-variant="narrow"
+                        data-alignment="end"
+                      >
+                          {hike.speedMoving.toFixed(2)} <span>km/h</span>
+                      </td>
+                      <td
+                        data-variant="narrow"
+                        data-alignment="end"
+                      >
+                          {hike.speedOverall.toFixed(2)} <span>km/h</span>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
