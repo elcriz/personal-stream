@@ -42,8 +42,8 @@ module.exports = {
 
   /**
    * Get a mongoose where query to filter by date range (either year and/or month).
-   * @param {number|string} year
-   * @param {number|string} month 
+   * @param {(number|string)} year
+   * @param {(number|string)} month 
    * @returns {object}
    */
   getDateTimeFilter: (year, month) => {
