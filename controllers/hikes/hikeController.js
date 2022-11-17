@@ -46,7 +46,7 @@ module.exports = {
         hikes,
       });
     } catch (error) {
-      res.status(500).send();
+      res.status(500).json({ error: error.message });
     }
   },
 
