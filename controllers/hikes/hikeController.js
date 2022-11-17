@@ -22,8 +22,6 @@ module.exports = {
       month,
     } = req.query;
 
-    console.log({ sortBy, order, year, month });
-
     if (req.user.role !== 1) {
       return res.status(401).send();
     }
