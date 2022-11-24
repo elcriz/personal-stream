@@ -13,6 +13,11 @@
   max-width: none;
 }
 
+.canvas--with-top-border {
+  padding-top: var(--spacing);
+  border-top: 1px solid rgba(var(--color-light-blue), .25);
+}
+
 @media screen and (max-width: 440px) {
   .canvas {
     min-width: 320px;
