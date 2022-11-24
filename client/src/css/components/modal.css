@@ -11,6 +11,7 @@
   height: 100vh;
   transition: var(--transition-100);
   background-color: rgba(0, 0, 0, .25);
+  z-index: 1;
 }
 
 .modal.is-hidden {

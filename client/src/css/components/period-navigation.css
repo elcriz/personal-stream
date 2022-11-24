@@ -1,0 +1,60 @@
+.period-navigation {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--spacing) * 2);
+  margin-bottom: var(--spacing);
+  padding-bottom: var(--spacing);
+  border-bottom: 1px solid rgba(var(--color-light-blue), .25);
+  transition: var(--transition-100);
+}
+
+.period-navigation[data-variant="loading"] {
+  pointer-events: none;
+  opacity: .5;
+}
+
+.period-navigation__actions {
+  order: 1;
+  display: flex;
+  align-items: center;
+  gap: calc(var(--spacing) / 2);
+}
+
+.period-navigation__button {
+  position: relative;
+  margin-top: 0 !important;
+  border-radius: calc(var(--spacing) / 2) !important;
+}
+
+.period-navigation__button::after{
+  display: block;
+}
+
+.period-navigation__button--previous {
+  order: 1;
+}
+
+.period-navigation__button--previous::after {
+  content: '\003C';
+}
+
+.period-navigation__button--next {
+  order: 3;
+}
+
+.period-navigation__button--next::after {
+  content: '\003E';
+}
+
+.period-navigation__period-indicator {
+  order: 2;
+  padding: calc(var(--spacing) / 2) var(--spacing);
+  color: rgb(var(--color-grey));
+  background-color: rgba(var(--color-grey), .125);
+  border-radius: calc(var(--spacing) / 4);
+  line-height: 16px;
+}
+
+.period-navigation__segmented-control {
+  order: 2;
+}

@@ -1,4 +1,5 @@
 .canvas {
+  position: relative;
   max-width: 720px;
   min-width: 440px;
   box-sizing: border-box;
@@ -11,6 +12,11 @@
 .canvas--full {
   width: 100%;
   max-width: none;
+}
+
+.canvas--with-top-border {
+  padding-top: var(--spacing);
+  border-top: 1px solid rgba(var(--color-light-blue), .25);
 }
 
 @media screen and (max-width: 440px) {
