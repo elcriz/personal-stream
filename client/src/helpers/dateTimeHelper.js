@@ -14,6 +14,24 @@ export const getReadableDate = (timestamp, dateTimeFormat = 'dd-MM-yyyy HH:mm') 
   dateTimeFormat,
 );
 
+export const getReadableMonth = (month) => {
+  const monthMap = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+  return monthMap[month];
+};
+
 export const getHoursFromMinutes = (totalMinutes) => {
   const getWithZeros = calculated => (
     calculated < 10 ? `0${calculated}` : calculated
@@ -26,5 +44,6 @@ export const getHoursFromMinutes = (totalMinutes) => {
 export default {
   getRelativeDate,
   getReadableDate,
+  getReadableMonth,
   getHoursFromMinutes,
 };

@@ -3,21 +3,7 @@ import PropTypes from 'prop-types';
 import useTableHeads from '../../hooks/useTableHeads';
 import SkeletonItem from '../SkeletonItem';
 import TableHeadButton from '../TableHeadButton';
-
-const monthMap = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
+import { getReadableMonth } from '../../helpers/dateTimeHelper';
 
 const HikesOverview = ({
   hikes,
@@ -43,7 +29,7 @@ const HikesOverview = ({
       <div className="hikes-overview__log log">
         <header className="log__header">
           <h1 className="log__heading">
-            <em>{amount === 1 ? '1 Hike' : `${amount} Hikes`} in {month ? `${monthMap[month]} ` : ''}{year}</em>
+            <em>{amount === 1 ? '1 Hike' : `${amount} Hikes`} in {month !== undefined ? `${getReadableMonth(month)} ` : ''}{year}</em>
           </h1>
         </header>
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SegmentedControl from './SegmentedControl';
+import { getReadableMonth } from '../helpers/dateTimeHelper';
 
 const types = ['Year', 'Month'];
 
@@ -46,7 +47,7 @@ const PeriodNavigation = ({
 
       <nav className="period-navigation__actions">
         <div className="period-navigation__period-indicator">
-          {period.length > 1 ? `${period[1] + 1}-` : ''}
+          {period.length > 1 ? `${getReadableMonth(period[1])} ` : ''}
           {period[0]}
         </div>
         <button

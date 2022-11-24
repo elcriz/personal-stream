@@ -171,10 +171,6 @@
 }
 
 @media screen and (max-width: 440px) {
-  .log__header {
-    padding-right: 80px;
-  }
-
   .log__heading {
     font-size: var(--font-size-100);
   }
