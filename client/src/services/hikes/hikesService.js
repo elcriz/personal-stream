@@ -58,14 +58,24 @@ export default {
   /**
    * Retrieve hikes.
    * @param {string} _token
+   * @param {number[]} period - Year or Year and Month to search in
    * @param {string} sortBy - Value to sort results by
    * @param {boolean} isAscending - Should results be ordered ascending?
    * @returns Promise
    */
-  retrieveHikes: async (_token, sortBy, isAscending = false) => {
+  retrieveHikes: async (
+    _token,
+    period,
+    sortBy,
+    isAscending = false,
+  ) => {
     try {
+      let params = `?sortBy=${sortBy}&order=${isAscending ? 'asc' : 'desc'}&year=${period[0]}`;
+      if (period.length > 1) {
+        params += `&month=${period[1] + 1}`;
+      }
       const response = await fetch(
-        `/api/hikes?sortBy=${sortBy}&order=${isAscending ? 'asc' : 'desc'}`,
+        `/api/hikes${params}`,
         {
           credentials: 'include',
           headers: {
@@ -77,8 +87,8 @@ export default {
       if (!response.ok) {
         throw new Error(response.status);
       }
-      const { amount, totals, hikes } = await response.json();
-      return { amount, totals, hikes: hikes.map(serializeHikeToPlatform) };
+      const { hikes, ...data } = await response.json();
+      return { ...data, hikes: hikes.map(serializeHikeToPlatform) };
     } catch (error) {
       throw error;
     }

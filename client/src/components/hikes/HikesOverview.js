@@ -4,9 +4,27 @@ import useTableHeads from '../../hooks/useTableHeads';
 import SkeletonItem from '../SkeletonItem';
 import TableHeadButton from '../TableHeadButton';
 
+const monthMap = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
+
 const HikesOverview = ({
   hikes,
+  month,
+  year,
   amount,
+  isFirstUpdate,
   isAddingDisabled,
   isLoading,
   onFetch,
@@ -15,7 +33,9 @@ const HikesOverview = ({
   const { handleTableHeadClick, sortBy, isAscending } = useTableHeads('dateTime');
 
   useEffect(() => {
-    onFetch(sortBy, isAscending);
+    if (!isFirstUpdate) {
+      onFetch(sortBy, isAscending);
+    }
   }, [sortBy, isAscending]);
 
   return (
@@ -23,7 +43,7 @@ const HikesOverview = ({
       <div className="hikes-overview__log log">
         <header className="log__header">
           <h1 className="log__heading">
-            <em>{amount === 1 ? '1 Hike' : `${amount} Hikes`} so far</em>
+            <em>{amount === 1 ? '1 Hike' : `${amount} Hikes`} in {month ? `${monthMap[month]} ` : ''}{year}</em>
           </h1>
         </header>
 
@@ -217,7 +237,10 @@ const HikesOverview = ({
 
 HikesOverview.propTypes = {
   hikes: PropTypes.array.isRequired,
+  month: PropTypes.number,
+  year: PropTypes.number.isRequired,
   amount: PropTypes.number.isRequired,
+  isFirstUpdate: PropTypes.bool.isRequired,
   isAddingDisabled: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
   onFetch: PropTypes.func.isRequired,
