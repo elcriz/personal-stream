@@ -44,7 +44,6 @@ const Hikes = () => {
       })
       .finally(() => {
         setIsSubmitting(false);
-        setIsFetching(true);
         fetchHikes();
         callback();
       });
@@ -84,6 +83,7 @@ const Hikes = () => {
   };
 
   useEffect(() => {
+    console.log(period, firstUpdate.current);
     if (!firstUpdate.current) {
       fetchHikes();
     }
