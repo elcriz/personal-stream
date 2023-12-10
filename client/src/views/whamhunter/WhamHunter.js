@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import whamHunterService from './WhamHunterService';
+import { getSortedByProperty } from '../../helpers/arrayHelper';
 import './wham-hunter.css';
 
 const defaultErrorMessage = 'Wham! Er ging iets mis! Probeer het later nog een keer :-(';
@@ -11,6 +12,10 @@ const WhamHunter = () => {
   const [scoreTimeMs, setScoreTimeMs] = useState(0);
   const [error, setError] = useState('');
   const [isFetching, setIsFetching] = useState(false);
+
+  const sortedPlayers = ((hasScores) => {
+    return hasScores ? getSortedByProperty(players, 'score', 'desc') : players.reverse();
+  })(!!players.find((player => player.score > 0)))
 
   const fetchPlayers = () => {
     setError('');
@@ -179,7 +184,7 @@ const WhamHunter = () => {
                     <h2>Al meegespeeld?</h2>
                     <p>Klik dan op je naam om verder te gaan:</p>
                     <ul className="wham-hunter__players">
-                      {players.map((player, playerIndex) => (
+                      {getSortedByProperty(players, 'name').map((player, playerIndex) => (
                         <li key={playerIndex}>
                           <button
                             className="wham-hunter__player-name"
@@ -220,17 +225,16 @@ const WhamHunter = () => {
                   {scoreTimeMs > 0 && (
                     <img src="/whammed.png" alt="George" />
                   )}
-                  <p className="disclaimer">In de verleiding om extra te klikken? Denk twee keer na... hou het eerlijk en hou het leuk ;-)</p>
                 </div>
 
                 <div className="scores">
-                <h2>Scorelijst</h2>
+                  <h2>Scorelijst</h2>
                   {players.length === 0 && (
                     <p>Nog niemand heeft gescoord. Ga jij de eerste zijn? ;-)</p>
                   )}
                   {players.length > 0 && (
                     <ol className="wham-hunter__players wham-hunter__players--scores">
-                      {players.map((player, playerIndex) => (
+                      {sortedPlayers.map((player, playerIndex) => (
                         <li key={playerIndex}>
                           <div className="player__placement">{playerIndex + 1}.</div>
                           <div className="player__name">{player.name}</div>
@@ -240,6 +244,7 @@ const WhamHunter = () => {
                     </ol>
                   )}
                 </div>
+                <p className="disclaimer">In de verleiding om extra te klikken? Denk twee keer na... hou het eerlijk en hou het leuk ;-)</p>
               </>
             )}
           </>
