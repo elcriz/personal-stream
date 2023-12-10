@@ -209,7 +209,7 @@ const WhamHunter = () => {
             {userInfo && (
               <>
                 <div className="game">
-                  <h2>LAST CHRISTMAS gehoord?</h2>
+                  <h2>Last Christmas gehoord?</h2>
                   <p>Yes! Laat het ons direct weten:</p>
                   <button
                     className="wham-hunter__button wham-hunter__button--xl"
@@ -246,7 +246,7 @@ const WhamHunter = () => {
                     </ol>
                   )}
                 </div>
-                <p className="disclaimer">In de verleiding om extra te klikken? Denk twee keer na... hou het eerlijk en hou het leuk ;-)</p>
+                <p className="disclaimer">In de verleiding om 2x te klikken? Denk twee keer na. Hou het eerlijk en hou het leuk ;-)</p>
               </>
             )}
           </>
