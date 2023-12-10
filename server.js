@@ -39,6 +39,7 @@ const userRouter = require('./routes/userRouter');
 const streamRouter = require('./routes/streamRouter');
 const feedRouter = require('./routes/feedRouter');
 const hikesRouter = require('./routes/hikes/hikesRouter');
+const whamhunterRouter = require('./routes/whamhunter/whamhunterRouter');
 
 app.use(cors({
   credentials: true,
@@ -62,6 +63,8 @@ app.use('/api/proxy', corsProxy);
 app.use('/feed.xml', feedRouter);
 
 app.use('/api/hikes', hikesRouter);
+
+app.use('/api/whamhunter', whamhunterRouter);
 
 mongoose.connect(process.env.MONGO_DB_CONNECTION_STRING, {
   useNewUrlParser: true,
