@@ -100,7 +100,11 @@ const WhamHunter = () => {
   };
 
   useEffect(() => {
+    document.title = 'Wham! Hunter';
     getUserInfoFromStorage();
+    return () => {
+      document.title = 'Chris\ Stream';
+    }
   }, []);
 
   useEffect(() => {
