@@ -14,7 +14,9 @@ const WhamHunter = () => {
   const [isFetching, setIsFetching] = useState(false);
 
   const sortedPlayers = ((hasScores) => {
-    return hasScores ? getSortedByProperty(players, 'score', 'desc') : players.reverse();
+    return hasScores
+      ? getSortedByProperty(players, 'score', 'desc')
+      : players.reverse();
   })(!!players.find((player => player.score > 0)))
 
   const fetchPlayers = () => {
