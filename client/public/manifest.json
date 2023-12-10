@@ -8,7 +8,7 @@
       "type": "image/x-icon"
     }
   ],
-  "start_url": ".",
+  "start_url": "https://chris-personal-stream.herokuapp.com/whamhunter",
   "display": "standalone",
   "theme_color": "#0069be",
   "background_color": "#ffffff"
