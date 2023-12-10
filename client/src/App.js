@@ -12,6 +12,8 @@ import Header from './components/Header';
 import PrivateWrapper from './components/PrivateWrapper';
 import useAuth from './hooks/useAuth';
 
+import { WhamHunter } from './views/whamhunter/WhamHunter';
+
 const App = () => {
   const auth = useAuth();
 
@@ -46,6 +48,11 @@ const App = () => {
             path="/login"
             exact
             element={(<Login />)}
+          />
+          <Route
+            path="/whamhunter"
+            exact
+            element={(<WhamHunter />)}
           />
           <Route element={(
             <PrivateWrapper
