@@ -57,7 +57,7 @@ const WhamHunter = () => {
       console.error(e);
       setError(defaultErrorMessage);
     }
-  }
+  };
 
   const handleSubmitLogin = () => {
     const playerName = name.trim();
@@ -100,7 +100,7 @@ const WhamHunter = () => {
       .finally(() => {
         setIsFetching(false);
       });
-  }
+  };
 
   const handleSelectPlayer = (playerToSelect) => {
     setUserInfo(playerToSelect);
