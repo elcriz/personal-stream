@@ -2,11 +2,7 @@ const User = require('../models/userModel');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 
-const {
-  getToken,
-  getRefreshToken,
-  COOKIE_OPTIONS,
-} = require('../utils/authenticate');
+const { getToken, getRefreshToken, COOKIE_OPTIONS } = require('../utils/authenticate');
 
 // Get current user details
 const getMe = (req, res) => {
@@ -36,13 +32,13 @@ const login = async (req, res, next) => {
       res.send({
         success: true,
         role: req.user.role,
-        token
+        token,
       });
     });
   } catch (error) {
     next(error);
   }
-}
+};
 
 // Log out the user
 const logout = async (req, res, next) => {
@@ -56,9 +52,7 @@ const logout = async (req, res, next) => {
 
   try {
     const user = await User.findById(_id);
-    const tokenIndex = user.refreshToken.findIndex(
-      item => item.refreshToken === refreshToken,
-    );
+    const tokenIndex = user.refreshToken.findIndex((item) => item.refreshToken === refreshToken);
 
     if (tokenIndex !== -1) {
       user.refreshToken.id(user.refreshToken[tokenIndex]._id).remove();
@@ -78,31 +72,28 @@ const logout = async (req, res, next) => {
 
 // Sign up a new user
 const signup = async (req, res) => {
-  const { body: { username, firstName, lastName, password } } = req;
-  const newUser = await User
-    .register(
-      new User({ username }),
-      password,
-      (error, user) => {
-        if (error) {
-          return res.status(500).json({ error });
-        }
-        user.firstName = firstName;
-        user.lastName = lastName;
+  const {
+    body: { username, firstName, lastName, password },
+  } = req;
+  const newUser = await User.register(new User({ username }), password, (error, user) => {
+    if (error) {
+      return res.status(500).json({ error });
+    }
+    user.firstName = firstName;
+    user.lastName = lastName;
 
-        const token = getToken({ _id: user._id });
-        const refreshToken = getRefreshToken({ _id: user._id });
+    const token = getToken({ _id: user._id });
+    const refreshToken = getRefreshToken({ _id: user._id });
 
-        user.refreshToken.push({ refreshToken });
-        user.save((error, user) => {
-          if (error) {
-            res.status(500).json({ error });
-          }
-          res.cookie('refreshToken', refreshToken, COOKIE_OPTIONS);
-          res.json({ success: true, token });
-        });
-      },
-    );
+    user.refreshToken.push({ refreshToken });
+    user.save((error, user) => {
+      if (error) {
+        res.status(500).json({ error });
+      }
+      res.cookie('refreshToken', refreshToken, COOKIE_OPTIONS);
+      res.json({ success: true, token });
+    });
+  });
 };
 
 // Check refreshToken
@@ -123,9 +114,7 @@ const checkRefreshToken = async (req, res, next) => {
       return res.status(401).send('Unauthorized');
     }
 
-    const tokenIndex = user.refreshToken.findIndex(
-      item => item.refreshToken === refreshToken,
-    );
+    const tokenIndex = user.refreshToken.findIndex((item) => item.refreshToken === refreshToken);
 
     if (tokenIndex === -1) {
       res.status(401).send('Unauthorized');
@@ -143,7 +132,7 @@ const checkRefreshToken = async (req, res, next) => {
       res.send({
         success: true,
         role: req.user.role,
-        token
+        token,
       });
     });
   } catch (error) {

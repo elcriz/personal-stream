@@ -9,31 +9,34 @@ const sessionSchema = new Schema({
   },
 });
 
-const userSchema = new Schema({
-  firstName: {
-    type: String,
-    default: '',
+const userSchema = new Schema(
+  {
+    firstName: {
+      type: String,
+      default: '',
+    },
+    lastName: {
+      type: String,
+      default: '',
+    },
+    authStrategy: {
+      type: String,
+      default: 'local',
+    },
+    points: {
+      type: Number,
+      default: 50,
+    },
+    role: {
+      type: Number,
+      default: 0,
+    },
+    refreshToken: {
+      type: [sessionSchema],
+    },
   },
-  lastName: {
-    type: String,
-    default: '',
-  },
-  authStrategy: {
-    type: String,
-    default: 'local',
-  },
-  points: {
-    type: Number,
-    default: 50,
-  },
-  role: {
-    type: Number,
-    default: 0,
-  },
-  refreshToken: {
-    type: [sessionSchema],
-  },
-}, { timestamps: true });
+  { timestamps: true },
+);
 
 userSchema.set('toJSON', {
   transform: (doc, ret, options) => {

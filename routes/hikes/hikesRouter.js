@@ -1,8 +1,5 @@
 const express = require('express');
-const {
-  getHikes,
-  addHike,
-} = require('../../controllers/hikes/hikeController');
+const { getHikes, addHike } = require('../../controllers/hikes/hikeController');
 const { verifyUser } = require('../../utils/authenticate');
 const router = express.Router();
 

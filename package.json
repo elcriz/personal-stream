@@ -5,8 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "lint": "npm run lint:fix",
+    "lint": "npm run lint:format && npm run lint:fix",
     "lint:fix": "eslint --ext .js,.ts --fix --color --ignore-path ./.gitignore",
+    "lint:format": "prettier --log-level log --write \"./**/*.{js,ts,md,json}\" ",
     "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
   },
   "engines": {

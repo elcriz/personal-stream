@@ -10,9 +10,8 @@ module.exports = {
   addPlayer: async (req, res) => {
     const { name } = req.body;
     try {
-      const playerToAdd = await Player
-        .create(new Player({ name, score: 0 }));
-        res.status(201).json(playerToAdd);
+      const playerToAdd = await Player.create(new Player({ name, score: 0 }));
+      res.status(201).json(playerToAdd);
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
@@ -25,11 +24,9 @@ module.exports = {
       return res.status(404).json({ error: 'No such player found' });
     }
 
-    const scoringPlayer = await Player
-      .findById(id);
+    const scoringPlayer = await Player.findById(id);
 
-    const player = await Player
-      .findOneAndUpdate({ _id: id }, { score: (scoringPlayer.score + 1) });
+    const player = await Player.findOneAndUpdate({ _id: id }, { score: scoringPlayer.score + 1 });
 
     if (!player) {
       return res.status(400).json({ error: 'No such item found' });
@@ -37,4 +34,4 @@ module.exports = {
 
     res.status(200).json(player);
   },
-}
+};

@@ -11,12 +11,12 @@ exports.COOKIE_OPTIONS = {
   sameSite: 'none',
 };
 
-exports.getToken = user =>
+exports.getToken = (user) =>
   jwt.sign(user, process.env.JWT_SECRET, {
     expiresIn: eval(process.env.SESSION_EXPIRY),
   });
 
-exports.getRefreshToken = user =>
+exports.getRefreshToken = (user) =>
   jwt.sign(user, process.env.REFRESH_TOKEN_SECRET, {
     expiresIn: eval(process.env.REFRESH_TOKEN_EXPIRY),
   });

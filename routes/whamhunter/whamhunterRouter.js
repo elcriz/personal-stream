@@ -1,9 +1,9 @@
 const express = require('express');
 
 const {
- getPlayers,
- addPlayer,
- addScore
+  getPlayers,
+  addPlayer,
+  addScore,
 } = require('../../controllers/whamhunter/playerController');
 
 const router = express.Router();

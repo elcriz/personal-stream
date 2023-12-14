@@ -1,11 +1,11 @@
 module.exports = {
   root: true,
-  env: { browser: true, es2020: true },
-  extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
-  ignorePatterns: ["dist", ".eslintrc.cjs"],
-  parser: "@typescript-eslint/parser",
+  env: { browser: false, es2020: true },
+  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended'],
+  ignorePatterns: ['dist', '.eslintrc.cjs'],
+  parser: '@typescript-eslint/parser',
   rules: {
-    "no-unused-vars": "off",
-    "no-prototype-builtins": 0,
+    'no-unused-vars': 'off',
+    'no-prototype-builtins': 0,
   },
 };

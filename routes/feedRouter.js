@@ -2,13 +2,10 @@ const RSS = require('rss');
 const Item = require('../models/itemModel');
 
 module.exports = async (req, res) => {
-  const items = await Item
-    .find()
-    .sort('-createdAt')
-    .limit(5);
+  const items = await Item.find().sort('-createdAt').limit(5);
 
   const feed = new RSS({
-    title: 'Chris\' Stream',
+    title: "Chris' Stream",
     description: 'Short updates on things keeping me afloat, for anyone who cares.',
     feed_url: `${process.env.API_URL}/feed.xml`,
     site_url: process.env.SITE_URL,
