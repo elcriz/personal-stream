@@ -29,7 +29,7 @@ const PeriodNavigation = ({ period, isLoading, setPeriod }: PeriodNavigationProp
     );
   };
 
-  const handlePeriodTypeChange = (type: 'year' | 'month') => {
+  const handlePeriodTypeChange = (type: string | string[]) => {
     const today = new Date();
     const periodToSet = [today.getFullYear()];
     setPeriod(type === types[1] ? [...periodToSet, today.getMonth()] : periodToSet);

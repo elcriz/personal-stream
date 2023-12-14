@@ -53,8 +53,8 @@ function WhamHunter() {
   const addUserInfoToStorage = (overwrite?: IPlayer) => {
     try {
       window.localStorage.setItem('whamhunter', JSON.stringify(overwrite || userInfo));
-    } catch (e) {
-      console.error(e);
+    } catch (error) {
+      console.error(error);
       setError(defaultErrorMessage);
     }
   };
