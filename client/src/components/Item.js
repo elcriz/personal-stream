@@ -1,22 +1,18 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { Link, Navigate } from 'react-router-dom';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import { Link, Navigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
-import streamService from '../services/streamService';
-import useAuth from '../hooks/useAuth';
-import Media from './Media';
+import useAuth from 'hooks/useAuth';
+import streamService from 'services/streamService';
+import Media from 'components/Media';
 
-const Item = ({
-  className,
-  item,
-  shouldRenderOptions,
-  isLoading,
-}) => {
+const Item = ({ className, item, shouldRenderOptions, isLoading }) => {
   const [isFetching, setIsFetching] = useState(false);
   const [isDeleted, setIsDeleted] = useState(false);
 
-  const { _id, title, slug, body, tags, dates, relativeDates, hasMedia, mediaPosition, ...media } = item;
+  const { _id, title, slug, body, tags, dates, relativeDates, hasMedia, mediaPosition, ...media } =
+    item;
   const auth = useAuth();
 
   const handleDelete = (event) => {
@@ -25,7 +21,8 @@ const Item = ({
     if (window.confirm('Do you really want to delete this item?')) {
       setIsFetching(true);
 
-      streamService.deleteItemById(_id, auth.user.token)
+      streamService
+        .deleteItemById(_id, auth.user.token)
         .then(() => {
           setIsFetching(false);
           setIsDeleted(true);
@@ -38,9 +35,7 @@ const Item = ({
   };
 
   if (isDeleted) {
-    return (
-      <Navigate to="/" />
-    );
+    return <Navigate to="/" />;
   }
 
   return (
@@ -54,7 +49,10 @@ const Item = ({
           <Link to={`/${slug}`}>{title}</Link>
         </h2>
         <div className="item__meta">
-          <div className="item__timestamp" title={dates.created}>
+          <div
+            className="item__timestamp"
+            title={dates.created}
+          >
             {relativeDates.created}
           </div>
         </div>
@@ -92,8 +90,13 @@ const Item = ({
       {shouldRenderOptions && auth.user.isAllowedToModify && (
         <ul className="item__actions">
           <li>
-            <Link className="link" to={`/modify/${_id}`}>Edit</Link>
-            </li>
+            <Link
+              className="link"
+              to={`/modify/${_id}`}
+            >
+              Edit
+            </Link>
+          </li>
           <li>
             <button
               className="link"
@@ -121,6 +124,6 @@ Item.propTypes = {
   item: PropTypes.object.isRequired,
   shouldRenderOptions: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool,
-}
+};
 
 export default Item;

@@ -12,7 +12,7 @@
 }
 
 .input:disabled {
-  opacity: .5;
+  opacity: 0.5;
 }
 
 .input--body {

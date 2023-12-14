@@ -4,13 +4,13 @@
   gap: calc(var(--spacing) * 2);
   margin-bottom: var(--spacing);
   padding-bottom: var(--spacing);
-  border-bottom: 1px solid rgba(var(--color-light-blue), .25);
+  border-bottom: 1px solid rgba(var(--color-light-blue), 0.25);
   transition: var(--transition-100);
 }
 
-.period-navigation[data-variant="loading"] {
+.period-navigation[data-variant='loading'] {
   pointer-events: none;
-  opacity: .5;
+  opacity: 0.5;
 }
 
 .period-navigation__actions {
@@ -26,7 +26,7 @@
   border-radius: calc(var(--spacing) / 2) !important;
 }
 
-.period-navigation__button::after{
+.period-navigation__button::after {
   display: block;
 }
 
@@ -50,7 +50,7 @@
   order: 2;
   padding: calc(var(--spacing) / 2) var(--spacing);
   color: rgb(var(--color-grey));
-  background-color: rgba(var(--color-grey), .125);
+  background-color: rgba(var(--color-grey), 0.125);
   border-radius: calc(var(--spacing) / 4);
   line-height: 16px;
 }

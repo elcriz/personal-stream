@@ -16,7 +16,7 @@
 .items-list__options h3 {
   margin-bottom: 0;
   margin-right: calc(var(--spacing) / 4);
-  font-size: .9em;
+  font-size: 0.9em;
 }
 
 .items-list__options h3::after {
@@ -67,7 +67,7 @@
   width: 24px;
   height: 24px;
   margin-right: calc(var(--spacing) / 2);
-  background-color: rgba(var(--color-dark-green), .25);
+  background-color: rgba(var(--color-dark-green), 0.25);
   border-radius: calc(var(--spacing) / 2);
   text-align: center;
 }

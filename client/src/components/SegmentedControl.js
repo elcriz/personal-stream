@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 
 const SegmentedControl = ({
   id,
@@ -13,31 +13,28 @@ const SegmentedControl = ({
   isInline,
   ...rest
 }) => {
-	const isMultiSelect = value && Array.isArray(value);
-	const [currentValue, setValue] = useState(value
-		|| (isMultiSelect ? [] : '')
-	);
+  const isMultiSelect = value && Array.isArray(value);
+  const [currentValue, setValue] = useState(value || (isMultiSelect ? [] : ''));
 
   const handleChange = (newValue, isChecked) => {
-		if (!isMultiSelect) {
-			setValue(newValue);
-			return;
-		}
-		setValue(oldValues => ([
-			...oldValues.filter(foundValue => foundValue !== newValue),
-			newValue
-		].filter(foundValue => isChecked
-			? foundValue !== newValue : true
-		)));
-	};
+    if (!isMultiSelect) {
+      setValue(newValue);
+      return;
+    }
+    setValue((oldValues) =>
+      [...oldValues.filter((foundValue) => foundValue !== newValue), newValue].filter(
+        (foundValue) => (isChecked ? foundValue !== newValue : true),
+      ),
+    );
+  };
 
-	React.useEffect(() => {
-		if (onChange && currentValue !== value) {
-			onChange(currentValue);
-		}
-	}, [currentValue]);
+  useEffect(() => {
+    if (onChange && currentValue !== value) {
+      onChange(currentValue);
+    }
+  }, [currentValue]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (value) {
       setValue(value || (isMultiSelect ? [] : ''));
     }
@@ -53,24 +50,26 @@ const SegmentedControl = ({
     >
       {label && (
         <div className="segmented-control__label-box">
-          <label className="segmented-control__label">
-              {label}
-          </label>
+          <label className="segmented-control__label">{label}</label>
         </div>
       )}
       <div className="segmented-control__items">
         {options.map((optionValue, index) => {
           const optionId = `${id}-${index}`;
-          const serializedOptionValue = typeof optionValue === 'object' ? Object.keys(optionValue)[0] : optionValue;
-          const inputLabel = typeof optionValue === 'object' ? optionValue[Object.keys(optionValue)] : optionValue;
+          const serializedOptionValue =
+            typeof optionValue === 'object' ? Object.keys(optionValue)[0] : optionValue;
+          const inputLabel =
+            typeof optionValue === 'object' ? optionValue[Object.keys(optionValue)] : optionValue;
           const checked = isMultiSelect
-            ? (currentValue.indexOf(serializedOptionValue) !== -1)
-            : (currentValue === serializedOptionValue);
+            ? currentValue.indexOf(serializedOptionValue) !== -1
+            : currentValue === serializedOptionValue;
 
           return (
             <label
               key={index}
-              className={`segmented-control__item${value === serializedOptionValue ? ' is-selected' : ''}`}
+              className={`segmented-control__item${
+                value === serializedOptionValue ? ' is-selected' : ''
+              }`}
               htmlFor={optionId}
             >
               <input
@@ -84,9 +83,7 @@ const SegmentedControl = ({
                   handleChange(event.target.value, checked);
                 }}
               />
-              <span className="segmented-control__input-label">
-                {inputLabel}
-              </span>
+              <span className="segmented-control__input-label">{inputLabel}</span>
             </label>
           );
         })}
@@ -102,19 +99,10 @@ SegmentedControl.defaultProps = {
 
 SegmentedControl.propTypes = {
   id: PropTypes.string.isRequired,
+  className: PropTypes.string,
   label: PropTypes.string,
-  options: PropTypes.arrayOf(
-    PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.object
-    ])
-  ).isRequired,
-  value: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.arrayOf(
-      PropTypes.string
-    )
-  ]),
+  options: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.object])).isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
   onChange: PropTypes.func,
   isInline: PropTypes.bool,
   isSmall: PropTypes.bool,

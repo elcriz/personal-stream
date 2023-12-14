@@ -1,11 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
-import hikesService from '../../services/hikes/hikesService';
-import useAuth from '../../hooks/useAuth';
-import Hike from '../../models/hikes/Hike';
-import Canvas from '../../components/Canvas';
-import PeriodNavigation from '../../components/PeriodNavigation';
-import HikesOverview from '../../components/hikes/HikesOverview';
-import AddHikeModal from '../../components/hikes/AddHikeModal';
+import { useEffect, useRef, useState } from 'react';
+import Canvas from 'components/Canvas';
+import AddHikeModal from 'components/hikes/AddHikeModal';
+import HikesOverview from 'components/hikes/HikesOverview';
+import PeriodNavigation from 'components/PeriodNavigation';
+import useAuth from 'hooks/useAuth';
+import Hike from 'models/hikes/Hike';
+import hikesService from 'services/hikes/hikesService';
 
 const Hikes = () => {
   const [period, setPeriod] = useState([new Date().getFullYear()]);
@@ -21,11 +21,7 @@ const Hikes = () => {
   const auth = useAuth();
   const firstUpdate = useRef(true);
 
-  const handleAddSubmit = (
-    hikeToAdd = new Hike(),
-    callback,
-    event,
-  ) => {
+  const handleAddSubmit = (hikeToAdd = new Hike(), callback, event) => {
     event.preventDefault();
     setError('');
     setIsSubmitting(true);
@@ -33,10 +29,7 @@ const Hikes = () => {
     hikesService
       .createHike(hikeToAdd, auth.user.token)
       .then((hikeAdded) => {
-        setHikes(currentHikes => ([
-          hikeAdded,
-          ...currentHikes,
-        ]));
+        setHikes((currentHikes) => [hikeAdded, ...currentHikes]);
       })
       .catch((error) => {
         console.log(error);
@@ -49,31 +42,25 @@ const Hikes = () => {
       });
   };
 
-  const fetchHikes = (
-    sortBy = 'dateTime',
-    isAscending = false,
-  ) => {
+  const fetchHikes = (sortBy = 'dateTime', isAscending = false) => {
     setIsFetching(true);
     setError('');
 
     hikesService
-      .retrieveHikes(
-        auth.user.token,
-        period,
-        sortBy,
-        isAscending,
+      .retrieveHikes(auth.user.token, period, sortBy, isAscending)
+      .then(
+        ({
+          filteredAmount: newFilteredAmount,
+          amount: newAmount,
+          totals: newTotals,
+          hikes: newHikes,
+        }) => {
+          setFilteredAmount(newFilteredAmount);
+          setAmount(newAmount);
+          setTotals(newTotals);
+          setHikes(newHikes);
+        },
       )
-      .then(({
-        filteredAmount: newFilteredAmount,
-        amount: newAmount,
-        totals: newTotals,
-        hikes: newHikes,
-      }) => {
-        setFilteredAmount(newFilteredAmount);
-        setAmount(newAmount);
-        setTotals(newTotals);
-        setHikes(newHikes);
-      })
       .catch((error) => {
         setError(error);
       })
@@ -124,11 +111,7 @@ const Hikes = () => {
         isSubmitting={isSubmitting}
       />
 
-      {error && (
-        <div className="error">
-          {error}
-        </div>
-      )}
+      {error && <div className="error">{error}</div>}
     </Canvas>
   );
 };

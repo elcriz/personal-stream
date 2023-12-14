@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
-import usersService from '../services/usersService';
-import Canvas from '../components/Canvas';
-import Field from '../components/Field';
-import useAuth from '../hooks/useAuth';
+import Canvas from 'components/Canvas';
+import Field from 'components/Field';
+import useAuth from 'hooks/useAuth';
+import usersService from 'services/usersService';
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -20,10 +20,11 @@ const Register = () => {
     setIsSubmitting(true);
     setError('');
 
-    usersService.retrieveSignup(email, firstName, lastName, password)
+    usersService
+      .retrieveSignup(email, firstName, lastName, password)
       .then((data) => {
         setIsSubmitting(false);
-        auth.setUser(previous => ({
+        auth.setUser((previous) => ({
           ...previous,
           token: data.token,
         }));
@@ -45,19 +46,17 @@ const Register = () => {
           }
         }
       });
-  }
+  };
 
   useEffect(() => {
     setError('');
   }, [email, firstName, lastName, password]);
 
   if (auth.user.isAuthenticated) {
-    return (
-      <Navigate to="/" />
-    );
+    return <Navigate to="/" />;
   }
 
-  return(
+  return (
     <Canvas>
       <form
         className="form"
@@ -108,15 +107,19 @@ const Register = () => {
         >
           Register
         </button>
-        {error && (
-          <div className="form__error error">
-            {error}
-          </div>
-        )}
-        <p>Already have an account? <Link className="link" to="/login">Sign in</Link></p>
+        {error && <div className="form__error error">{error}</div>}
+        <p>
+          Already have an account?{' '}
+          <Link
+            className="link"
+            to="/login"
+          >
+            Sign in
+          </Link>
+        </p>
       </form>
     </Canvas>
   );
-}
+};
 
 export default Register;

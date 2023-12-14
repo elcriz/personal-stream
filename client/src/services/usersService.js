@@ -4,22 +4,15 @@ export default {
    * @returns Promise
    */
   retrieveRefreshToken: async () => {
-    try {
-      const response = await fetch(
-        `/api/users/refreshToken`,
-        {
-          method: 'POST',
-          credentials: 'include',
-          headers: { 'Content-Type': 'application/json' },
-        },
-      );
-      if (!response.ok) {
-        throw new Error(response.status);
-      }
-      return await response.json();
-    } catch (error) {
-      throw error;
+    const response = await fetch(`/api/users/refreshToken`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+    });
+    if (!response.ok) {
+      throw new Error(response.status);
     }
+    return await response.json();
   },
 
   /**
@@ -29,24 +22,16 @@ export default {
    * @returns Promise
    */
   retrieveLogin: async (username, password) => {
-    try {
-      const response = await fetch(
-        `/api/users/login`,
-        {
-          method: 'POST',
-          credentials: 'include',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username, password }),
-        },
-      );
-      if (!response.ok) {
-        throw response.status;
-      }
-      return await response.json();
-
-    } catch (error) {
-      throw error;
+    const response = await fetch(`/api/users/login`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password }),
+    });
+    if (!response.ok) {
+      throw response.status;
     }
+    return await response.json();
   },
 
   /**
@@ -55,24 +40,17 @@ export default {
    * @returns Promise
    */
   retrieveLogout: async (_token) => {
-    try {
-      const response = await fetch(
-        `/api/users/logout`,
-        {
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${_token}`,
-          },
-        },
-      );
-      if (!response.ok) {
-        throw new Error(response.status);
-      }
-      return await response.json();
-    } catch (error) {
-      throw error;
+    const response = await fetch(`/api/users/logout`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${_token}`,
+      },
+    });
+    if (!response.ok) {
+      throw new Error(response.status);
     }
+    return await response.json();
   },
 
   /**
@@ -84,27 +62,20 @@ export default {
    * @returns Promise
    */
   retrieveSignup: async (username, firstName, lastName, password) => {
-    try {
-      const response = await fetch(
-        `/api/users/signup`,
-        {
-          method: 'POST',
-          credentials: 'include',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            username,
-            firstName,
-            lastName,
-            password,
-          }),
-        },
-      );
-      if (!response.ok) {
-        throw response.status;
-      }
-      return await response.json();
-    } catch (error) {
-      throw error;
+    const response = await fetch(`/api/users/signup`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username,
+        firstName,
+        lastName,
+        password,
+      }),
+    });
+    if (!response.ok) {
+      throw response.status;
     }
+    return await response.json();
   },
 };

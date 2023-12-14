@@ -20,5 +20,5 @@
   font-weight: bold;
   background-color: rgb(var(--color-orange));
   border-radius: calc(var(--spacing) / 2);
-  box-shadow: 4px 4px 0px rgba(var(--color-brown), .1);
+  box-shadow: 4px 4px 0px rgba(var(--color-brown), 0.1);
 }

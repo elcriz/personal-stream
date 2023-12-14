@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 import { Link } from 'react-router-dom';
-import usersService from '../services/usersService';
-import useAuth from '../hooks/useAuth';
+import useAuth from 'hooks/useAuth';
+import usersService from 'services/usersService';
 
 const Header = () => {
   const auth = useAuth();
@@ -9,7 +9,8 @@ const Header = () => {
   const handleLogout = (event) => {
     event.preventDefault();
 
-    usersService.retrieveLogout(auth.user.token)
+    usersService
+      .retrieveLogout(auth.user.token)
       .then(() => {
         auth.clearUser();
       })
@@ -24,12 +25,32 @@ const Header = () => {
         <Link to="/">Chris' Stream</Link>
       </h1>
       <nav aria-label="Main">
-        <Link className="link" to="/">Stream</Link>
-        <Link className="link" to="/about">About</Link>
+        <Link
+          className="link"
+          to="/"
+        >
+          Stream
+        </Link>
+        <Link
+          className="link"
+          to="/about"
+        >
+          About
+        </Link>
         {auth.user.isAllowedToAdd && (
           <>
-            <Link className="link" to="/add">Add</Link>
-            <Link className="link" to="/hikes">Hikes</Link>
+            <Link
+              className="link"
+              to="/add"
+            >
+              Add
+            </Link>
+            <Link
+              className="link"
+              to="/hikes"
+            >
+              Hikes
+            </Link>
           </>
         )}
         {auth.user.isAuthenticated && (

@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
+import { getReadableMonth } from '../../helpers/dateTimeHelper';
 import useTableHeads from '../../hooks/useTableHeads';
 import SkeletonItem from '../SkeletonItem';
 import TableHeadButton from '../TableHeadButton';
-import { getReadableMonth } from '../../helpers/dateTimeHelper';
 
 const HikesOverview = ({
   hikes,
@@ -29,7 +29,11 @@ const HikesOverview = ({
       <div className="hikes-overview__log log">
         <header className="log__header">
           <h1 className="log__heading">
-            <em>{amount === 1 ? '1 Hike' : `${amount} Hikes`} in {month !== undefined ? `${getReadableMonth(month)} ` : ''}{year}</em>
+            <em>
+              {amount === 1 ? '1 Hike' : `${amount} Hikes`} in{' '}
+              {month !== undefined ? `${getReadableMonth(month)} ` : ''}
+              {year}
+            </em>
           </h1>
         </header>
 
@@ -44,9 +48,7 @@ const HikesOverview = ({
 
         <div className="log__overview-wrapper">
           <div className="log__overview">
-            {isLoading && hikes.length === 0 && (
-              <SkeletonItem />
-            )}
+            {isLoading && hikes.length === 0 && <SkeletonItem />}
             {hikes.length > 0 && (
               <table
                 className="log__table"
@@ -106,7 +108,9 @@ const HikesOverview = ({
                         Elevation gain
                       </TableHeadButton>
                     </th>
-                    <th colSpan="2">Duration <span>(hh:mm)</span></th>
+                    <th colSpan="2">
+                      Duration <span>(hh:mm)</span>
+                    </th>
                     <th colSpan="2">Speed</th>
                   </tr>
                   <tr>
@@ -195,19 +199,19 @@ const HikesOverview = ({
                         data-variant="narrow"
                         data-alignment="end"
                       >
-                          {hike.hours.stopped}
+                        {hike.hours.stopped}
                       </td>
                       <td
                         data-variant="narrow"
                         data-alignment="end"
                       >
-                          {hike.speedMoving.toFixed(2)} <span>km/h</span>
+                        {hike.speedMoving.toFixed(2)} <span>km/h</span>
                       </td>
                       <td
                         data-variant="narrow"
                         data-alignment="end"
                       >
-                          {hike.speedOverall.toFixed(2)} <span>km/h</span>
+                        {hike.speedOverall.toFixed(2)} <span>km/h</span>
                       </td>
                     </tr>
                   ))}

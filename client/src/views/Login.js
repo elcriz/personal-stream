@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
-import usersService from '../services/usersService';
-import Canvas from '../components/Canvas';
-import Field from '../components/Field';
-import useAuth from '../hooks/useAuth';
+import Canvas from 'components/Canvas';
+import Field from 'components/Field';
+import useAuth from 'hooks/useAuth';
+import usersService from 'services/usersService';
 
 const defaultErrorMessage = 'Something went wrong, please try again later';
 
@@ -20,10 +20,11 @@ const Login = () => {
     setIsSubmitting(true);
     setError('');
 
-    usersService.retrieveLogin(email, password)
+    usersService
+      .retrieveLogin(email, password)
       .then((data) => {
         setIsSubmitting(false);
-        auth.setUser(previous => ({
+        auth.setUser((previous) => ({
           ...previous,
           token: data.token,
           role: data.role,
@@ -56,9 +57,7 @@ const Login = () => {
   }, [email, password]);
 
   if (auth.user.isAuthenticated) {
-    return (
-      <Navigate to="/" />
-    );
+    return <Navigate to="/" />;
   }
 
   return (
@@ -94,12 +93,16 @@ const Login = () => {
         >
           Sign In
         </button>
-        {error && (
-          <div className="form__error error">
-            {error}
-          </div>
-        )}
-        <p>Or <Link className="link" to="/register">register a new account</Link></p>
+        {error && <div className="form__error error">{error}</div>}
+        <p>
+          Or{' '}
+          <Link
+            className="link"
+            to="/register"
+          >
+            register a new account
+          </Link>
+        </p>
       </form>
     </Canvas>
   );

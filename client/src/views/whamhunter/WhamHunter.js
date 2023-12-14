@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
-import whamHunterService from './WhamHunterService';
-import { getSortedByProperty } from '../../helpers/arrayHelper';
+import { useEffect, useState } from 'react';
+import { getSortedByProperty } from 'helpers/arrayHelper';
+import whamHunterService from 'services/whamHunter/whamHunterService';
+
 import './wham-hunter.css';
 
 const defaultErrorMessage = 'Wham! Er ging iets mis! Probeer het later nog een keer :-(';
@@ -14,15 +15,14 @@ const WhamHunter = () => {
   const [isFetching, setIsFetching] = useState(false);
 
   const sortedPlayers = ((hasScores) => {
-    return hasScores
-      ? getSortedByProperty(players, 'score', 'desc')
-      : players.reverse();
-  })(!!players.find((player => player.score > 0)))
+    return hasScores ? getSortedByProperty(players, 'score', 'desc') : players.reverse();
+  })(!!players.find((player) => player.score > 0));
 
   const fetchPlayers = () => {
     setError('');
     setIsFetching(true);
-    whamHunterService.retrievePlayers()
+    whamHunterService
+      .retrievePlayers()
       .then((items) => {
         setPlayers(items);
       })
@@ -44,7 +44,7 @@ const WhamHunter = () => {
     try {
       const parsed = JSON.parse(data);
       setUserInfo({ name: parsed.name, score: parsed.score, _id: parsed._id });
-    } catch(e) {
+    } catch (e) {
       console.error(e);
       setError(defaultErrorMessage);
     }
@@ -53,7 +53,7 @@ const WhamHunter = () => {
   const addUserInfoToStorage = (overwrite) => {
     try {
       window.localStorage.setItem('whamhunter', JSON.stringify(overwrite || userInfo));
-    } catch(e) {
+    } catch (e) {
       console.error(e);
       setError(defaultErrorMessage);
     }
@@ -61,13 +61,14 @@ const WhamHunter = () => {
 
   const handleSubmitLogin = () => {
     const playerName = name.trim();
-    if (players.find((player => player.name === playerName))) {
+    if (players.find((player) => player.name === playerName)) {
       setError('Deze speler bestaat al. Kies een andere naam!');
       return;
     }
 
     setError('');
-    whamHunterService.addPlayer(playerName)
+    whamHunterService
+      .addPlayer(playerName)
       .then((item) => {
         setName('');
         setUserInfo(item);
@@ -83,12 +84,14 @@ const WhamHunter = () => {
 
   const handleAddScore = () => {
     const currentTimeMs = Date.now();
-    if (currentTimeMs - scoreTimeMs < 30000) { // 30 seconds wait time
+    if (currentTimeMs - scoreTimeMs < 30000) {
+      // 30 seconds wait time
       setError('Ho ho, niet zo snel! Niemand hoort Last Christmas zó vaak... xD');
       return;
     }
     setError('');
-    whamHunterService.addScore(userInfo._id)
+    whamHunterService
+      .addScore(userInfo._id)
       .then((overwrite) => {
         setScoreTimeMs(Date.now()); // Set time AFTER scoring
         setUserInfo(overwrite);
@@ -110,8 +113,8 @@ const WhamHunter = () => {
     document.title = 'Wham! Hunter';
     getUserInfoFromStorage();
     return () => {
-      document.title = 'Chris\ Stream';
-    }
+      document.title = 'Chris Stream';
+    };
   }, []);
 
   useEffect(() => {
@@ -134,7 +137,7 @@ const WhamHunter = () => {
       }, 30000);
       return () => {
         clearTimeout(waitTimer);
-      }
+      };
     }
   }, [scoreTimeMs]);
 
@@ -142,25 +145,25 @@ const WhamHunter = () => {
     <div className="wham-hunter">
       <div className="wham-hunter__inner">
         <header>
-          <img src="/wham-main.png" alt="Last Christmas!" />
+          <img
+            src="/wham-main.png"
+            alt="Last Christmas!"
+          />
           <h1>Wham! Hunter</h1>
-          {userInfo && (
-            <span>{userInfo.name}</span>
-          )}
+          {userInfo && <span>{userInfo.name}</span>}
         </header>
 
-        {isFetching && (
-          <div className="loader">
-            Bezig met ophalen data...
-          </div>
-        )}
+        {isFetching && <div className="loader">Bezig met ophalen data...</div>}
 
         {!isFetching && (
           <>
             {!userInfo && (
               <>
                 <form className="wham-hunter__login-form">
-                  <p>Welkom bij Wham Hunter! Zo te zien heb je nog niet eerder meegespeeld. Vul je naam in om mee te doen:</p>
+                  <p>
+                    Welkom bij Wham Hunter! Zo te zien heb je nog niet eerder meegespeeld. Vul je
+                    naam in om mee te doen:
+                  </p>
                   <div className="field">
                     <input
                       type="text"
@@ -200,7 +203,11 @@ const WhamHunter = () => {
                         </li>
                       ))}
                     </ul>
-                    <p className="disclaimer">In de verleiding om een andere naam te kiezen? Dat kan, maar hou het eerlijk! ;-) Deze applicatie is binnen een uurtje ontwikkeld en heeft geen ingewikkelde authenticatie...</p>
+                    <p className="disclaimer">
+                      In de verleiding om een andere naam te kiezen? Dat kan, maar hou het eerlijk!
+                      ;-) Deze applicatie is binnen een uurtje ontwikkeld en heeft geen ingewikkelde
+                      authenticatie...
+                    </p>
                   </div>
                 )}
               </>
@@ -219,13 +226,14 @@ const WhamHunter = () => {
                   >
                     {scoreTimeMs > 0 && 'GOED BEZIG !'}
                     {scoreTimeMs === 0 && (
-                      <>
-                        {userInfo.score === 0 ? 'Ik heb \'m gehoord!' : 'Ik hoorde \'m weer!'}
-                      </>
+                      <>{userInfo.score === 0 ? "Ik heb 'm gehoord!" : "Ik hoorde 'm weer!"}</>
                     )}
                   </button>
                   {scoreTimeMs > 0 && (
-                    <img src="/whammed.png" alt="George" />
+                    <img
+                      src="/whammed.png"
+                      alt="George"
+                    />
                   )}
                 </div>
 
@@ -246,20 +254,19 @@ const WhamHunter = () => {
                     </ol>
                   )}
                 </div>
-                <p className="disclaimer">In de verleiding om 2x te klikken? Denk twee keer na. Hou het eerlijk en hou het leuk ;-)</p>
+                <p className="disclaimer">
+                  In de verleiding om 2x te klikken? Denk twee keer na. Hou het eerlijk en hou het
+                  leuk ;-)
+                </p>
               </>
             )}
           </>
         )}
 
-        {error !== '' && (
-          <div className="error">
-            {error}
-          </div>
-        )}
+        {error !== '' && <div className="error">{error}</div>}
       </div>
     </div>
   );
-}
+};
 
 export { WhamHunter };

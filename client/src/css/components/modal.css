@@ -10,7 +10,7 @@
   width: 100%;
   height: 100vh;
   transition: var(--transition-90);
-  background-color: rgba(0, 0, 0, .25);
+  background-color: rgba(0, 0, 0, 0.25);
   z-index: 1;
 }
 
@@ -29,7 +29,7 @@
   position: relative;
   background-color: rgb(var(--color-ui-light));
   border-radius: var(--spacing);
-  box-shadow: 0px 0px var(--spacing) rgba(0, 0, 0, .15);
+  box-shadow: 0px 0px var(--spacing) rgba(0, 0, 0, 0.15);
   transition: var(--transition-100);
   overflow: hidden;
 }
@@ -40,7 +40,7 @@
 
 .modal__heading {
   padding: var(--spacing) 100px var(--spacing) var(--spacing);
-  border-bottom: 1px solid rgba(var(--color-light-blue), .25);
+  border-bottom: 1px solid rgba(var(--color-light-blue), 0.25);
 }
 
 .modal__button {
@@ -84,7 +84,7 @@
   }
 
   .modal__form input {
-    background-color: rgba(var(--color-grey), .125);
+    background-color: rgba(var(--color-grey), 0.125);
   }
 
   .modal__form .form__buttons {
@@ -94,7 +94,7 @@
     right: 0;
     padding: var(--spacing);
     background-color: rgb(var(--color-ui-light));
-    border-top: 1px solid rgba(var(--color-light-blue), .25);
+    border-top: 1px solid rgba(var(--color-light-blue), 0.25);
     border-bottom-left-radius: var(--spacing);
     border-bottom-right-radius: var(--spacing);
   }

@@ -1,21 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-const Field = ({
-  id,
-  className,
-  label,
-  type,
-  options,
-  value,
-  onChange,
-  children,
-  ...rest
-}) => (
-  <div
-    className={classnames(className, 'field')}
-  >
+const Field = ({ id, className, label, type, options, value, onChange, children, ...rest }) => (
+  <div className={classnames(className, 'field')}>
     <label htmlFor={id}>{label}</label>
     <div className="field__inner">
       {type !== 'body' && type !== 'radio' && (
@@ -41,32 +29,27 @@ const Field = ({
           }}
         />
       )}
-      {type === 'radio' && options.map((option, optionIndex) => (
-        <div
-          key={optionIndex}
-          className="field__radio-item"
-        >
-          <input
-            {...rest}
-            type="radio"
-            name={id}
-            id={option}
-            value={option}
-            checked={value === option.toLowerCase()}
-            onChange={() => {
-              onChange(option, id);
-            }}
-          />
-          <label htmlFor={option}>
-            {option}
-          </label>
-        </div>
-      ))}
-      {children && (
-        <aside>
-          {children}
-        </aside>
-      )}
+      {type === 'radio' &&
+        options.map((option, optionIndex) => (
+          <div
+            key={optionIndex}
+            className="field__radio-item"
+          >
+            <input
+              {...rest}
+              type="radio"
+              name={id}
+              id={option}
+              value={option}
+              checked={value === option.toLowerCase()}
+              onChange={() => {
+                onChange(option, id);
+              }}
+            />
+            <label htmlFor={option}>{option}</label>
+          </div>
+        ))}
+      {children && <aside>{children}</aside>}
     </div>
   </div>
 );

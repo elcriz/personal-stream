@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
-import streamService from '../services/streamService';
-import Canvas from '../components/Canvas';
-import SingleItem from '../components/Item';
-import SkeletonItem from '../components/SkeletonItem';
+import Canvas from 'components/Canvas';
+import SingleItem from 'components/Item';
+import SkeletonItem from 'components/SkeletonItem';
+import streamService from 'services/streamService';
 
 const defaultErrorMessage = 'An error occured whilst fetching the item, please try again later';
 
@@ -16,7 +16,8 @@ const Item = () => {
   const fetchItem = () => {
     setError('');
     setIsFetching(true);
-    streamService.retrieveItemBySlug(slug)
+    streamService
+      .retrieveItemBySlug(slug)
       .then((retrievedItem) => {
         setIsFetching(false);
         setItem(retrievedItem);
@@ -32,9 +33,7 @@ const Item = () => {
   }, []);
 
   if (!slug) {
-    return (
-      <Navigate to="/" />
-    );
+    return <Navigate to="/" />;
   }
 
   if (isFetching) {
@@ -54,11 +53,7 @@ const Item = () => {
           isLoading={isFetching}
         />
       )}
-      {error && (
-        <div className="error">
-          {error}
-        </div>
-      )}
+      {error && <div className="error">{error}</div>}
     </Canvas>
   );
 };

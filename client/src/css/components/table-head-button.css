@@ -18,7 +18,7 @@
 
 .table-head-button:focus {
   text-decoration: none;
-  color: rgb(var( --color-text-emphasize));
+  color: rgb(var(--color-text-emphasize));
 }
 
 .table-head-button:hover,
@@ -27,7 +27,7 @@
 }
 
 .table-head-button--selected {
-  color: rgb(var( --color-text-emphasize));
+  color: rgb(var(--color-text-emphasize));
 }
 
 .table-head-button--selected::after {

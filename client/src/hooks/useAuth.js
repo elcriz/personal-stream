@@ -1,29 +1,30 @@
-import { useContext, useCallback } from 'react';
-import usersService from '../services/usersService';
-import { UserContext, initialState } from '../context/UserContext';
+import { useCallback, useContext } from 'react';
+import { initialState, UserContext } from 'context/UserContext';
+import usersService from 'services/usersService';
 
 const useAuth = () => {
   const [userContext, setUserContext] = useContext(UserContext);
   const isAuthenticated = !!userContext.token;
 
   const clearUser = () => {
-    setUserContext(previous => ({
+    setUserContext((previous) => ({
       ...previous,
       ...initialState,
     }));
   };
 
   const verifyUser = useCallback(() => {
-    usersService.retrieveRefreshToken()
+    usersService
+      .retrieveRefreshToken()
       .then((data) => {
         setTimeout(verifyUser, 5 * 60 * 1000);
-        setUserContext(previous => ({
+        setUserContext((previous) => ({
           ...previous,
           token: data.token,
           role: data.role,
         }));
       })
-      .catch((error) => {
+      .catch(() => {
         clearUser();
       });
   }, [setUserContext]);

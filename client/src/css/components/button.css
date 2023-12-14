@@ -28,10 +28,10 @@
 
 button:disabled {
   pointer-events: none;
-  opacity: .5 !important;
+  opacity: 0.5 !important;
 }
 
 button:hover,
 button:focus {
-  background-color: rgba(var(--color-primary), .75);
+  background-color: rgba(var(--color-primary), 0.75);
 }

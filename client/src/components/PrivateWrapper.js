@@ -1,8 +1,12 @@
-import React from 'react'
-import { Outlet, Navigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { Navigate, Outlet } from 'react-router-dom';
 
 const PrivateWrapper = ({ isAuthenticated }) => {
   return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
+};
+
+PrivateWrapper.propTypes = {
+  isAuthenticated: PropTypes.bool,
 };
 
 export default PrivateWrapper;

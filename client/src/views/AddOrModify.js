@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { Navigate, useParams, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
-import streamService from '../services/streamService';
-import Canvas from '../components/Canvas';
-import Field from '../components/Field';
-import ItemsList from '../components/ItemsList';
-import Item from '../models/Item.js';
-import useAuth from '../hooks/useAuth';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import Canvas from 'components/Canvas';
+import Field from 'components/Field';
+import ItemsList from 'components/ItemsList';
+import useAuth from 'hooks/useAuth';
+import Item from 'models/Item.js';
+import streamService from 'services/streamService';
 
 const AddOrModify = () => {
   const [tags, setTags] = useState([]);
@@ -22,17 +22,21 @@ const AddOrModify = () => {
   const auth = useAuth();
 
   const handleChange = (newValue, property) => {
-    setItem(previous => new Item({
-      ...previous,
-      [property]: newValue,
-    }));
+    setItem(
+      (previous) =>
+        new Item({
+          ...previous,
+          [property]: newValue,
+        }),
+    );
   };
 
   const fetchItem = async () => {
     setError('');
     setIsFetching(true);
 
-    return await streamService.retrieveItemById(id)
+    return await streamService
+      .retrieveItemById(id)
       .then((retrievedItem) => {
         setIsFetching(false);
         setItem(new Item(retrievedItem));
@@ -46,7 +50,8 @@ const AddOrModify = () => {
   const fetchTags = () => {
     setIsFetching(true);
 
-    streamService.retrieveAllTags()
+    streamService
+      .retrieveAllTags()
       .then((data) => {
         setIsFetching(false);
         setTags(data);
@@ -64,7 +69,7 @@ const AddOrModify = () => {
 
       const addOrModify = id
         ? streamService.modifyItem(item, id, auth.user.token)
-        : streamService.createItem(item, auth.user.token)
+        : streamService.createItem(item, auth.user.token);
 
       addOrModify
         .then(() => {
@@ -80,10 +85,7 @@ const AddOrModify = () => {
   };
 
   useEffect(() => {
-    setIsValid(item.isValid()
-      && auth.user.isAllowedToAdd
-      && auth.user.isAllowedToModify
-    );
+    setIsValid(item.isValid() && auth.user.isAllowedToAdd && auth.user.isAllowedToModify);
   }, [item]);
 
   useEffect(() => {
@@ -91,16 +93,13 @@ const AddOrModify = () => {
       fetchTags();
       return;
     }
-    fetchItem()
-      .then(() => {
-        fetchTags();
-      });
+    fetchItem().then(() => {
+      fetchTags();
+    });
   }, []);
 
   if (isProcessed) {
-    return (
-      <Navigate to="/" />
-    );
+    return <Navigate to="/" />;
   }
 
   return (
@@ -109,9 +108,7 @@ const AddOrModify = () => {
         className="form"
         onSubmit={handleSubmit}
       >
-        <h2 className="form__heading">
-          {id ? 'Edit' : 'Add new'} item
-        </h2>
+        <h2 className="form__heading">{id ? 'Edit' : 'Add new'} item</h2>
         <Field
           id="title"
           className="form__field"
@@ -133,9 +130,7 @@ const AddOrModify = () => {
           onChange={handleChange}
         >
           <div className="form__preview">
-            <ReactMarkdown>
-              {item.body || 'Preview comes here...'}
-            </ReactMarkdown>
+            <ReactMarkdown>{item.body || 'Preview comes here...'}</ReactMarkdown>
           </div>
         </Field>
         {!isFetching && (
@@ -198,11 +193,7 @@ const AddOrModify = () => {
             </button>
           )}
         </div>
-        {error && (
-          <div className="form__error error">
-            {error}
-          </div>
-        )}
+        {error && <div className="form__error error">{error}</div>}
       </form>
     </Canvas>
   );

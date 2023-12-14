@@ -1,9 +1,11 @@
-import React from 'react';
-import Canvas from '../components/Canvas';
+import Canvas from 'components/Canvas';
 
 const NotFound = () => (
   <Canvas>
-    <header className="stream__header" role="banner">
+    <header
+      className="stream__header"
+      role="banner"
+    >
       <h2>404 - Not Found</h2>
     </header>
     <ul>

@@ -20,13 +20,20 @@ class Hike {
   }
 
   isValid() {
-    return !!this.dateTime
-      && !!this.location
-      && this.distance !== undefined && !isNaN(Number(this.distance))
-      && this.durationMoving !== undefined && !isNaN(Number(this.durationMoving))
-      && this.durationStopped !== undefined && !isNaN(Number(this.durationStopped))
-      && this.speedMoving !== undefined && !isNaN(Number(this.speedMoving))
-      && this.speedOverall !== undefined && !isNaN(Number(this.speedOverall))
+    return (
+      !!this.dateTime &&
+      !!this.location &&
+      this.distance !== undefined &&
+      !isNaN(Number(this.distance)) &&
+      this.durationMoving !== undefined &&
+      !isNaN(Number(this.durationMoving)) &&
+      this.durationStopped !== undefined &&
+      !isNaN(Number(this.durationStopped)) &&
+      this.speedMoving !== undefined &&
+      !isNaN(Number(this.speedMoving)) &&
+      this.speedOverall !== undefined &&
+      !isNaN(Number(this.speedOverall))
+    );
   }
 }
 

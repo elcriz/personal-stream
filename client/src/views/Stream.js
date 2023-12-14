@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import streamService from '../services/streamService';
-import Canvas from '../components/Canvas';
-import Item from '../components/Item';
-import SkeletonItem from '../components/SkeletonItem';
-import Tags from '../components/Tags';
+import Canvas from 'components/Canvas';
+import Item from 'components/Item';
+import SkeletonItem from 'components/SkeletonItem';
+import Tags from 'components/Tags';
+import streamService from 'services/streamService';
 
 const defaultErrorMessage = 'An error occured whilst fetching new items, please try again later';
 const defaultAmount = 0;
@@ -23,18 +23,19 @@ const Stream = () => {
   const fetchItems = () => {
     setError('');
 
-    streamService.retrieveItems(page, amountToFetch, tag)
+    streamService
+      .retrieveItems(page, amountToFetch, tag)
       .then(({ amount: newAmount, items: newItems }) => {
         setIsFetching(false);
         setAmount(newAmount);
-        setItems(previous => ([
-          ...previous.filter(existing =>
-            newItems.findIndex(item => item._id === existing._id) === -1,
+        setItems((previous) => [
+          ...previous.filter(
+            (existing) => newItems.findIndex((item) => item._id === existing._id) === -1,
           ),
           ...newItems,
-        ]));
+        ]);
       })
-      .catch((error) => {
+      .catch(() => {
         setError(defaultErrorMessage);
         setIsFetching(false);
       });
@@ -57,7 +58,10 @@ const Stream = () => {
   return (
     <Canvas>
       <div className="stream">
-        <header className="stream__header" role="banner">
+        <header
+          className="stream__header"
+          role="banner"
+        >
           <p>Short updates on things keeping me afloat, for anyone who cares.</p>
         </header>
         <Tags
@@ -82,14 +86,14 @@ const Stream = () => {
             ))}
           </div>
         )}
-        {(page * amountToFetch) < amount && (
+        {page * amountToFetch < amount && (
           <div className="stream__paginator">
             <button
               className="button"
               type="button"
               disabled={isFetching}
               onClick={() => {
-                setPage(current => (current + 1));
+                setPage((current) => current + 1);
               }}
             >
               Load older items
@@ -98,15 +102,9 @@ const Stream = () => {
         )}
       </div>
       {!isFetching && items.length === 0 && (
-        <div className="error">
-          No items we're found{tag ? ` matching '${tag}'`: ''}
-        </div>
+        <div className="error">No items we're found{tag ? ` matching '${tag}'` : ''}</div>
       )}
-      {error && (
-        <div className="error">
-          {error}
-        </div>
-      )}
+      {error && <div className="error">{error}</div>}
     </Canvas>
   );
 };

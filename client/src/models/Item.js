@@ -1,13 +1,5 @@
 class Item {
-  constructor({
-    title,
-    slug,
-    body,
-    tags,
-    images,
-    videos,
-    mediaPosition,
-  } = {}) {
+  constructor({ title, slug, body, tags, images, videos, mediaPosition } = {}) {
     this.title = title || '';
     this.slug = slug || '';
     this.body = body || '';
@@ -22,9 +14,7 @@ class Item {
   }
 
   isValid() {
-    return !!this.title
-      && !!this.body
-      && this.tags.length > 0;
+    return !!this.title && !!this.body && this.tags.length > 0;
   }
 }
 

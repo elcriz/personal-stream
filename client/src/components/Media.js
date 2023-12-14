@@ -1,13 +1,8 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
+import { useState } from 'react';
 
-const Media = ({
-  className,
-  images,
-  videos,
-  hasMultipleMedia,
-}) => {
+const Media = ({ className, images, videos, hasMultipleMedia }) => {
   const [currentImage, setCurrentImage] = useState(undefined);
 
   return (
@@ -18,7 +13,7 @@ const Media = ({
     >
       {images.length > 0 && (
         <div className="media__container">
-          {images.map(image => (
+          {images.map((image) => (
             <figure
               key={image}
               className="media__figure"
@@ -43,7 +38,7 @@ const Media = ({
       )}
       {videos.length > 0 && (
         <div className="media__container media-container--videos">
-          {videos.map(youTubeId => (
+          {videos.map((youTubeId) => (
             <div
               key={youTubeId}
               className="media__video-container"

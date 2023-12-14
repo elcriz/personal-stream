@@ -1,15 +1,10 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import SegmentedControl from './SegmentedControl';
-import { getReadableMonth } from '../helpers/dateTimeHelper';
+import { getReadableMonth } from 'helpers/dateTimeHelper';
+import SegmentedControl from 'components/SegmentedControl';
 
 const types = ['Year', 'Month'];
 
-const PeriodNavigation = ({
-  period,
-  isLoading,
-  setPeriod,
-}) => {
+const PeriodNavigation = ({ period, isLoading, setPeriod }) => {
   const periodType = period.length === 2 ? types[1] : types[0];
 
   const handlePeriodClick = (toAddOrsubstract) => {
@@ -17,19 +12,22 @@ const PeriodNavigation = ({
       setPeriod([period[0] + toAddOrsubstract]);
       return;
     }
-    setPeriod(toAddOrsubstract >= 0
-      ? (period[1] === 11 ? [(period[0] + 1), 0] : [period[0], (period[1] + 1)])
-      : (period[1] === 0 ? [(period[0] - 1), 11] : [period[0], (period[1] - 1)])
+
+    setPeriod(
+      toAddOrsubstract >= 0
+        ? period[1] === 11
+          ? [period[0] + 1, 0]
+          : [period[0], period[1] + 1]
+        : period[1] === 0
+          ? [period[0] - 1, 11]
+          : [period[0], period[1] - 1],
     );
   };
 
   const handlePeriodTypeChange = (type) => {
     const today = new Date();
     const periodToSet = [today.getFullYear()];
-    setPeriod(type === types[1]
-      ? [...periodToSet, today.getMonth()]
-      : periodToSet
-    );
+    setPeriod(type === types[1] ? [...periodToSet, today.getMonth()] : periodToSet);
   };
 
   return (
@@ -57,7 +55,6 @@ const PeriodNavigation = ({
           onClick={() => {
             handlePeriodClick(-1);
           }}
-
         />
         <button
           className="period-navigation__button period-navigation__button--next button button--secondary button--90"
@@ -73,10 +70,7 @@ const PeriodNavigation = ({
 };
 
 PeriodNavigation.propTypes = {
-  period: PropTypes.arrayOf(
-    PropTypes.number.isRequired,
-    PropTypes.number,
-  ).isRequired,
+  period: PropTypes.arrayOf(PropTypes.number.isRequired, PropTypes.number).isRequired,
   isLoading: PropTypes.bool.isRequired,
   setPeriod: PropTypes.func.isRequired,
 };

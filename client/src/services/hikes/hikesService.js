@@ -1,13 +1,7 @@
-import { getRelativeDate, getReadableDate, getHoursFromMinutes } from '../../helpers/dateTimeHelper';
-import Hike from '../../models/hikes/Hike';
+import { getHoursFromMinutes, getReadableDate, getRelativeDate } from 'helpers/dateTimeHelper';
+import Hike from 'models/hikes/Hike';
 
-function serializeHikeToPlatform({
-  createdAt,
-  updatedAt,
-  duration,
-  speed,
-  ...hike
-}) {
+function serializeHikeToPlatform({ createdAt, updatedAt, duration, speed, ...hike }) {
   return {
     _id: hike._id,
     ...new Hike({
@@ -63,35 +57,23 @@ export default {
    * @param {boolean} isAscending - Should results be ordered ascending?
    * @returns Promise
    */
-  retrieveHikes: async (
-    _token,
-    period,
-    sortBy,
-    isAscending = false,
-  ) => {
-    try {
-      let params = `?sortBy=${sortBy}&order=${isAscending ? 'asc' : 'desc'}&year=${period[0]}`;
-      if (period.length > 1) {
-        params += `&month=${period[1] + 1}`;
-      }
-      const response = await fetch(
-        `/api/hikes${params}`,
-        {
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${_token}`,
-          },
-        }
-      );
-      if (!response.ok) {
-        throw new Error(response.status);
-      }
-      const { hikes, ...data } = await response.json();
-      return { ...data, hikes: hikes.map(serializeHikeToPlatform) };
-    } catch (error) {
-      throw error;
+  retrieveHikes: async (_token, period, sortBy, isAscending = false) => {
+    let params = `?sortBy=${sortBy}&order=${isAscending ? 'asc' : 'desc'}&year=${period[0]}`;
+    if (period.length > 1) {
+      params += `&month=${period[1] + 1}`;
     }
+    const response = await fetch(`/api/hikes${params}`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${_token}`,
+      },
+    });
+    if (!response.ok) {
+      throw new Error(response.status);
+    }
+    const { hikes, ...data } = await response.json();
+    return { ...data, hikes: hikes.map(serializeHikeToPlatform) };
   },
 
   /**
@@ -101,28 +83,19 @@ export default {
    * @returns Promise
    */
   createHike: async (body, _token) => {
-    try {
-      const response = await fetch(
-        '/api/hikes',
-        {
-          method: 'POST',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${_token}`,
-          },
-          body: JSON.stringify(
-            serializeHikeToApi(body)
-          ),
-        },
-      );
-      if (!response.ok) {
-        throw new Error(response.status);
-      }
-      const hike = await response.json();
-      return serializeHikeToPlatform(hike);
-    } catch (error) {
-      throw error;
+    const response = await fetch('/api/hikes', {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${_token}`,
+      },
+      body: JSON.stringify(serializeHikeToApi(body)),
+    });
+    if (!response.ok) {
+      throw new Error(response.status);
     }
-  }
+    const hike = await response.json();
+    return serializeHikeToPlatform(hike);
+  },
 };

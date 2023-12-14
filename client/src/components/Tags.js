@@ -1,20 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import streamService from '../services/streamService';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import streamService from 'services/streamService';
 
-const Tags = ({
-  className,
-  currentTag,
-}) => {
+const Tags = ({ className, currentTag }) => {
   const [tags, setTags] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
 
   const fetchTags = () => {
     setIsFetching(true);
 
-    streamService.retrieveAllTags()
+    streamService
+      .retrieveAllTags()
       .then((data) => {
         setIsFetching(false);
         setTags(data);
@@ -45,7 +43,7 @@ const Tags = ({
         })}
         to="/"
       >
-          All
+        All
       </Link>
       {tags.map((tag, tagIndex) => (
         <Link

@@ -1,16 +1,12 @@
-import { getRelativeDate, getReadableDate } from '../helpers/dateTimeHelper';
-import Item from '../models/Item';
+import { getReadableDate, getRelativeDate } from 'helpers/dateTimeHelper';
+import Item from 'models/Item';
 
 /**
  * Serialize a single item and add a relative date property.
  * @param {object} - Item
  * @returns Object<Item>
  */
-function serializeItem({
-  createdAt,
-  updatedAt,
-  ...item
-}) {
+function serializeItem({ createdAt, updatedAt, ...item }) {
   return {
     _id: item._id,
     ...new Item(item),
@@ -34,18 +30,14 @@ export default {
    * @returns Promise
    */
   retrieveItems: async (page, limit, tag) => {
-    try {
-      const response = await fetch(
-        `/api/stream?${tag ? `tag=${tag}&` : ''}page=${page}&limit=${limit}`,
-      );
-      if (!response.ok) {
-        throw new Error(response.status);
-      }
-      const { amount, items } = await response.json();
-      return { amount, items: items.map(serializeItem) };
-    } catch (error) {
-      throw error;
+    const response = await fetch(
+      `/api/stream?${tag ? `tag=${tag}&` : ''}page=${page}&limit=${limit}`,
+    );
+    if (!response.ok) {
+      throw new Error(response.status);
     }
+    const { amount, items } = await response.json();
+    return { amount, items: items.map(serializeItem) };
   },
 
   /**
@@ -54,18 +46,12 @@ export default {
    * @returns Promise
    */
   retrieveItemById: async (id) => {
-    try {
-      const response = await fetch(
-        `/api/stream/item/${id}`,
-      );
-      if (!response.ok) {
-        throw new Error(response.status);
-      }
-      const item = await response.json();
-      return serializeItem(item);
-    } catch (error) {
-      throw error;
+    const response = await fetch(`/api/stream/item/${id}`);
+    if (!response.ok) {
+      throw new Error(response.status);
     }
+    const item = await response.json();
+    return serializeItem(item);
   },
 
   /**
@@ -74,18 +60,12 @@ export default {
    * @returns Promise
    */
   retrieveItemBySlug: async (slug) => {
-    try {
-      const response = await fetch(
-        `/api/stream/item/${slug}`,
-      );
-      if (!response.ok) {
-        throw new Error(response.status);
-      }
-      const item = await response.json();
-      return serializeItem(item);
-    } catch (error) {
-      throw error;
+    const response = await fetch(`/api/stream/item/${slug}`);
+    if (!response.ok) {
+      throw new Error(response.status);
     }
+    const item = await response.json();
+    return serializeItem(item);
   },
 
   /**
@@ -93,17 +73,11 @@ export default {
    * @returns Promise
    */
   retrieveAllTags: async () => {
-    try {
-      const response = await fetch(
-        `/api/stream/tags`,
-      );
-      if (!response.ok) {
-        throw new Error(response.status);
-      }
-      return await response.json();
-    } catch (error) {
-      throw error;
+    const response = await fetch(`/api/stream/tags`);
+    if (!response.ok) {
+      throw new Error(response.status);
     }
+    return await response.json();
   },
 
   /**
@@ -113,27 +87,20 @@ export default {
    * @returns Promise
    */
   createItem: async (body, _token) => {
-    try {
-      const response = await fetch(
-        `/api/stream/item`,
-        {
-          method: 'POST',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${_token}`,
-          },
-          body: JSON.stringify(body),
-        },
-      );
-      if (!response.ok) {
-        throw new Error(response.status);
-      }
-      const item = await response.json();
-      return serializeItem(item);
-    } catch (error) {
-      throw error;
+    const response = await fetch(`/api/stream/item`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${_token}`,
+      },
+      body: JSON.stringify(body),
+    });
+    if (!response.ok) {
+      throw new Error(response.status);
     }
+    const item = await response.json();
+    return serializeItem(item);
   },
 
   /**
@@ -144,27 +111,20 @@ export default {
    * @returns Promise
    */
   modifyItem: async (body, id, _token) => {
-    try {
-      const response = await fetch(
-        `/api/stream/item/${id}`,
-        {
-          method: 'PATCH',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${_token}`,
-          },
-          body: JSON.stringify(body),
-        },
-      );
-      if (!response.ok) {
-        throw new Error(response.status);
-      }
-      const item = await response.json();
-      return serializeItem(item);
-    } catch (error) {
-      throw error;
+    const response = await fetch(`/api/stream/item/${id}`, {
+      method: 'PATCH',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${_token}`,
+      },
+      body: JSON.stringify(body),
+    });
+    if (!response.ok) {
+      throw new Error(response.status);
     }
+    const item = await response.json();
+    return serializeItem(item);
   },
 
   /**
@@ -173,25 +133,18 @@ export default {
    * @returns Promise
    */
   deleteItemById: async (id, _token) => {
-    try {
-      const response = await fetch(
-        `/api/stream/item/${id}`,
-        {
-          method: 'DELETE',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${_token}`,
-          },
-        },
-      );
-      if (!response.ok) {
-        throw new Error(response.status);
-      }
-      const item = await response.json();
-      return serializeItem(item);
-    } catch (error) {
-      throw error;
+    const response = await fetch(`/api/stream/item/${id}`, {
+      method: 'DELETE',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${_token}`,
+      },
+    });
+    if (!response.ok) {
+      throw new Error(response.status);
     }
-  }
+    const item = await response.json();
+    return serializeItem(item);
+  },
 };

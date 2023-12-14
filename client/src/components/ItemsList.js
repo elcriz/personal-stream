@@ -1,51 +1,40 @@
-import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 
-const ItemsList = ({
-  id,
-  label,
-  singleItemLabel,
-  options,
-  defaultValues,
-  onChange,
-  ...rest
-}) => {
+const ItemsList = ({ id, label, singleItemLabel, options, defaultValues, onChange, ...rest }) => {
   const [values, setValues] = useState(defaultValues);
-  const availableOptions = options
-    .filter(option => values.indexOf(option) === -1);
+  const availableOptions = options.filter((option) => values.indexOf(option) === -1);
 
   const handleUseOption = (event, optionToAdd) => {
     event.preventDefault();
-    setValues(previous => ([
-      ...previous.filter(value => value !== '' && value !== optionToAdd),
+    setValues((previous) => [
+      ...previous.filter((value) => value !== '' && value !== optionToAdd),
       optionToAdd,
-    ]));
+    ]);
   };
 
   const handleChange = (event, indexToChange) => {
-    setValues(previous => previous.map((value, valueIndex) =>
-      valueIndex === indexToChange ? event.target.value : value
-    ));
+    setValues((previous) =>
+      previous.map((value, valueIndex) =>
+        valueIndex === indexToChange ? event.target.value : value,
+      ),
+    );
   };
 
   const handleDelete = (event, indexToDelete) => {
     event.preventDefault();
-    setValues(previous => previous.filter((_, valueIndex) =>
-      valueIndex !== indexToDelete,
-    ));
+    setValues((previous) => previous.filter((_, valueIndex) => valueIndex !== indexToDelete));
   };
 
   const handleAdd = (event) => {
     event.preventDefault();
-    setValues(previous => ([...previous, '']));
+    setValues((previous) => [...previous, '']);
   };
 
   useEffect(() => {
     onChange(
-      values
-        .map(value => value.trim())
-        .filter(value => value !== ''),
-      id
+      values.map((value) => value.trim()).filter((value) => value !== ''),
+      id,
     );
   }, [values]);
 
@@ -54,9 +43,7 @@ const ItemsList = ({
       id={id}
       className="field"
     >
-      {label && (
-        <label>{label}</label>
-      )}
+      {label && <label>{label}</label>}
       <div className="items-list">
         {availableOptions.length > 0 && (
           <div className="items-list__options">
@@ -123,6 +110,7 @@ ItemsList.defaultProps = {
 };
 
 ItemsList.propTypes = {
+  id: PropTypes.string,
   label: PropTypes.string,
   singleItemLabel: PropTypes.string,
   options: PropTypes.array,
