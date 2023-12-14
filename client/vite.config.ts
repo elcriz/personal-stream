@@ -30,7 +30,6 @@ export default defineConfig(({ command }) => {
     production: {
       base: '/dist',
       build: {
-        outDir: './wwwroot/dist',
         cssCodeSplit: true,
         emptyOutDir: true,
         rollupOptions: {
