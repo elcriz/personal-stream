@@ -20,7 +20,7 @@ require('./utils/authenticate');
 const app = express();
 
 // Middleware
-app.use(express.static(path.join(__dirname, 'client', 'build')));
+app.use(express.static(path.join(__dirname, 'client', 'dist')));
 
 app.use((req, res, next) => {
   console.log(`${req.method}: ${req.path}`);
