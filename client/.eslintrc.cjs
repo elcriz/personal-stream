@@ -10,7 +10,6 @@ module.exports = {
     },
   },
   extends: [
-    'eslint-config-prettier',
     'eslint:recommended',
     'plugin:import/recommended',
     'plugin:react/recommended',
