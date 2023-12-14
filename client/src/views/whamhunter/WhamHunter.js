@@ -6,7 +6,7 @@ import './wham-hunter.css';
 
 const defaultErrorMessage = 'Wham! Er ging iets mis! Probeer het later nog een keer :-(';
 
-const WhamHunter = () => {
+function WhamHunter() {
   const [name, setName] = useState('');
   const [userInfo, setUserInfo] = useState(undefined);
   const [players, setPlayers] = useState([]);
@@ -267,6 +267,6 @@ const WhamHunter = () => {
       </div>
     </div>
   );
-};
+}
 
 export { WhamHunter };
