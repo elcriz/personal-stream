@@ -1,0 +1,39 @@
+:root {
+  --spacing: 16px;
+
+  --color-white: 255, 255, 255;
+  --color-brown: 39, 35, 34;
+  --color-yellow: 249, 154, 43;
+  --color-orange: 248, 91, 50;
+  --color-red: 221, 70, 71;
+  --color-blue: 26, 55, 68;
+  --color-light-blue: 46, 75, 88;
+  --color-green: 106, 162, 80;
+  --color-dark-green: 30, 70, 52;
+  --color-beige: 252, 229, 180;
+  --color-grey: 93, 113, 131;
+
+  --color-text: var(--color-brown);
+  --color-text-light: var(--color-white);
+  --color-text-emphasize: var(--color-yellow);
+
+  --color-link: var(--color-text);
+  --color-link-active: var(--color-grey);
+
+  --color-ui: var(--color-blue);
+  --color-ui-light: var(--color-white);
+
+  --color-primary: var(--color-green);
+  --color-secondary: var(--color-grey);
+
+  --font-size-300: 28px;
+  --font-size-200: 24px;
+  --font-size-150: 20px;
+  --font-size-100: 18px;
+  --font-size-90: 16px;
+  --font-size-80: 14px;
+  --font-size-70: 12px;
+
+  --transition-100: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  --transition-90: all 250ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+}

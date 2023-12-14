@@ -1,0 +1,21 @@
+.input {
+  appearance: none;
+  padding: 0 var(--spacing);
+  height: calc(var(--spacing) * 2.5);
+  width: 100%;
+  background-color: rgb(var(--color-ui-light));
+  border: none;
+  border-radius: calc(var(--spacing) / 4);
+  font-family: 'Barlow', Arial, Helvetica, sans-serif;
+  font-size: 1em;
+  box-sizing: border-box;
+}
+
+.input:disabled {
+  opacity: 0.5;
+}
+
+.input--body {
+  height: 200px;
+  padding: var(--spacing);
+}

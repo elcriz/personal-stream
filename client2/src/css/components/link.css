@@ -1,0 +1,28 @@
+.link {
+  color: rgb(var(--color-link));
+}
+
+.link:hover,
+.link:focus {
+  color: rgb(var(--color-link-active));
+  text-decoration: underline;
+}
+
+button.link {
+  display: inline-block;
+  appearance: none;
+  padding: 0;
+  background: none;
+  font-family: 'Barlow', Arial, Helvetica, sans-serif;
+  font-size: 1em;
+  border: none;
+}
+
+button.link:hover,
+button.link:focus {
+  box-shadow: none;
+}
+
+p .link {
+  text-decoration: underline;
+}

@@ -1,19 +1,17 @@
-const Item = require('../models/itemModel');
-const mongoose = require('mongoose');
+const Item = require("../models/itemModel");
+const mongoose = require("mongoose");
 
 // Get the total amount of items
 const getAmount = async (tag) => {
-  return await Item
-    .countDocuments(tag ? { tags: { $in: [tag] } } : {});
+  return await Item.countDocuments(tag ? { tags: { $in: [tag] } } : {});
 };
 
 // Get all items
 const getItems = async (req, res) => {
   const { tag, page = 1, limit = 5 } = req.query;
   const amount = await getAmount(tag);
-  const items = await Item
-    .find(tag ? { tags: { $in: [tag] } } : {})
-    .sort('-createdAt')
+  const items = await Item.find(tag ? { tags: { $in: [tag] } } : {})
+    .sort("-createdAt")
     .limit(limit * 1)
     .skip((page - 1) * limit);
   res.status(200).json({ amount, items });
@@ -30,20 +28,23 @@ const getItem = async (req, res) => {
     : await Item.findOne({ slug });
 
   if (!item) {
-    return res.status(404).json({ error: 'No such item found' });
+    return res.status(404).json({ error: "No such item found" });
   }
   res.status(200).json(item);
 };
 
 // Get all tags
 const getTags = async (req, res) => {
-  const allTags = await Item
-    .find()
-    .select(['tags']);
-  const serializedTags = allTags.reduce((previous, item) => ([
-    ...previous,
-    ...item.tags.filter(tag => previous.indexOf(tag) === -1),
-  ]), []).sort();
+  const allTags = await Item.find().select(["tags"]);
+  const serializedTags = allTags
+    .reduce(
+      (previous, item) => [
+        ...previous,
+        ...item.tags.filter((tag) => previous.indexOf(tag) === -1),
+      ],
+      []
+    )
+    .sort();
   res.status(200).json(serializedTags);
 };
 
@@ -54,8 +55,9 @@ const addItem = async (req, res) => {
   }
   const { title, tags, body, images, videos } = req.body;
   try {
-    const itemToAdd = await Item
-      .create(new Item({ title, tags, body, images, videos }));
+    const itemToAdd = await Item.create(
+      new Item({ title, tags, body, images, videos })
+    );
     res.status(201).json(itemToAdd);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -71,14 +73,13 @@ const deleteItem = async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: 'No such item found' });
+    return res.status(404).json({ error: "No such item found" });
   }
 
-  const item = await Item
-    .findOneAndDelete({ _id: id });
+  const item = await Item.findOneAndDelete({ _id: id });
 
   if (!item) {
-    return res.status(400).json({ error: 'No such item found' });
+    return res.status(400).json({ error: "No such item found" });
   }
   res.status(200).json(item);
 };
@@ -92,14 +93,13 @@ const updateItem = async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: 'No such item found' });
+    return res.status(404).json({ error: "No such item found" });
   }
 
-  const item = await Item
-    .findOneAndUpdate({ _id: id }, { ...req.body });
+  const item = await Item.findOneAndUpdate({ _id: id }, { ...req.body });
 
   if (!item) {
-    return res.status(400).json({ error: 'No such item found' });
+    return res.status(400).json({ error: "No such item found" });
   }
   res.status(200).json(item);
 };
