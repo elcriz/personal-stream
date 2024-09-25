@@ -7,12 +7,11 @@
   "proxy": "http://localhost:5000",
   "scripts": {
     "dev": "vite",
-    "build": "npm run tsc && vite build",
+    "build": "tsc && vite build",
     "lint": "npm run lint:format && npm run lint:fix",
     "lint:fix": "eslint ./src --ext .jsx,.js,.ts,.tsx --fix --color --ignore-path ./.gitignore",
     "lint:format": "prettier --log-level log --write \"./**/*.{js,jsx,ts,tsx,css,md,json}\" ",
-    "preview": "vite preview",
-    "tsc": "./node_modules/typescript/bin/tsc"
+    "preview": "vite preview"
   },
   "dependencies": {
     "classnames": "^2.3.2",
