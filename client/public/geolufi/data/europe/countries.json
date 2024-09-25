@@ -1,0 +1,242 @@
+[
+  {
+      "id": 1,
+      "name": { "nl": "Albanië", "en": "Albania" },
+      "position": { "x": 61, "y": 82 }
+  },
+  {
+      "ïd": 2,
+      "name": { "nl": "Andorra", "en": "Andorra" },
+      "position": { "x": 29, "y": 77 }
+  },
+  {
+      "id": 3,
+      "name": { "nl": "Oostenrijk", "en": "Austria" },
+      "position": { "x": 51, "y": 65 }
+  },
+  {
+      "id": 5,
+      "name": { "nl": "Belarus", "en": "Belarus" },
+      "position": { "x": 70, "y": 47 }
+  },
+  {
+      "id": 6,
+      "name": { "nl": "België", "en": "Belgium" },
+      "position": { "x": 36, "y": 56 }
+  },
+  {
+      "id": 7,
+      "name": { "nl": "Bosnië en Herzegovina", "en": "Bosnia and Herzegovina" },
+      "position": { "x": 56.5, "y": 74 }
+  },
+  {
+      "id": 8,
+      "name": { "nl": "Bulgarije", "en": "Bulgaria" },
+      "position": { "x": 69, "y": 77 }
+  },
+  {
+      "id": 9,
+      "name": { "nl": "Kroatië", "en": "Croatia" },
+      "position": { "x": 54, "y": 70 }
+  },
+  {
+      "id": 10,
+      "name": { "nl": "Cyprus", "en": "Cyprus" },
+      "position": { "x": 87, "y": 94 }
+  },
+  {
+      "id": 11,
+      "name": { "nl": "Tsjechië", "en": "Czech Republic" },
+      "position": { "x": 52, "y": 59 }
+  },
+  {
+      "id": 12,
+      "name": { "nl": "Denemarken", "en": "Denmark" },
+      "position": { "x": 45, "y":42 }
+  },
+  {
+      "id": 13,
+      "name": { "nl": "Estland", "en": "Estonia" },
+      "position": { "x": 65, "y": 33.5 }
+  },
+  {
+      "id": 14,
+      "name": { "nl": "Finland", "en": "Finland" },
+      "position": { "x": 63, "y": 24 }
+  },
+  {
+      "id": 15,
+      "name": { "nl": "Frankrijk", "en": "France" },
+      "position": { "x": 32, "y": 66 }
+  },
+  {
+      "id": 16,
+      "name": { "nl": "Georgië", "en": "Georgia" },
+      "position": { "x": 97, "y": 70 }
+  },
+  {
+      "id": 17,
+      "name": { "nl": "Duitsland", "en": "Germany" },
+      "position": { "x": 44, "y": 54 }
+  },
+  {
+      "id": 18,
+      "name": { "nl": "Griekenland", "en": "Greece" },
+      "position": { "x": 64, "y": 85 }
+  },
+  {
+      "id": 19,
+      "name": { "nl": "Hongarije", "en": "Hungary" },
+      "position": { "x": 59, "y": 66 }
+  },
+  {
+      "id": 20,
+      "name": { "nl": "IJsland", "en": "Iceland" },
+      "position": { "x": 19, "y": 11 }
+  },
+  {
+      "id": 21,
+      "name": { "nl": "Ierland", "en": "Ireland" },
+      "position": { "x": 20, "y": 45 }
+  },
+  {
+      "id": 22,
+      "name": { "nl": "Italië", "en": "Italy" },
+      "position": { "x": 48, "y": 78 }
+  },
+  {
+      "id": 23,
+      "name": { "nl": "Kosovo", "en": "Kosovo" },
+      "position": { "x": 62, "y": 78 }
+  },
+  {
+      "id": 24,
+      "name": { "nl": "Letland", "en": "Latvia" },
+      "position": { "x": 65, "y": 38 }
+  },
+  {
+      "id": 25,
+      "name": { "nl": "Liechtenstein", "en": "Liechtenstein" },
+      "position": { "x": 44, "y": 66 }
+  },
+  {
+      "id": 26,
+      "name": { "nl": "Litouwen", "en": "Lithuania" },
+      "position": { "x": 64, "y": 43 }
+  },
+  {
+      "id": 27,
+      "name": { "nl": "Luxemburg", "en": "Lucembourg" },
+      "position": { "x": 38, "y": 59 }
+  },
+  {
+      "id": 28,
+      "name": { "nl": "Malta", "en": "Malta" },
+      "position": { "x": 51, "y": 97 }
+  },
+  {
+      "id": 29,
+      "name": { "nl": "Moldavië", "en": "Moldova" },
+      "position": { "x": 73, "y": 63 }
+  },
+  {
+      "id": 30,
+      "name": { "nl": "Monaco", "en": "Monaco" },
+      "position": { "x": 38, "y": 76 }
+  },
+  {
+      "id": 31,
+      "name": { "nl": "Montenegro", "en": "Montenegro" },
+      "position": { "x": 59, "y": 77.5 }
+  },
+  {
+      "id": 32,
+      "name": { "nl": "Nederland", "en": "Netherlands" },
+      "position": { "x": 38, "y": 51 }
+  },
+  {
+      "id": 33,
+      "name": { "nl": "Noord-Macedonië", "en": "North Macedonia" },
+      "position": { "x": 64, "y": 80.5 }
+  },
+  {
+      "id": 34,
+      "name": { "nl": "Noorwegen", "en": "Norway" },
+      "position": { "x": 45, "y": 29 }
+  },
+  {
+      "id": 35,
+      "name": { "nl": "Polen", "en": "Poland" },
+      "position": { "x": 58, "y": 52 }
+  },
+  {
+      "id": 36,
+      "name": { "nl": "Portugal", "en": "Portugal" },
+      "position": { "x": 11, "y": 80 }
+  },
+  {
+      "id": 37,
+      "name": { "nl": "Roemenië", "en": "Romania" },
+      "position": { "x": 68, "y": 68 }
+  },
+  {
+      "id": 38,
+      "name": { "nl": "Rusland", "en": "Russia" },
+      "position": { "x": 84, "y": 30 }
+  },
+  {
+      "id": 39,
+      "name": { "nl": "San Marino", "en": "San Marino" },
+      "position": { "x": 48, "y": 75 }
+  },
+  {
+      "id": 40,
+      "name": { "nl": "Servië", "en": "Serbia" },
+      "position": { "x": 62, "y": 74 }
+  },
+  {
+      "id": 41,
+      "name": { "nl": "Slowakije", "en": "Slovakia" },
+      "position": { "x": 58, "y": 62 }
+  },
+  {
+      "id": 42,
+      "name": { "nl": "Slovenië", "en": "Slovania" },
+      "position": { "x": 51, "y": 69 }
+  },
+  {
+      "id": 43,
+      "name": { "nl": "Spanje", "en": "Spain" },
+      "position": { "x": 19, "y": 81 }
+  },
+  {
+      "id": 44,
+      "name": { "nl": "Zweden", "en": "Sweden" },
+      "position": { "x": 51, "y": 31 }
+  },
+  {
+      "id": 45,
+      "name": { "nl": "Zwitserland", "en": "Switzerland" },
+      "position": { "x": 41, "y": 66 }
+  },
+  {
+      "id": 46,
+      "name": { "nl": "Turkije", "en": "Turkey" },
+      "position": { "x": 84, "y": 84 }
+  },
+  {
+      "id": 47,
+      "name": { "nl": "Oekraïne", "en": "Ukraine" },
+      "position": { "x": 76, "y": 57 }
+  },
+  {
+      "id": 48,
+      "name": { "nl": "Verenigd Koninkrijk", "en": "United Kingdom" },
+      "position": { "x": 28, "y": 49 }
+  },
+  {
+      "id": 49,
+      "name": { "nl": "Vaticaanstad", "en": "Vatican City" },
+      "position": { "x": 48, "y": 80 }
+  }
+]

@@ -14,6 +14,7 @@ import Register from 'src/views/Register';
 import Stream from 'src/views/Stream';
 
 import { WhamHunter } from 'src/views/whamhunter/WhamHunter';
+import { Geolufi } from 'src/views/geolufi/app';
 
 const App = () => {
   const auth = useAuth();
@@ -49,6 +50,10 @@ const App = () => {
           <Route
             path="/whamhunter"
             element={<WhamHunter />}
+          />
+          <Route
+            path="/geolufi"
+            element={<Geolufi />}
           />
           <Route element={<PrivateWrapper isAuthenticated={!auth.user.isAuthenticated} />}>
             <Route
