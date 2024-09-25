@@ -12,7 +12,7 @@
     "lint:fix": "eslint ./src --ext .jsx,.js,.ts,.tsx --fix --color --ignore-path ./.gitignore",
     "lint:format": "prettier --log-level log --write \"./**/*.{js,jsx,ts,tsx,css,md,json}\" ",
     "preview": "vite preview",
-    "tsc": "./node_modules/typescript/bin/tsc",
+    "tsc": "./node_modules/typescript/bin/tsc"
   },
   "dependencies": {
     "classnames": "^2.3.2",
