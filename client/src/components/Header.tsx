@@ -39,6 +39,14 @@ const Header = () => {
         >
           About
         </Link>
+        {!auth.user.isAuthenticated && (
+          <Link
+            className="link"
+            to="/login"
+          >
+            Login
+          </Link>
+        )}
         {auth.user.isAllowedToAdd && (
           <>
             <Link
