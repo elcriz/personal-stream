@@ -24,17 +24,21 @@ const login = async (req, res, next) => {
   try {
     const user = await User.findById(_id);
     user.refreshToken.push({ refreshToken });
-    user.save((error) => {
-      if (error) {
+
+    user
+      .save()
+      .then(() => {
+        res.cookie('refreshToken', refreshToken, COOKIE_OPTIONS);
+        res.send({
+          success: true,
+          role: req.user.role,
+          token,
+        });
+      })
+      .catch((error) => {
+        console.log('Some error happened:', error);
         return res.status(500).send(error);
-      }
-      res.cookie('refreshToken', refreshToken, COOKIE_OPTIONS);
-      res.send({
-        success: true,
-        role: req.user.role,
-        token,
       });
-    });
   } catch (error) {
     next(error);
   }
