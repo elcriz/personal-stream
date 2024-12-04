@@ -234,7 +234,7 @@ function WhamHunter() {
                   {scoreTimeMs > 0 && (
                     <img
                       src="/whammed.png"
-                      alt="George"
+                      alt="George approves!"
                     />
                   )}
                 </div>

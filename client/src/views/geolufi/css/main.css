@@ -59,7 +59,7 @@ body {
   position: relative;
 }
 
-.game {
+.board {
   position: absolute;
   left: 0;
   right: 0;
@@ -73,7 +73,7 @@ body {
   background-color: rgb(100, 155, 100);
 }
 
-.game-bar {
+.board-bar {
   position: absolute;
   left: 0;
   top: 0;
@@ -89,24 +89,24 @@ body {
   color: white;
 }
 
-.game-bar aside {
+.board-bar aside {
   display: flex;
   align-items: center;
   gap: 16px;
 }
 
-.game-bar__score-indicator {
+.board-bar__score-indicator {
   display: flex;
   list-style: none;
   gap: 8px;
 }
 
-.game-bar__score-indicator li:not(:first-child) {
+.board-bar__score-indicator li:not(:first-child) {
   border-left: 1px solid rgb(100, 100, 100);
   padding-left: 8px;
 }
 
-.game__content {
+.board__content {
   margin-top: 64px;
   margin-bottom: 64px;
 }
@@ -176,7 +176,7 @@ select {
   background-color: darkmagenta;
 }
 
-.game-screen {
+.board-screen {
   display: flex;
   gap: 64px;
   margin-top: 32px;
@@ -186,12 +186,12 @@ select {
   box-sizing: border-box;
 }
 
-.game-screen__map-container {
+.board-screen__map-container {
   max-width: 800px;
   position: relative;
 }
 
-.game-screen__map-container img {
+.board-screen__map-container img {
   width: 100%;
   padding: 0;
   border-radius: 16px;
@@ -199,7 +199,7 @@ select {
   border: 4px solid rgba(255, 0, 255, .25);
 }
 
-.game-screen__heading {
+.board-screen__heading {
   position: absolute;
   left: 0;
   top: -44px;

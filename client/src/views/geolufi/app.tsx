@@ -124,7 +124,7 @@ function Geolufi() {
   }, [game, message]);
 
   return (
-    <div className="game">
+    <div className="board">
       <GameBar
         language={language}
         score={score}
@@ -133,7 +133,7 @@ function Geolufi() {
         onResetClick={handleResetClick}
         isInGame={game.length > 0}
       />
-      <main className="game__content">
+      <main className="board__content">
         {game.length === 0 && (
           <SplashScreen
             language={language}
