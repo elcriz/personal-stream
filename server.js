@@ -76,7 +76,7 @@ mongoose
 
     app.get('*', (req, res) => {
       console.log('Serving up React build html');
-      res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+      res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
     });
 
     const server = app.listen(process.env.PORT || 5000, () => {
