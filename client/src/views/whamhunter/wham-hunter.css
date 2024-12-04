@@ -47,6 +47,10 @@
   --color-wham-gold: 200, 175, 100;
 }
 
+body {
+  height: 100vh;
+}
+
 .wham-hunter {
   position: absolute;
   left: 0;
