@@ -8,12 +8,12 @@ const options = {
 };
 
 passport.use(
-  new JwtStrategy(options, (jwt_payload, done) => {
-    User.findOne({ _id: jwt_payload._id }, (error, user) => {
-      if (error) {
-        return done(error, false);
-      }
+  new JwtStrategy(options, async (jwt_payload, done) => {
+    try {
+      const user = await User.findOne({ _id: jwt_payload._id });
       return done(null, user || false);
-    });
+    } catch (error) {
+      return done(error, false);
+    }
   }),
 );
