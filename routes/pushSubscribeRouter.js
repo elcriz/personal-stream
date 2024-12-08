@@ -21,3 +21,5 @@ router.post('/', (req, res) => {
 
   webPush.sendNotification(subscription, payload).catch(console.log);
 });
+
+module.exports = router;
