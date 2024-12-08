@@ -268,3 +268,12 @@ body {
   opacity: 0.75;
   font-size: var(--font-size-80);
 }
+
+.wham-hunter__logout-button {
+  appearance: none;
+  border: none;
+  text-decoration: underline;
+  color: rgb(255, 255, 100);
+  background: none;
+  font-family: 'Space Grotesk', Arial, Helvetica, sans-serif;
+}

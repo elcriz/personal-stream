@@ -59,6 +59,18 @@ function WhamHunter() {
     }
   };
 
+  const handleLogout = () => {
+    try {
+      window.localStorage.removeItem('whamhunter');
+      setName('');
+      setUserInfo(undefined);
+      setError('');
+    } catch (error) {
+      console.error(error);
+      setError(defaultErrorMessage);
+    }
+  };
+
   const handleSubmitLogin = () => {
     const playerName = name.trim();
     if (players.find((player) => player.name === playerName)) {
@@ -156,7 +168,7 @@ function WhamHunter() {
             alt="Last Christmas!"
           />
           <h1>Wham! Hunter</h1>
-          {userInfo && <span>{userInfo.name}</span>}
+          {userInfo && <span>{userInfo.name} (<button className="wham-hunter__logout-button" type="button" onClick={handleLogout}>Uitloggen</button>)</span>}
         </header>
 
         {isFetching && <div className="loader">Bezig met ophalen data...</div>}
