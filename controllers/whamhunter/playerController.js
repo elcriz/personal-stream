@@ -2,7 +2,7 @@ const Player = require('../../models/whamhunter/playerModel');
 const mongoose = require('mongoose');
 const webPush = require('web-push');
 
-// Initiate push notifications
+// Initialize push notifications
 webPush.setVapidDetails(
   `mailto+${process.env.EMAIL}`,
   process.env.PUSH_PUBLIC_KEY,
