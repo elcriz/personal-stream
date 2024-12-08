@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema, model } = mongoose;
 
-const subscriberModel = new Schema(
+const subscriberSchema = new Schema(
   {
     subscription: {
       type: Object,
@@ -11,4 +11,4 @@ const subscriberModel = new Schema(
   { timestamps: true },
 );
 
-module.exports = model('Subscriber', subscriberModel);
+module.exports = model('Subscriber', subscriberSchema);

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const webPush = require('web-push');
-const Subscriber = require('../../models/whamhunter/subscriberModel');
+const Subscriber = require('../models/whamhunter/subscriberModel');
 
 // Initialize push notifications
 webPush.setVapidDetails(
