@@ -1,5 +1,13 @@
 const Player = require('../../models/whamhunter/playerModel');
 const mongoose = require('mongoose');
+const webPush = require('web-push');
+
+// Initiate push notifications
+webPush.setVapidDetails(
+  `mailto+${process.env.EMAIL}`,
+  process.env.PUSH_PUBLIC_KEY,
+  process.env.PUSH_PRIVATE_KEY,
+);
 
 module.exports = {
   getPlayers: async (_, res) => {
@@ -26,10 +34,26 @@ module.exports = {
 
     const scoringPlayer = await Player.findById(id);
 
-    const player = await Player.findOneAndUpdate({ _id: id }, { score: scoringPlayer.score + 1 });
+    const score = scoringPlayer.score + 1;
+
+    const player = await Player.findOneAndUpdate({ _id: id }, { score });
 
     if (!player) {
       return res.status(400).json({ error: 'No such item found' });
+    }
+
+    // Send push notification
+    try {
+      webPush.sendNotification({
+        title: 'WHAM!',
+        body: `Speler ${scoringPlayer.name} hoorde zojuist Last Christmas en heeft nu ${score} punten!`,
+      });
+    } catch (error) {
+      console.error('Sending push notification failed', {
+        player,
+        scoringPlayer,
+        score,
+      });
     }
 
     res.status(200).json(player);

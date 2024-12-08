@@ -74,7 +74,7 @@ mongoose
   .then((db) => {
     console.log('Connected to database.');
 
-    app.get('*', (req, res) => {
+    app.get('*', (_, res) => {
       console.log('Serving up React build html');
       res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
     });
