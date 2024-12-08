@@ -64,29 +64,37 @@ export default {
 };
 
 async function subscribeByUserId(userId: string) {
-  const publicKey = 'BHPOSgUf1aV4JD5EzuNYXtHd4GtpHqYSIomXULncx3FGcVmra0Q5Y8WIHjFi_nJQ0F8njEyFOeBSWSp7UE0oQFs';
+  try {
+    const publicKey = 'BHPOSgUf1aV4JD5EzuNYXtHd4GtpHqYSIomXULncx3FGcVmra0Q5Y8WIHjFi_nJQ0F8njEyFOeBSWSp7UE0oQFs';
 
-  const registration = await navigator.serviceWorker.register(`service-worker.js?v=${Date.now()}`, { scope: '/ '});
+    alert('About to register');
 
-  const subscription = await registration.pushManager.subscribe({
-    userVisibleOnly: true,
-    applicationServerKey: publicKey,
-  });
+    const registration = await navigator.serviceWorker.register(`service-worker.js?v=${Date.now()}`, { scope: '/ '});
 
-  alert('About to POSt subscription: ' + subscription + ' | ' + userId);
+    alert('About to subscribe');
 
-  const response = await fetch('/api/notifications/subscribe', {
-    method: 'POST',
-    body: JSON.stringify({ subscription, userId }),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+    const subscription = await registration.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: publicKey,
+    });
 
-  console.log('Subscribing user');
+    alert('About to POST subscription');
 
-  if (!response.ok) {
-    alert(response.status);
-    throw response.status;
+    const response = await fetch('/api/notifications/subscribe', {
+      method: 'POST',
+      body: JSON.stringify({ subscription, userId }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    console.log('Subscribing user');
+
+    if (!response.ok) {
+      alert(response.status);
+      throw response.status;
+    }
+  } catch (error){
+    alert(error);
   }
 }
