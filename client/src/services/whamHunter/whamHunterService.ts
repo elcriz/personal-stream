@@ -54,6 +54,7 @@ export default {
       }).catch((error) => {
         console.log('Error after requesting:', error);
       });
+      console.log('Huh');
     } else if (Notification.permission === 'granted') {
       subscribeByUserId(userId);
     } else {
