@@ -47,9 +47,9 @@ module.exports = {
     const subscribers = await Subscriber.find({});
     if (subscribers.length > 0) {
       subscribers
-        .filter((subscriber, index, self) => {
-          return self.findIndex((value) => value.userId === subscriber.userId) === index;
-        })
+        // .filter((subscriber, index, self) => {
+        //   return self.findIndex((value) => value.userId === subscriber.userId) === index;
+        // })
         .forEach(({ subscription }) => {
           webPush
             .sendNotification(
