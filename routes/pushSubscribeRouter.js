@@ -27,7 +27,7 @@ router.post('/send', (req, res) => {
   subscriptions.forEach((subscription) => {
     webPush.sendNotification(subscription, payload).catch((error) => {
       console.log('Error whilst attempting to send a push notification');
-      console.error(error.stack);
+      console.error(error.stack, { subscription });
     });
   });
 
