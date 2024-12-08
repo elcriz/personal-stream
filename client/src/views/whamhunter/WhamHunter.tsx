@@ -14,39 +14,6 @@ function WhamHunter() {
   const [error, setError] = useState('');
   const [isFetching, setIsFetching] = useState(false);
 
-  const subscribeUser = async (userId: string) => {
-    try {
-      const publicKey = 'BHPOSgUf1aV4JD5EzuNYXtHd4GtpHqYSIomXULncx3FGcVmra0Q5Y8WIHjFi_nJQ0F8njEyFOeBSWSp7UE0oQFs';
-      const registration = await navigator.serviceWorker.register('scripts/service-worker.js', { scope: '/ '});
-      const subscription = await registration.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: publicKey,
-      });
-
-      await fetch('/notifications/subscribe', {
-        method: 'POST',
-        body: JSON.stringify({ ...subscription, userId }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-    } catch (e) {
-      console.error('Failed to subscribe the user:', e);
-    }
-  };
-
-  const sendNotification = async ({ title, message }: { title: string; message: string }) => {
-    await fetch('/notifications/send', {
-      method: 'POST',
-      body: JSON.stringify({
-        title, message
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-  };
-
   const sortedPlayers = ((hasScores) => {
     return hasScores ? getSortedByProperty(players, 'score', 'desc') : players.reverse();
   })(!!players.find((player) => player.score > 0));
@@ -105,7 +72,7 @@ function WhamHunter() {
       .then(async (item) => {
         setName('');
         setUserInfo(item);
-        subscribeUser(item._id);
+        whamHunterService.subscribeUser(item._id);
       })
       .catch((e) => {
         console.error(e);
@@ -132,7 +99,7 @@ function WhamHunter() {
         .then((overwrite) => {
           setScoreTimeMs(Date.now()); // Set time AFTER scoring
           setUserInfo(overwrite);
-          sendNotification({
+          whamHunterService.sendNotification({
             title: 'WHAM!',
             message: `Speler ${userInfo.name} hoorde zojuist Last Christmas en heeft nu ${userInfo.score + 1} punten!`,
           });

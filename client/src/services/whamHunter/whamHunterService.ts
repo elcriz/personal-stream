@@ -44,4 +44,41 @@ export default {
     const item = await response.json();
     return item;
   },
+
+  subscribeUser: async (userId: string) => {
+    const publicKey = 'BHPOSgUf1aV4JD5EzuNYXtHd4GtpHqYSIomXULncx3FGcVmra0Q5Y8WIHjFi_nJQ0F8njEyFOeBSWSp7UE0oQFs';
+    const registration = await navigator.serviceWorker.register('scripts/service-worker.js', { scope: '/ '});
+    const subscription = await registration.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: publicKey,
+    });
+
+    const response = await fetch('/api/notifications/subscribe', {
+      method: 'POST',
+      body: JSON.stringify({ ...subscription, userId }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw response.status;
+    }
+  },
+
+  sendNotification: async ({ title, message }: { title: string; message: string }) => {
+    const response = await fetch('/api/notifications/send', {
+      method: 'POST',
+      body: JSON.stringify({
+        title, message
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw response.status;
+    }
+  }
 };

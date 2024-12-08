@@ -12,7 +12,7 @@ webPush.setVapidDetails(
 let subscriptions = [];
 
 router.post('/subscribe', (req, res) => {
-  const subscription = req.body;
+  const { userId, ...subscription } = req.body;
   subscriptions.push(subscription);
   res.status(201).json({});
 });
@@ -30,6 +30,8 @@ router.post('/send', (req, res) => {
       console.error(error.stack);
     });
   });
+
+  res.status(201).json({});
 });
 
 module.exports = router;
