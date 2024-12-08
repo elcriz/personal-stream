@@ -48,8 +48,11 @@ export default {
   subscribeUser: (userId: string) => {
     console.log('About to check for permissions:', { userId }, Notification.permission);
     if (Notification.permission === 'default') {
-      Notification.requestPermission().then(async () => {
+      Notification.requestPermission().then(async (permission) => {
+        console.log('subscribing next', { permission });
         subscribeByUserId(userId);
+      }).catch((error) => {
+        console.log('Error after requesting:', error);
       });
     } else if (Notification.permission === 'granted') {
       subscribeByUserId(userId);
