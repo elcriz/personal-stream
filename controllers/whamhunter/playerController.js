@@ -44,7 +44,7 @@ module.exports = {
 
     // Send push notification
     try {
-      webPush.sendNotification({
+      webPush.sendNotification(req.body, {
         title: 'WHAM!',
         body: `Speler ${scoringPlayer.name} hoorde zojuist Last Christmas en heeft nu ${score} punten!`,
       });
