@@ -4,7 +4,7 @@ const webPush = require('web-push');
 
 // Initialize push notifications
 webPush.setVapidDetails(
-  `mailto+${process.env.EMAIL}`,
+  `mailto:${process.env.EMAIL}`,
   process.env.PUSH_PUBLIC_KEY,
   process.env.PUSH_PRIVATE_KEY,
 );
