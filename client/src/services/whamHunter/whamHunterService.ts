@@ -71,7 +71,7 @@ async function subscribeByUserId(userId: string) {
 
     const registration = await navigator.serviceWorker.register(`service-worker.js?v=${Date.now()}`, { scope: '/ '});
 
-    alert('About to subscribe');
+    alert('About to subscribe: ' + registration);
 
     const subscription = await registration.pushManager.subscribe({
       userVisibleOnly: true,
