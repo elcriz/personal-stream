@@ -71,8 +71,6 @@ async function subscribeByUserId(userId: string) {
 
     if (registrationBefore) {
       navigator.serviceWorker.ready.then(async (registration) => {
-        alert(`A service worker is active: ${registration.active}`);
-
         const subscription = await registration.pushManager.subscribe({
           userVisibleOnly: true,
           applicationServerKey: publicKey,
@@ -85,8 +83,6 @@ async function subscribeByUserId(userId: string) {
             'Content-Type': 'application/json',
           },
         });
-
-        console.log('Subscribing user');
 
         if (!response.ok) {
           alert(response.status);
