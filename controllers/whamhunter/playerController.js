@@ -44,18 +44,12 @@ module.exports = {
 
     // Send push notification
     try {
-      console.log('req.body', { body });
-      webPush.sendNotification(req.body, {
+      webPush.sendNotification('https://chris-personal-stream.herokuapp.com/whamhunter', {
         title: 'WHAM!',
         body: `Speler ${scoringPlayer.name} hoorde zojuist Last Christmas en heeft nu ${score} punten!`,
       });
     } catch (error) {
-      console.error('Sending push notification failed', {
-        'req.body': req.body,
-        player,
-        scoringPlayer,
-        score,
-      });
+      console.error('Sending push notification failed', error);
     }
 
     res.status(200).json(player);
