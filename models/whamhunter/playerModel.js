@@ -4,7 +4,7 @@ const { Schema, model } = mongoose;
 const playerSchema = new Schema(
   {
     name: {
-      type: String,
+      type: Schema.Types.Mixed,
       defaut: '',
     },
     score: {
