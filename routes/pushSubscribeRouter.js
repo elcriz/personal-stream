@@ -21,21 +21,4 @@ router.post('/subscribe', async (req, res) => {
   }
 });
 
-router.post('/send', (req, res) => {
-  const { title, message } = req.body;
-  const payload = JSON.stringify({
-    title,
-    body: message,
-  });
-
-  subscriptions.forEach((subscription) => {
-    webPush.sendNotification(subscription, payload).catch((error) => {
-      console.log('Error whilst attempting to send a push notification');
-      console.error(error.stack, { subscription });
-    });
-  });
-
-  res.status(201).json({});
-});
-
 module.exports = router;
