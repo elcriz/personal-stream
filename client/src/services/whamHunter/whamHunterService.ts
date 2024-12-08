@@ -67,30 +67,32 @@ async function subscribeByUserId(userId: string) {
   try {
     const publicKey = 'BHPOSgUf1aV4JD5EzuNYXtHd4GtpHqYSIomXULncx3FGcVmra0Q5Y8WIHjFi_nJQ0F8njEyFOeBSWSp7UE0oQFs';
 
-    const registration = await navigator.serviceWorker.register(`service-worker.js?v=${Date.now()}`, { scope: '/ '});
+    const registrationBefore = await navigator.serviceWorker.register(`service-worker.js?v=${Date.now()}`, { scope: '/ '});
 
-    navigator.serviceWorker.ready.then((registration) => {
-      alert(`A service worker is active: ${registration.active}`);
-    });
+    if (registrationBefore) {
+      navigator.serviceWorker.ready.then(async (registration) => {
+        alert(`A service worker is active: ${registration.active}`);
 
-    const subscription = await registration.pushManager.subscribe({
-      userVisibleOnly: true,
-      applicationServerKey: publicKey,
-    });
+        const subscription = await registration.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: publicKey,
+        });
 
-    const response = await fetch('/api/notifications/subscribe', {
-      method: 'POST',
-      body: JSON.stringify({ subscription, userId }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+        const response = await fetch('/api/notifications/subscribe', {
+          method: 'POST',
+          body: JSON.stringify({ subscription, userId }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
 
-    console.log('Subscribing user');
+        console.log('Subscribing user');
 
-    if (!response.ok) {
-      alert(response.status);
-      throw response.status;
+        if (!response.ok) {
+          alert(response.status);
+          throw response.status;
+        }
+      });
     }
   } catch (error){
     alert(error);
