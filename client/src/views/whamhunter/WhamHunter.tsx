@@ -116,6 +116,7 @@ function WhamHunter() {
 
   const handleSelectPlayer = (playerToSelect: IPlayer) => {
     setUserInfo(playerToSelect);
+    whamHunterService.subscribeUser(playerToSelect._id);
   };
 
   useEffect(() => {
