@@ -38,6 +38,7 @@ const streamRouter = require('./routes/streamRouter');
 const feedRouter = require('./routes/feedRouter');
 const hikesRouter = require('./routes/hikes/hikesRouter');
 const whamhunterRouter = require('./routes/whamhunter/whamhunterRouter');
+const pushSubscribeRouter = require('./routes/pushSubscribeRouter');
 
 app.use(
   cors({
@@ -53,6 +54,8 @@ app.use(
 );
 
 app.use(passport.initialize());
+
+app.use('/subscribe', pushSubscribeRouter);
 
 app.use('/api/users', userRouter);
 
