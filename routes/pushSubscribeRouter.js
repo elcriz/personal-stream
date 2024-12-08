@@ -11,7 +11,7 @@ webPush.setVapidDetails(
 );
 
 router.post('/subscribe', async (req, res) => {
-  const { userId, ...subscription } = req.body;
+  const { userId, subscription } = req.body;
   try {
     console.log('/subscribe received', { userId, subscription });
     const subscriptionToAdd = await Subscriber.create(new Subscriber({ userId, subscription }));
