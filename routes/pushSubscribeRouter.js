@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const webPush = require('web-push');
+const Subscriber = require('../../models/whamhunter/subscriberModel');
 
 // Initialize push notifications
 webPush.setVapidDetails(
@@ -9,12 +10,14 @@ webPush.setVapidDetails(
   process.env.PUSH_PRIVATE_KEY,
 );
 
-let subscriptions = [];
-
-router.post('/subscribe', (req, res) => {
+router.post('/subscribe', async (req, res) => {
   const { userId, ...subscription } = req.body;
-  subscriptions.push(subscription);
-  res.status(201).json({});
+  try {
+    const subscriptionToAdd = await Subscriber.create(new Subscriber({ subscription }));
+    res.status(201).json(subscriptionToAdd);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 });
 
 router.post('/send', (req, res) => {

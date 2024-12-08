@@ -99,10 +99,6 @@ function WhamHunter() {
         .then((overwrite) => {
           setScoreTimeMs(Date.now()); // Set time AFTER scoring
           setUserInfo(overwrite);
-          whamHunterService.sendNotification({
-            title: 'WHAM!',
-            message: `Speler ${userInfo.name} hoorde zojuist Last Christmas en heeft nu ${userInfo.score + 1} punten!`,
-          });
         })
         .catch((e) => {
           console.error(e);

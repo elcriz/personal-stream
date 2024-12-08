@@ -47,7 +47,8 @@ export default {
 
   subscribeUser: async (userId: string) => {
     const publicKey = 'BHPOSgUf1aV4JD5EzuNYXtHd4GtpHqYSIomXULncx3FGcVmra0Q5Y8WIHjFi_nJQ0F8njEyFOeBSWSp7UE0oQFs';
-    const registration = await navigator.serviceWorker.register('service-worker.js', { scope: '/ '});
+    const registration = await navigator.serviceWorker.register(`service-worker.js?v=${Date.now()}`, { scope: '/ '});
+
     const subscription = await registration.pushManager.subscribe({
       userVisibleOnly: true,
       applicationServerKey: publicKey,
@@ -67,20 +68,4 @@ export default {
       throw response.status;
     }
   },
-
-  sendNotification: async ({ title, message }: { title: string; message: string }) => {
-    const response = await fetch('/api/notifications/send', {
-      method: 'POST',
-      body: JSON.stringify({
-        title, message
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    if (!response.ok) {
-      throw response.status;
-    }
-  }
 };

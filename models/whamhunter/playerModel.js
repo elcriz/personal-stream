@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { Schema, plugin, model } = mongoose;
+const { Schema, model } = mongoose;
 
 const playerSchema = new Schema(
   {
