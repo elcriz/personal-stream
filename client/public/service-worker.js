@@ -11,7 +11,12 @@ self.addEventListener('push', (event) => {
 
   console.debug('Push received', { title, body });
 
-  event.waitUntil(
-    self.registration.showNotification(title, { body }),
-  );
+  navigator.serviceWorker.getRegistrations()
+    .then((registrations) => {
+      registrations[0].showNotification(title, { body })
+    });
+
+  // event.waitUntil(
+  //   self.registration.showNotification(title, { body }),
+  // );
 });
