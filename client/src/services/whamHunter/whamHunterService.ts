@@ -49,7 +49,6 @@ export default {
     console.log('About to check for permissions:', { userId }, Notification.permission);
     if (Notification.permission === 'default') {
       Notification.requestPermission().then(async (permission) => {
-        alert('Permission:' + permission);
         console.log('subscribing next', { permission });
         subscribeByUserId(userId);
       }).catch((error) => {
@@ -66,12 +65,15 @@ export default {
 
 async function subscribeByUserId(userId: string) {
   const publicKey = 'BHPOSgUf1aV4JD5EzuNYXtHd4GtpHqYSIomXULncx3FGcVmra0Q5Y8WIHjFi_nJQ0F8njEyFOeBSWSp7UE0oQFs';
+
   const registration = await navigator.serviceWorker.register(`service-worker.js?v=${Date.now()}`, { scope: '/ '});
 
   const subscription = await registration.pushManager.subscribe({
     userVisibleOnly: true,
     applicationServerKey: publicKey,
   });
+
+  alert('About to POSt subscription: ' + subscription + ' | ' + userId);
 
   const response = await fetch('/api/notifications/subscribe', {
     method: 'POST',
@@ -84,6 +86,7 @@ async function subscribeByUserId(userId: string) {
   console.log('Subscribing user');
 
   if (!response.ok) {
+    alert(response.status);
     throw response.status;
   }
 }
