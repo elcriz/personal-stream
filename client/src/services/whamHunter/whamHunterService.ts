@@ -47,7 +47,7 @@ export default {
 
   subscribeUser: async (userId: string) => {
     const publicKey = 'BHPOSgUf1aV4JD5EzuNYXtHd4GtpHqYSIomXULncx3FGcVmra0Q5Y8WIHjFi_nJQ0F8njEyFOeBSWSp7UE0oQFs';
-    const registration = await navigator.serviceWorker.register('/service-worker.js', { scope: '/ '});
+    const registration = await navigator.serviceWorker.register('service-worker.js', { scope: '/ '});
     const subscription = await registration.pushManager.subscribe({
       userVisibleOnly: true,
       applicationServerKey: publicKey,
