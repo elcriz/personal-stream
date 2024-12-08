@@ -8,5 +8,8 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('push', (event) => {
   const { title, body } = event.data.json();
-  self.ServiceWorkerRegistration.showNotification(title, { body });
+
+  event.waitUntil(
+    self.registration.showNotification(title, { body }),
+  );
 });

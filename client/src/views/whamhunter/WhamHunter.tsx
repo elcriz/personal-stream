@@ -14,6 +14,39 @@ function WhamHunter() {
   const [error, setError] = useState('');
   const [isFetching, setIsFetching] = useState(false);
 
+  const subscribeUser = async (userId: string) => {
+    try {
+      const publicKey = 'BHPOSgUf1aV4JD5EzuNYXtHd4GtpHqYSIomXULncx3FGcVmra0Q5Y8WIHjFi_nJQ0F8njEyFOeBSWSp7UE0oQFs';
+      const registration = await navigator.serviceWorker.register('scripts/service-worker.js', { scope: '/ '});
+      const subscription = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: publicKey,
+      });
+
+      await fetch('/notifications/subscribe', {
+        method: 'POST',
+        body: JSON.stringify({ ...subscription, userId }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+    } catch (e) {
+      console.error('Failed to subscribe the user:', e);
+    }
+  };
+
+  const sendNotification = async ({ title, message }: { title: string; message: string }) => {
+    await fetch('/notifications/send', {
+      method: 'POST',
+      body: JSON.stringify({
+        title, message
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  };
+
   const sortedPlayers = ((hasScores) => {
     return hasScores ? getSortedByProperty(players, 'score', 'desc') : players.reverse();
   })(!!players.find((player) => player.score > 0));
@@ -69,9 +102,10 @@ function WhamHunter() {
     setError('');
     whamHunterService
       .addPlayer(playerName)
-      .then((item) => {
+      .then(async (item) => {
         setName('');
         setUserInfo(item);
+        subscribeUser(item._id);
       })
       .catch((e) => {
         console.error(e);
@@ -85,17 +119,23 @@ function WhamHunter() {
   const handleAddScore = () => {
     if (userInfo?._id) {
       const currentTimeMs = Date.now();
+
       if (currentTimeMs - scoreTimeMs < 30000) {
         // 30 seconds wait time
         setError('Ho ho, niet zo snel! Niemand hoort Last Christmas zó vaak... xD');
         return;
       }
+
       setError('');
       whamHunterService
         .addScore(userInfo._id)
         .then((overwrite) => {
           setScoreTimeMs(Date.now()); // Set time AFTER scoring
           setUserInfo(overwrite);
+          sendNotification({
+            title: 'WHAM!',
+            message: `Speler ${userInfo.name} hoorde zojuist Last Christmas en heeft nu ${userInfo.score + 1} punten!`,
+          });
         })
         .catch((e) => {
           console.error(e);
@@ -217,7 +257,7 @@ function WhamHunter() {
 
             {userInfo && (
               <>
-                <div className="game">
+                <div className="game" data-user-id={userInfo._id}>
                   <h2>Last Christmas gehoord?</h2>
                   <p>Yes! Laat het ons direct weten:</p>
                   <button

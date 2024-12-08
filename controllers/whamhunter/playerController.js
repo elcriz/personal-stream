@@ -1,13 +1,5 @@
 const Player = require('../../models/whamhunter/playerModel');
 const mongoose = require('mongoose');
-const webPush = require('web-push');
-
-// Initialize push notifications
-webPush.setVapidDetails(
-  `mailto:${process.env.EMAIL}`,
-  process.env.PUSH_PUBLIC_KEY,
-  process.env.PUSH_PRIVATE_KEY,
-);
 
 module.exports = {
   getPlayers: async (_, res) => {
@@ -40,16 +32,6 @@ module.exports = {
 
     if (!player) {
       return res.status(400).json({ error: 'No such item found' });
-    }
-
-    // Send push notification
-    try {
-      webPush.sendNotification('https://chris-personal-stream.herokuapp.com/whamhunter', {
-        title: 'WHAM!',
-        body: `Speler ${scoringPlayer.name} hoorde zojuist Last Christmas en heeft nu ${score} punten!`,
-      });
-    } catch (error) {
-      console.error('Sending push notification failed', error);
     }
 
     res.status(200).json(player);

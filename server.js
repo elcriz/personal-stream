@@ -55,7 +55,7 @@ app.use(
 
 app.use(passport.initialize());
 
-app.use('/subscribe', pushSubscribeRouter);
+app.use('/notifications', pushSubscribeRouter);
 
 app.use('/api/users', userRouter);
 

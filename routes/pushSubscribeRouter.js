@@ -9,17 +9,27 @@ webPush.setVapidDetails(
   process.env.PUSH_PRIVATE_KEY,
 );
 
-router.post('/', (req, res) => {
+let subscriptions = [];
+
+router.post('/subscribe', (req, res) => {
   const subscription = req.body;
-
+  subscriptions.push(subscription);
   res.status(201).json({});
+});
 
+router.post('/send', (req, res) => {
+  const { title, message } = req.body;
   const payload = JSON.stringify({
-    title: 'WHAM!',
-    body: 'Je hebt je succesvol aangemeld voor notificaties van WHAM! HUNTER',
+    title,
+    body: message,
   });
 
-  webPush.sendNotification(subscription, payload).catch(console.log);
+  subscriptions.forEach((subscription) => {
+    webPush.sendNotification(subscription, payload).catch((error) => {
+      console.log('Error whilst attempting to send a push notification');
+      console.error(error.stack);
+    });
+  });
 });
 
 module.exports = router;
