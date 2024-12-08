@@ -61,6 +61,8 @@ export default {
       },
     });
 
+    console.log('Subscribing user');
+
     if (!response.ok) {
       throw response.status;
     }
