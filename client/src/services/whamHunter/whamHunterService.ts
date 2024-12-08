@@ -45,27 +45,39 @@ export default {
     return item;
   },
 
-  subscribeUser: async (userId: string) => {
-    const publicKey = 'BHPOSgUf1aV4JD5EzuNYXtHd4GtpHqYSIomXULncx3FGcVmra0Q5Y8WIHjFi_nJQ0F8njEyFOeBSWSp7UE0oQFs';
-    const registration = await navigator.serviceWorker.register(`service-worker.js?v=${Date.now()}`, { scope: '/ '});
-
-    const subscription = await registration.pushManager.subscribe({
-      userVisibleOnly: true,
-      applicationServerKey: publicKey,
-    });
-
-    const response = await fetch('/api/notifications/subscribe', {
-      method: 'POST',
-      body: JSON.stringify({ subscription, userId }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    console.log('Subscribing user');
-
-    if (!response.ok) {
-      throw response.status;
+  subscribeUser: (userId: string) => {
+    if (Notification.permission === 'default') {
+      Notification.requestPermission().then(async () => {
+        subscribeByUserId(userId);
+      });
+    } else if (Notification.permission === 'granted') {
+      subscribeByUserId(userId);
+    } else {
+      console.log('Permission to receive notifications:', Notification.permission);
     }
   },
 };
+
+async function subscribeByUserId(userId: string) {
+  const publicKey = 'BHPOSgUf1aV4JD5EzuNYXtHd4GtpHqYSIomXULncx3FGcVmra0Q5Y8WIHjFi_nJQ0F8njEyFOeBSWSp7UE0oQFs';
+  const registration = await navigator.serviceWorker.register(`service-worker.js?v=${Date.now()}`, { scope: '/ '});
+
+  const subscription = await registration.pushManager.subscribe({
+    userVisibleOnly: true,
+    applicationServerKey: publicKey,
+  });
+
+  const response = await fetch('/api/notifications/subscribe', {
+    method: 'POST',
+    body: JSON.stringify({ subscription, userId }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  console.log('Subscribing user');
+
+  if (!response.ok) {
+    throw response.status;
+  }
+}
