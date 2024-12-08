@@ -51,6 +51,7 @@ module.exports = {
       });
     } catch (error) {
       console.error('Sending push notification failed', {
+        'req.body': req.body,
         player,
         scoringPlayer,
         score,
