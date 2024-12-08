@@ -4,7 +4,8 @@ const { Schema, model } = mongoose;
 const subscriberModel = new Schema(
   {
     subscription: {
-      default: null,
+      type: Object,
+      default: {},
     },
   },
   { timestamps: true },
