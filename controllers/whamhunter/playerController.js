@@ -46,20 +46,24 @@ module.exports = {
     // Try to send push notifications to any subscribers
     const subscribers = await Subscriber.find({});
     if (subscribers.length > 0) {
-      subscribers.forEach(({ subscription }) => {
-        webPush
-          .sendNotification(
-            subscription,
-            JSON.stringify({
-              title: 'WHAM!',
-              body: `Speler ${scoringPlayer.name} hoorde zojuist Last Christmas en heeft nu ${score} punten!`,
-            }),
-          )
-          .catch((error) => {
-            console.log('Server: error whilst attempting to send a push notification');
-            console.error(error.stack, { subscription });
-          });
-      });
+      subscribers
+        .filter((subscriber, index, self) => {
+          return self.findIndex((value) => value.userId === subscriber.userId) === index;
+        })
+        .forEach(({ subscription }) => {
+          webPush
+            .sendNotification(
+              subscription,
+              JSON.stringify({
+                title: 'WHAM!',
+                body: `Speler ${scoringPlayer.name} hoorde zojuist Last Christmas en heeft nu ${score} punten!`,
+              }),
+            )
+            .catch((error) => {
+              console.log('Server: error whilst attempting to send a push notification');
+              console.error(error.stack, { subscription });
+            });
+        });
     }
 
     res.status(200).json(player);
