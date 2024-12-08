@@ -13,7 +13,8 @@ webPush.setVapidDetails(
 router.post('/subscribe', async (req, res) => {
   const { userId, ...subscription } = req.body;
   try {
-    const subscriptionToAdd = await Subscriber.create(new Subscriber({ subscription }));
+    console.log('/subscribe received', { userId, subscription });
+    const subscriptionToAdd = await Subscriber.create(new Subscriber({ userId, subscription }));
     res.status(201).json(subscriptionToAdd);
   } catch (error) {
     res.status(400).json({ error: error.message });

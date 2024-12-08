@@ -3,6 +3,10 @@ const { Schema, model } = mongoose;
 
 const subscriberSchema = new Schema(
   {
+    userId: {
+      type: String,
+      default: '',
+    },
     subscription: {
       type: Object,
       default: {},
