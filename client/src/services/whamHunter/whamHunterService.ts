@@ -56,7 +56,7 @@ export default {
 
     const response = await fetch('/api/notifications/subscribe', {
       method: 'POST',
-      body: JSON.stringify({ ...subscription, userId }),
+      body: JSON.stringify({ subscription, userId }),
       headers: {
         'Content-Type': 'application/json',
       },
