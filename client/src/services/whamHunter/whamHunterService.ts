@@ -67,18 +67,16 @@ async function subscribeByUserId(userId: string) {
   try {
     const publicKey = 'BHPOSgUf1aV4JD5EzuNYXtHd4GtpHqYSIomXULncx3FGcVmra0Q5Y8WIHjFi_nJQ0F8njEyFOeBSWSp7UE0oQFs';
 
-    alert('About to register');
-
     const registration = await navigator.serviceWorker.register(`service-worker.js?v=${Date.now()}`, { scope: '/ '});
 
-    alert('About to subscribe: ' + registration);
+    navigator.serviceWorker.ready.then((registration) => {
+      alert(`A service worker is active: ${registration.active}`);
+    });
 
     const subscription = await registration.pushManager.subscribe({
       userVisibleOnly: true,
       applicationServerKey: publicKey,
     });
-
-    alert('About to POST subscription');
 
     const response = await fetch('/api/notifications/subscribe', {
       method: 'POST',
