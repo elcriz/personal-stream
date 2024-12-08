@@ -48,10 +48,13 @@ module.exports = {
     if (subscribers.length > 0) {
       subscribers
         .forEach(({ subscription }) => {
-          webPush.sendNotification(subscription, {
-            title: 'WHAM!',
-            body: `Speler ${scoringPlayer.name} hoorde zojuist Last Christmas en heeft nu ${score} punten!`,
-          });
+          webPush.sendNotification(
+            subscription,
+            JSON.stringify({
+              title: 'WHAM!',
+              body: `Speler ${scoringPlayer.name} hoorde zojuist Last Christmas en heeft nu ${score} punten!`,
+            }),
+          );
         })
         .catch((error) => {
           console.log('Server: error whilst attempting to send a push notification');
